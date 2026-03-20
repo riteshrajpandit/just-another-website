@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — NEXACORE</title>
+<meta name="description" content="Sign in to the NEXACORE platform dashboard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS — identical to site system
+   ============================================================ */
+:root {
+  --brand-primary:   #1b76bb;
+  --brand-secondary: #0d4a78;
+  --brand-accent:    #00d4ff;
+  --brand-warm:      #f5a623;
+  --transition:      200ms ease;
+  --transition-slow: 400ms ease;
+}
+
+[data-theme="light"] {
+  --bg-base:        #f5f4f0;
+  --bg-surface:     #ffffff;
+  --bg-elevated:    #eceae4;
+  --bg-dark-band:   #e0ded8;
+  --text-primary:   #0e0e0e;
+  --text-secondary: #4a4a4a;
+  --text-muted:     #8a8a8a;
+  --border:         #d0cec8;
+  --border-strong:  #0e0e0e;
+  --panel-bg:       #f0ede8;
+  --panel-border:   #d0cec8;
+}
+
+[data-theme="dark"] {
+  --bg-base:        #0a0a0a;
+  --bg-surface:     #111111;
+  --bg-elevated:    #1a1a1a;
+  --bg-dark-band:   #050505;
+  --text-primary:   #f0ede8;
+  --text-secondary: #a8a5a0;
+  --text-muted:     #555550;
+  --border:         #2a2a2a;
+  --border-strong:  #f0ede8;
+  --panel-bg:       #0d1a26;
+  --panel-border:   #1b3450;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; height: 100%; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100%;
+  overflow-x: hidden;
+  transition: background .3s ease, color .3s ease;
+}
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: inherit; border: none; background: none; }
+::selection { background: var(--brand-primary); color: #fff; }
+:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 2px; }
+
+/* ============================================================
+   LAYOUT — full-viewport split
+   ============================================================ */
+.login-root {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+/* ============================================================
+   LEFT PANEL — brand + visual
+   ============================================================ */
+.login-left {
+  background: var(--panel-bg);
+  border-right: 1px solid var(--panel-border);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(2rem, 4vw, 3.5rem);
+}
+
+/* Dot-grid background — same as homepage hero */
+.ll-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: .45;
+  pointer-events: none;
+}
+
+/* Brand glow blob */
+.ll-blob {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(27,118,187,.18), transparent 68%);
+  bottom: -120px;
+  left: -80px;
+  pointer-events: none;
+}
+
+.ll-blob-2 {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,212,255,.08), transparent 70%);
+  top: 10%;
+  right: -60px;
+  pointer-events: none;
+}
+
+/* Top bar inside left panel */
+.ll-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ll-logo {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+}
+
+.ll-logo-mark {
+  width: 30px;
+  height: 30px;
+  background: var(--brand-primary);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ll-logo-mark::before,
+.ll-logo-mark::after {
+  content: '';
+  position: absolute;
+  background: #fff;
+}
+.ll-logo-mark::before { width: 60%; height: 2px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.ll-logo-mark::after  { width: 2px; height: 60%; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+.ll-logo-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: .1em;
+  color: var(--text-primary);
+}
+.ll-logo-name span { color: var(--brand-primary); }
+
+.ll-back-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .62rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  transition: color var(--transition);
+}
+.ll-back-link:hover { color: var(--brand-primary); }
+.ll-back-link svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+/* Central visual composition */
+.ll-visual {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.ll-headline {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  margin-bottom: 1.25rem;
+}
+
+.ll-headline .line1 { color: var(--text-primary); display: block; }
+.ll-headline .line2 { color: var(--brand-primary); display: block; }
+
+.ll-sub {
+  font-size: clamp(.9rem, 1.2vw, 1rem);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 380px;
+  margin-bottom: 2.5rem;
+}
+
+/* Geometric box composition — same language as index hero */
+.ll-geo {
+  position: relative;
+  height: 200px;
+  margin-bottom: 2.5rem;
+}
+
+.ll-geo-box {
+  position: absolute;
+  border: 1px solid var(--panel-border);
+}
+
+.ll-geo-box--a {
+  width: 140px; height: 140px;
+  top: 0; left: 0;
+  border-color: var(--brand-primary);
+  opacity: .3;
+  animation: geo-spin 18s linear infinite;
+}
+.ll-geo-box--b {
+  width: 80px; height: 80px;
+  top: 20px; left: 20px;
+  background: var(--brand-primary);
+  opacity: .08;
+  animation: geo-spin 12s linear infinite reverse;
+}
+.ll-geo-box--c {
+  width: 40px; height: 40px;
+  top: 50px; left: 50px;
+  background: var(--brand-primary);
+  opacity: .22;
+}
+.ll-geo-box--d {
+  width: 16px; height: 16px;
+  top: 8px; left: 145px;
+  background: var(--brand-warm);
+  opacity: .7;
+  animation: pulse-warm 3s ease-in-out infinite;
+}
+.ll-geo-box--e {
+  width: 60px; height: 60px;
+  top: 100px; left: 160px;
+  border-color: var(--brand-accent);
+  opacity: .2;
+  animation: geo-spin 22s linear infinite;
+}
+.ll-geo-line-h {
+  position: absolute;
+  height: 1px; background: var(--border);
+  top: 70px; left: 0; right: -2rem;
+}
+.ll-geo-line-v {
+  position: absolute;
+  width: 1px; background: var(--border);
+  top: 0; bottom: -2rem; left: 220px;
+}
+
+@keyframes geo-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes pulse-warm {
+  0%,100% { opacity: .7; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.15); }
+}
+
+/* Stat strip */
+.ll-stats {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--panel-border);
+  background: var(--bg-surface);
+}
+
+.ll-stat {
+  flex: 1;
+  padding: 1rem .75rem;
+  border-right: 1px solid var(--panel-border);
+  text-align: center;
+  position: relative;
+}
+.ll-stat:last-child { border-right: none; }
+
+.ll-stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--brand-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .4s ease;
+}
+.ll-stat:hover::before { transform: scaleX(1); }
+
+.ll-stat-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  display: block;
+  line-height: 1;
+}
+.ll-stat-num .accent { color: var(--brand-primary); }
+
+.ll-stat-lbl {
+  font-size: .62rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--text-muted);
+  margin-top: .35rem;
+  display: block;
+}
+
+/* Version / env badge bottom-left */
+.ll-footer-label {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.ll-version {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .58rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.ll-version-dot {
+  width: 6px; height: 6px;
+  background: #22c55e;
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: .3; }
+}
+
+.ll-soc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .25rem .65rem;
+  border: 1px solid var(--panel-border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .55rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.ll-soc-badge svg { width: 10px; height: 10px; stroke: var(--brand-primary); fill: none; stroke-width: 2; }
+
+/* ============================================================
+   RIGHT PANEL — the actual form
+   ============================================================ */
+.login-right {
+  background: var(--bg-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 5vw, 3.5rem);
+  position: relative;
+}
+
+/* Top-right controls */
+.lr-controls {
+  position: absolute;
+  top: clamp(1.25rem, 3vw, 2rem);
+  right: clamp(1.25rem, 3vw, 2rem);
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.theme-toggle {
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border);
+  background: transparent; cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.theme-toggle:hover { border-color: var(--brand-primary); box-shadow: 2px 2px 0 var(--brand-primary); }
+.theme-toggle svg { width: 15px; height: 15px; stroke: var(--text-secondary); fill: none; stroke-width: 2; }
+
+.lr-help-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .62rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: .3rem .75rem;
+  transition: color var(--transition), border-color var(--transition);
+}
+.lr-help-link:hover { color: var(--brand-primary); border-color: var(--brand-primary); }
+
+/* Form card container */
+.login-card {
+  width: 100%;
+  max-width: 440px;
+}
+
+/* Tab switcher — Sign In / Register */
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: .65rem 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  transition: color var(--transition), background var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+}
+.auth-tab:last-child { border-right: none; }
+.auth-tab:hover { color: var(--text-primary); background: var(--bg-elevated); }
+.auth-tab.active { background: var(--brand-primary); color: #fff; }
+
+.auth-tab-dot {
+  width: 5px; height: 5px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* Panel switcher */
+.auth-panel { display: none; }
+.auth-panel.active { display: block; }
+
+/* Heading block */
+.login-heading {
+  margin-bottom: 1.75rem;
+}
+
+.login-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: .75rem;
+}
+.login-eyebrow-line { width: 20px; height: 2px; background: var(--brand-primary); }
+.login-eyebrow-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .62rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.login-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--text-primary);
+  margin-bottom: .5rem;
+}
+.login-title span { color: var(--brand-primary); }
+
+.login-sub {
+  font-size: .88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ---- FORM FIELDS — reused system ---- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  margin-bottom: 1rem;
+}
+.form-group:last-of-type { margin-bottom: 0; }
+
+.form-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-label a {
+  color: var(--brand-accent);
+  transition: color var(--transition);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.form-label a:hover { color: var(--brand-primary); }
+
+.input-wrap {
+  position: relative;
+}
+
+.form-input {
+  width: 100%;
+  padding: .75rem 1rem .75rem 2.75rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: .9rem;
+  border-radius: 0;
+  outline: none;
+  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+}
+
+.form-input:focus {
+  border-color: var(--brand-primary);
+  border-bottom-color: var(--brand-primary);
+  background: var(--bg-surface);
+  box-shadow: 0 0 0 3px rgba(27,118,187,.1);
+}
+
+.form-input::placeholder { color: var(--text-muted); }
+
+.form-input.error {
+  border-color: #ef4444;
+  border-bottom-color: #ef4444;
+}
+
+/* Input icon */
+.input-icon {
+  position: absolute;
+  left: .85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.input-icon svg {
+  width: 15px; height: 15px;
+  stroke: var(--text-muted); fill: none; stroke-width: 2;
+  transition: stroke var(--transition);
+}
+.form-input:focus ~ .input-icon svg,
+.input-wrap:focus-within .input-icon svg { stroke: var(--brand-primary); }
+
+/* Password toggle */
+.input-toggle {
+  position: absolute;
+  right: .85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+.input-toggle svg {
+  width: 15px; height: 15px;
+  stroke: var(--text-muted); fill: none; stroke-width: 2;
+  transition: stroke var(--transition);
+}
+.input-toggle:hover svg { stroke: var(--brand-primary); }
+
+/* Password with toggle — extra right padding */
+.form-input.has-toggle { padding-right: 2.75rem; }
+
+/* Error message */
+.field-error {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .58rem;
+  letter-spacing: .08em;
+  color: #ef4444;
+  display: none;
+  margin-top: .1rem;
+}
+.form-group.has-error .field-error { display: block; }
+
+/* Strength meter */
+.strength-meter {
+  display: flex;
+  gap: 3px;
+  margin-top: .4rem;
+}
+.strength-bar {
+  height: 3px;
+  flex: 1;
+  background: var(--border);
+  transition: background .3s ease;
+}
+.strength-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: .3rem;
+  display: block;
+}
+
+/* Remember / extras row */
+.form-extras {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  cursor: pointer;
+}
+.form-check input { position: absolute; opacity: 0; width: 0; height: 0; }
+.form-check-box {
+  width: 15px; height: 15px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: border-color var(--transition), background var(--transition);
+}
+.form-check input:checked + .form-check-box {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+.form-check input:checked + .form-check-box::after {
+  content: '';
+  display: block;
+  width: 7px; height: 4px;
+  border-left: 1.5px solid #fff;
+  border-bottom: 1.5px solid #fff;
+  transform: rotate(-45deg) translate(1px,-1px);
+}
+.form-check-label {
+  font-size: .8rem;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.forgot-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--brand-accent);
+  transition: color var(--transition);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.forgot-link:hover { color: var(--brand-primary); }
+
+/* Submit button */
+.btn-login {
+  width: 100%;
+  padding: .85rem 1.5rem;
+  background: var(--brand-primary);
+  color: #fff;
+  border: 1px solid var(--brand-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: .88rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  position: relative;
+  overflow: hidden;
+  margin-top: 1.25rem;
+}
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0 var(--brand-secondary);
+}
+.btn-login:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-login svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; flex-shrink: 0; }
+
+/* Shimmer on hover */
+.btn-login::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+  transition: left .5s ease;
+}
+.btn-login:hover::after { left: 140%; }
+
+/* Spinner */
+.btn-spinner {
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  display: none;
+  flex-shrink: 0;
+}
+.btn-login.loading .btn-spinner { display: block; }
+.btn-login.loading .btn-text { opacity: .7; }
+.btn-login.loading .btn-arrow { display: none; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Divider */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.auth-divider-line { flex: 1; height: 1px; background: var(--border); }
+.auth-divider-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .58rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* SSO / OAuth buttons */
+.sso-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .6rem;
+}
+
+.sso-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  padding: .65rem 1rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: .8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition), transform var(--transition), box-shadow var(--transition);
+  border-radius: 0;
+}
+.sso-btn:hover {
+  border-color: var(--brand-primary);
+  background: var(--bg-surface);
+  transform: translateY(-1px);
+  box-shadow: 2px 2px 0 var(--brand-primary);
+}
+.sso-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* MFA / 2FA step */
+.mfa-wrap {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+}
+.mfa-wrap.visible { display: flex; }
+.mfa-icon {
+  width: 52px; height: 52px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto;
+}
+.mfa-icon svg { width: 22px; height: 22px; stroke: var(--brand-primary); fill: none; stroke-width: 1.5; }
+.mfa-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+.mfa-sub { font-size: .82rem; color: var(--text-secondary); line-height: 1.5; }
+
+/* OTP digit inputs */
+.otp-row {
+  display: flex;
+  gap: .5rem;
+  justify-content: center;
+}
+.otp-input {
+  width: 46px; height: 52px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 0;
+  outline: none;
+  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+  caret-color: var(--brand-primary);
+}
+.otp-input:focus {
+  border-color: var(--brand-primary);
+  border-bottom-color: var(--brand-primary);
+  background: var(--bg-surface);
+  box-shadow: 0 0 0 3px rgba(27,118,187,.1);
+}
+.otp-input.filled { border-bottom-color: var(--brand-primary); }
+
+.mfa-resend {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .62rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.mfa-resend a {
+  color: var(--brand-accent);
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+.mfa-resend a:hover { color: var(--brand-primary); }
+
+/* Success / redirect state */
+.login-success {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: center;
+  padding: 1rem 0;
+}
+.login-success.visible { display: flex; }
+
+.success-icon-wrap {
+  position: relative;
+  width: 64px; height: 64px;
+}
+.success-icon-box {
+  width: 64px; height: 64px;
+  background: rgba(34,197,94,.1);
+  border: 1px solid rgba(34,197,94,.3);
+  display: flex; align-items: center; justify-content: center;
+}
+.success-icon-box svg { width: 26px; height: 26px; stroke: #22c55e; fill: none; stroke-width: 2; }
+.success-icon-corner {
+  position: absolute;
+  top: -4px; right: -4px;
+  width: 12px; height: 12px;
+  background: var(--brand-warm);
+}
+
+.success-title { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--text-primary); }
+.success-sub { font-size: .85rem; color: var(--text-secondary); line-height: 1.6; }
+
+.redirect-bar {
+  width: 100%;
+  height: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+.redirect-fill {
+  height: 100%;
+  background: var(--brand-primary);
+  width: 0%;
+  animation: redirect-progress 3s ease forwards;
+}
+@keyframes redirect-progress { to { width: 100%; } }
+
+.redirect-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Bottom sign-up nudge */
+.auth-switch {
+  text-align: center;
+  margin-top: 1.75rem;
+  font-size: .82rem;
+  color: var(--text-muted);
+}
+.auth-switch a {
+  color: var(--brand-accent);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+.auth-switch a:hover { color: var(--brand-primary); }
+
+/* Session info strip */
+.session-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.session-item {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.session-item svg { width: 11px; height: 11px; stroke: var(--brand-primary); fill: none; stroke-width: 2; }
+
+/* ============================================================
+   ANIMATIONS — consistent with site entry pattern
+   ============================================================ */
+.anim-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: anim-entry .5s ease forwards;
+}
+
+@keyframes anim-entry {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.anim-in--d1 { animation-delay: .1s; }
+.anim-in--d2 { animation-delay: .2s; }
+.anim-in--d3 { animation-delay: .3s; }
+.anim-in--d4 { animation-delay: .4s; }
+.anim-in--d5 { animation-delay: .5s; }
+
+/* Shake on error */
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
+}
+.shake { animation: shake .4s ease; }
+
+/* ============================================================
+   ERROR BANNER
+   ============================================================ */
+.error-banner {
+  display: none;
+  align-items: flex-start;
+  gap: .75rem;
+  padding: .85rem 1rem;
+  border: 1px solid rgba(239,68,68,.3);
+  background: rgba(239,68,68,.07);
+  margin-bottom: 1rem;
+}
+.error-banner.visible { display: flex; }
+.error-banner svg { width: 14px; height: 14px; stroke: #ef4444; fill: none; stroke-width: 2; flex-shrink: 0; margin-top: .1rem; }
+.error-banner-text { font-size: .8rem; color: #ef4444; line-height: 1.4; }
+
+/* ============================================================
+   REGISTER SPECIFIC
+   ============================================================ */
+.terms-note {
+  font-size: .75rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  text-align: center;
+  margin-top: 1rem;
+}
+.terms-note a { color: var(--brand-accent); text-decoration: underline; transition: color var(--transition); }
+.terms-note a:hover { color: var(--brand-primary); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .login-root { grid-template-columns: 1fr; }
+  .login-left { display: none; }
+  .login-right {
+    min-height: 100vh;
+    padding: 2rem 1.5rem;
+    justify-content: flex-start;
+    padding-top: 3rem;
+  }
+  .login-card { max-width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .sso-grid { grid-template-columns: 1fr; }
+  .otp-row { gap: .35rem; }
+  .otp-input { width: 40px; height: 48px; font-size: 1.1rem; }
+  .login-right { padding: 1.5rem 1rem; padding-top: 2.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="login-root">
+
+  <!-- ============================================================
+       LEFT PANEL
+       ============================================================ -->
+  <aside class="login-left" aria-label="NEXACORE brand panel">
+    <div class="ll-bg-grid"  aria-hidden="true"></div>
+    <div class="ll-blob"     aria-hidden="true"></div>
+    <div class="ll-blob-2"   aria-hidden="true"></div>
+
+    <!-- Top bar -->
+    <div class="ll-top">
+      <a href="index.html" class="ll-logo" aria-label="NEXACORE home">
+        <div class="ll-logo-mark" aria-hidden="true"></div>
+        <span class="ll-logo-name">NEXA<span>CORE</span></span>
+      </a>
+      <a href="index.html" class="ll-back-link">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        Back to site
+      </a>
+    </div>
+
+    <!-- Main visual block -->
+    <div class="ll-visual">
+      <h2 class="ll-headline">
+        <span class="line1">Your Control</span>
+        <span class="line2">Centre.</span>
+      </h2>
+      <p class="ll-sub">
+        Manage your NEXACORE products, monitor infrastructure health, configure integrations, and track SLA performance — all from a single authenticated workspace.
+      </p>
+
+      <!-- Geo composition -->
+      <div class="ll-geo" aria-hidden="true">
+        <div class="ll-geo-box ll-geo-box--a"></div>
+        <div class="ll-geo-box ll-geo-box--b"></div>
+        <div class="ll-geo-box ll-geo-box--c"></div>
+        <div class="ll-geo-box ll-geo-box--d"></div>
+        <div class="ll-geo-box ll-geo-box--e"></div>
+        <div class="ll-geo-line-h"></div>
+        <div class="ll-geo-line-v"></div>
+      </div>
+
+      <!-- Stats strip -->
+      <div class="ll-stats" role="list">
+        <div class="ll-stat" role="listitem">
+          <span class="ll-stat-num">340<span class="accent">+</span></span>
+          <span class="ll-stat-lbl">Clients</span>
+        </div>
+        <div class="ll-stat" role="listitem">
+          <span class="ll-stat-num">99<span class="accent">.97%</span></span>
+          <span class="ll-stat-lbl">Uptime</span>
+        </div>
+        <div class="ll-stat" role="listitem">
+          <span class="ll-stat-num">18<span class="accent">M+</span></span>
+          <span class="ll-stat-lbl">API / day</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="ll-footer-label">
+      <div class="ll-version">
+        <div class="ll-version-dot" aria-hidden="true"></div>
+        Platform v4.2.1 — All systems operational
+      </div>
+      <div class="ll-soc-badge">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        SOC 2 Type II
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================================================
+       RIGHT PANEL
+       ============================================================ -->
+  <main class="login-right" id="main-content">
+
+    <!-- Top controls -->
+    <div class="lr-controls">
+      <a href="contact.html" class="lr-help-link">Help</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg id="icon-sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+    </div>
+
+    <div class="login-card">
+
+      <!-- Tab switcher -->
+      <div class="auth-tabs anim-in" role="tablist" aria-label="Authentication mode">
+        <button class="auth-tab active" data-panel="signin" role="tab" aria-selected="true" id="tab-signin">
+          <span class="auth-tab-dot" aria-hidden="true"></span>
+          Sign In
+        </button>
+        <button class="auth-tab" data-panel="register" role="tab" aria-selected="false" id="tab-register">
+          <span class="auth-tab-dot" aria-hidden="true"></span>
+          Register
+        </button>
+      </div>
+
+      <!-- ---- SIGN IN PANEL ---- -->
+      <div class="auth-panel active" id="panel-signin" role="tabpanel" aria-labelledby="tab-signin">
+
+        <!-- Heading -->
+        <div class="login-heading anim-in anim-in--d1">
+          <div class="login-eyebrow">
+            <div class="login-eyebrow-line" aria-hidden="true"></div>
+            <span class="login-eyebrow-label">Dashboard Access</span>
+          </div>
+          <h1 class="login-title">Welcome<br><span>Back.</span></h1>
+          <p class="login-sub">Sign in to access your NEXACORE workspace, product configurations, and monitoring dashboards.</p>
+        </div>
+
+        <!-- Error banner -->
+        <div class="error-banner" id="signin-error" role="alert" aria-live="polite">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <span class="error-banner-text" id="signin-error-text">Invalid email or password. Please try again.</span>
+        </div>
+
+        <!-- Form -->
+        <form id="signin-form" novalidate class="anim-in anim-in--d2" autocomplete="on">
+
+          <div class="form-group" id="fg-email">
+            <label class="form-label" for="si-email">
+              Work Email
+            </label>
+            <div class="input-wrap">
+              <input
+                class="form-input"
+                id="si-email"
+                type="email"
+                name="email"
+                placeholder="you@company.com"
+                autocomplete="email"
+                required
+                aria-required="true"
+                aria-describedby="fg-email-err">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </span>
+            </div>
+            <span class="field-error" id="fg-email-err" role="alert">Please enter a valid email address</span>
+          </div>
+
+          <div class="form-group" id="fg-password">
+            <label class="form-label" for="si-password">
+              Password
+              <a href="#" id="forgot-link" class="forgot-link" tabindex="0">Forgot password?</a>
+            </label>
+            <div class="input-wrap">
+              <input
+                class="form-input has-toggle"
+                id="si-password"
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+                aria-required="true"
+                aria-describedby="fg-password-err">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="0" ry="0"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </span>
+              <button
+                type="button"
+                class="input-toggle"
+                id="si-toggle-pw"
+                aria-label="Show password">
+                <svg id="si-eye-open" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <svg id="si-eye-closed" viewBox="0 0 24 24" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+              </button>
+            </div>
+            <span class="field-error" id="fg-password-err" role="alert">Password is required</span>
+          </div>
+
+          <div class="form-extras">
+            <label class="form-check">
+              <input type="checkbox" id="si-remember" name="remember">
+              <span class="form-check-box" aria-hidden="true"></span>
+              <span class="form-check-label">Keep me signed in</span>
+            </label>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn-login" id="signin-btn" aria-label="Sign in to NEXACORE">
+            <div class="btn-spinner" aria-hidden="true"></div>
+            <span class="btn-text">Sign In to Dashboard</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+
+        </form>
+
+        <!-- MFA step (hidden until triggered) -->
+        <div class="mfa-wrap" id="mfa-wrap" aria-live="polite">
+          <div class="mfa-icon">
+            <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="0"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          </div>
+          <div class="mfa-title">Two-Factor Authentication</div>
+          <p class="mfa-sub">Enter the 6-digit code sent to your registered device or authenticator app.</p>
+          <div class="otp-row" id="otp-row" role="group" aria-label="One-time password digits">
+            <input class="otp-input" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 1">
+            <input class="otp-input" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 2">
+            <input class="otp-input" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 3">
+            <input class="otp-input" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 4">
+            <input class="otp-input" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 5">
+            <input class="otp-input" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 6">
+          </div>
+          <button class="btn-login" id="mfa-verify-btn" type="button" onclick="verifyMFA()">
+            <div class="btn-spinner" aria-hidden="true"></div>
+            <span class="btn-text">Verify Code</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+          <p class="mfa-resend">Did not receive a code? <a href="#" onclick="resendOTP(event)">Resend</a></p>
+          <button class="btn-login" style="background:transparent;color:var(--text-muted);border-color:var(--border);margin-top:-.5rem;font-size:.75rem" type="button" onclick="resetToLogin()">Use a different account</button>
+        </div>
+
+        <!-- Success -->
+        <div class="login-success" id="signin-success" aria-live="polite">
+          <div class="success-icon-wrap">
+            <div class="success-icon-box">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div class="success-icon-corner" aria-hidden="true"></div>
+          </div>
+          <div class="success-title">Access Granted</div>
+          <p class="success-sub">Identity verified. Redirecting you to the NEXACORE dashboard now.</p>
+          <div style="width:100%">
+            <div class="redirect-bar" aria-hidden="true"><div class="redirect-fill"></div></div>
+          </div>
+          <span class="redirect-label" aria-live="polite">Redirecting in 3 seconds...</span>
+        </div>
+
+        <!-- SSO -->
+        <div id="signin-sso-block" class="anim-in anim-in--d3">
+          <div class="auth-divider">
+            <div class="auth-divider-line" aria-hidden="true"></div>
+            <span class="auth-divider-label">or continue with</span>
+            <div class="auth-divider-line" aria-hidden="true"></div>
+          </div>
+          <div class="sso-grid">
+            <button class="sso-btn" type="button" aria-label="Sign in with Microsoft">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="9" height="9" fill="#f25022"/>
+                <rect x="13" y="2" width="9" height="9" fill="#7fba00"/>
+                <rect x="2" y="13" width="9" height="9" fill="#00a4ef"/>
+                <rect x="13" y="13" width="9" height="9" fill="#ffb900"/>
+              </svg>
+              Microsoft
+            </button>
+            <button class="sso-btn" type="button" aria-label="Sign in with Google">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              Google
+            </button>
+          </div>
+          <div class="auth-switch">
+            No account yet?
+            <a href="#" onclick="switchAuthPanel('register')">Create one</a>
+          </div>
+        </div>
+
+      </div><!-- end signin panel -->
+
+      <!-- ---- REGISTER PANEL ---- -->
+      <div class="auth-panel" id="panel-register" role="tabpanel" aria-labelledby="tab-register">
+
+        <div class="login-heading anim-in">
+          <div class="login-eyebrow">
+            <div class="login-eyebrow-line" aria-hidden="true"></div>
+            <span class="login-eyebrow-label">New Account</span>
+          </div>
+          <h1 class="login-title">Create Your<br><span>Workspace.</span></h1>
+          <p class="login-sub">Register to get access to the NEXACORE platform. Your administrator will be notified to approve access.</p>
+        </div>
+
+        <div class="error-banner" id="register-error" role="alert" aria-live="polite">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <span class="error-banner-text" id="register-error-text">Please fix the errors below.</span>
+        </div>
+
+        <form id="register-form" novalidate class="anim-in anim-in--d1" autocomplete="on">
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+            <div class="form-group" id="fg-reg-fname">
+              <label class="form-label" for="reg-fname">First Name</label>
+              <div class="input-wrap">
+                <input class="form-input" id="reg-fname" type="text" name="fname" placeholder="First name" autocomplete="given-name" required aria-required="true" aria-describedby="fg-reg-fname-err">
+                <span class="input-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+              </div>
+              <span class="field-error" id="fg-reg-fname-err" role="alert">Required</span>
+            </div>
+            <div class="form-group" id="fg-reg-lname">
+              <label class="form-label" for="reg-lname">Last Name</label>
+              <div class="input-wrap">
+                <input class="form-input" id="reg-lname" type="text" name="lname" placeholder="Last name" autocomplete="family-name" required aria-required="true" aria-describedby="fg-reg-lname-err">
+                <span class="input-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+              </div>
+              <span class="field-error" id="fg-reg-lname-err" role="alert">Required</span>
+            </div>
+          </div>
+
+          <div class="form-group" id="fg-reg-email">
+            <label class="form-label" for="reg-email">Work Email</label>
+            <div class="input-wrap">
+              <input class="form-input" id="reg-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" required aria-required="true" aria-describedby="fg-reg-email-err">
+              <span class="input-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></span>
+            </div>
+            <span class="field-error" id="fg-reg-email-err" role="alert">Enter a valid work email</span>
+          </div>
+
+          <div class="form-group" id="fg-reg-org">
+            <label class="form-label" for="reg-org">Organisation Name</label>
+            <div class="input-wrap">
+              <input class="form-input" id="reg-org" type="text" name="org" placeholder="Your company name" autocomplete="organization" required aria-required="true" aria-describedby="fg-reg-org-err">
+              <span class="input-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></span>
+            </div>
+            <span class="field-error" id="fg-reg-org-err" role="alert">Required</span>
+          </div>
+
+          <div class="form-group" id="fg-reg-pw">
+            <label class="form-label" for="reg-pw">Create Password</label>
+            <div class="input-wrap">
+              <input class="form-input has-toggle" id="reg-pw" type="password" name="password" placeholder="Minimum 8 characters" autocomplete="new-password" required aria-required="true" aria-describedby="fg-reg-pw-err">
+              <span class="input-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></span>
+              <button type="button" class="input-toggle" id="reg-toggle-pw" aria-label="Show password">
+                <svg id="reg-eye-open" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <svg id="reg-eye-closed" viewBox="0 0 24 24" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+              </button>
+            </div>
+            <!-- Strength meter -->
+            <div class="strength-meter" id="strength-meter" aria-hidden="true">
+              <div class="strength-bar" id="sb-1"></div>
+              <div class="strength-bar" id="sb-2"></div>
+              <div class="strength-bar" id="sb-3"></div>
+              <div class="strength-bar" id="sb-4"></div>
+            </div>
+            <span class="strength-label" id="strength-label" aria-live="polite"></span>
+            <span class="field-error" id="fg-reg-pw-err" role="alert">Minimum 8 characters required</span>
+          </div>
+
+          <button type="submit" class="btn-login" id="register-btn" aria-label="Create NEXACORE account">
+            <div class="btn-spinner" aria-hidden="true"></div>
+            <span class="btn-text">Create Account</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+
+          <p class="terms-note">
+            By creating an account you agree to NEXACORE's
+            <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+            Your administrator will approve access within one business day.
+          </p>
+
+        </form>
+
+        <div class="login-success" id="register-success" aria-live="polite">
+          <div class="success-icon-wrap">
+            <div class="success-icon-box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+            <div class="success-icon-corner" aria-hidden="true"></div>
+          </div>
+          <div class="success-title">Request Submitted</div>
+          <p class="success-sub">Your account request has been sent to your organisation administrator. You will receive an email once access is approved — typically within one business day.</p>
+          <a href="index.html" style="font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin-top:.25rem">Back to NEXACORE.io</a>
+        </div>
+
+        <div class="auth-switch" id="register-switch">
+          Already have an account?
+          <a href="#" onclick="switchAuthPanel('signin')">Sign in</a>
+        </div>
+
+      </div><!-- end register panel -->
+
+      <!-- Session info -->
+      <div class="session-strip anim-in anim-in--d4" aria-label="Security information">
+        <div class="session-item">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          256-bit TLS
+        </div>
+        <div class="session-item">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          End-to-end encrypted
+        </div>
+        <div class="session-item">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Session expires in 8 hrs
+        </div>
+      </div>
+
+    </div><!-- end login-card -->
+  </main><!-- end login-right -->
+
+</div><!-- end login-root -->
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+(function () {
+  'use strict';
+
+  // ---- THEME ----
+  const html       = document.documentElement;
+  const toggle     = document.getElementById('theme-toggle');
+  const iconSun    = document.getElementById('icon-sun');
+  const iconMoon   = document.getElementById('icon-moon');
+
+  function applyTheme(t) {
+    html.setAttribute('data-theme', t);
+    iconSun.style.display  = t === 'dark'  ? 'block' : 'none';
+    iconMoon.style.display = t === 'light' ? 'block' : 'none';
+    localStorage.setItem('nexacore-theme', t);
+  }
+  applyTheme(localStorage.getItem('nexacore-theme') || 'dark');
+  toggle.addEventListener('click', function () {
+    applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  // ---- AUTH TAB SWITCH ----
+  window.switchAuthPanel = function (name) {
+    document.querySelectorAll('.auth-tab').forEach(function (t) {
+      t.classList.toggle('active', t.dataset.panel === name);
+      t.setAttribute('aria-selected', t.dataset.panel === name ? 'true' : 'false');
+    });
+    document.querySelectorAll('.auth-panel').forEach(function (p) {
+      p.classList.toggle('active', p.id === 'panel-' + name);
+    });
+    // Re-run entry animations
+    document.querySelectorAll('#panel-' + name + ' .anim-in').forEach(function (el, i) {
+      el.style.animation = 'none';
+      el.offsetHeight; // reflow
+      el.style.animation = '';
+    });
+  };
+
+  document.querySelectorAll('.auth-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () { switchAuthPanel(btn.dataset.panel); });
+  });
+
+  // ---- PASSWORD TOGGLE (Sign In) ----
+  var siPwInput  = document.getElementById('si-password');
+  var siEyeOpen  = document.getElementById('si-eye-open');
+  var siEyeClosed= document.getElementById('si-eye-closed');
+  document.getElementById('si-toggle-pw').addEventListener('click', function () {
+    var shown = siPwInput.type === 'text';
+    siPwInput.type         = shown ? 'password' : 'text';
+    siEyeOpen.style.display  = shown ? 'block' : 'none';
+    siEyeClosed.style.display= shown ? 'none'  : 'block';
+    this.setAttribute('aria-label', shown ? 'Show password' : 'Hide password');
+  });
+
+  // ---- PASSWORD TOGGLE (Register) ----
+  var regPwInput   = document.getElementById('reg-pw');
+  var regEyeOpen   = document.getElementById('reg-eye-open');
+  var regEyeClosed = document.getElementById('reg-eye-closed');
+  document.getElementById('reg-toggle-pw').addEventListener('click', function () {
+    var shown = regPwInput.type === 'text';
+    regPwInput.type            = shown ? 'password' : 'text';
+    regEyeOpen.style.display   = shown ? 'block' : 'none';
+    regEyeClosed.style.display = shown ? 'none'  : 'block';
+    this.setAttribute('aria-label', shown ? 'Show password' : 'Hide password');
+  });
+
+  // ---- PASSWORD STRENGTH ----
+  var strengthColors = ['', '#ef4444', '#f5a623', '#1b76bb', '#22c55e'];
+  var strengthLabels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+  regPwInput.addEventListener('input', function () {
+    var val = this.value;
+    var score = 0;
+    if (val.length >= 8)                        score++;
+    if (/[A-Z]/.test(val))                      score++;
+    if (/[0-9]/.test(val))                      score++;
+    if (/[^A-Za-z0-9]/.test(val))               score++;
+    for (var i = 1; i <= 4; i++) {
+      var bar = document.getElementById('sb-' + i);
+      bar.style.background = i <= score ? strengthColors[score] : 'var(--border)';
+    }
+    var lbl = document.getElementById('strength-label');
+    lbl.textContent = val.length > 0 ? strengthLabels[score] || 'Too short' : '';
+    lbl.style.color = strengthColors[score] || 'var(--text-muted)';
+  });
+
+  // ---- SIGN IN FORM ----
+  var signinForm    = document.getElementById('signin-form');
+  var signinBtn     = document.getElementById('signin-btn');
+  var signinError   = document.getElementById('signin-error');
+  var signinErrorTx = document.getElementById('signin-error-text');
+  var mfaWrap       = document.getElementById('mfa-wrap');
+  var signinSuccess = document.getElementById('signin-success');
+  var ssoBlock      = document.getElementById('signin-sso-block');
+
+  // Demo credentials for UI demo purposes
+  var DEMO_EMAIL = 'admin@nexacore.io';
+  var DEMO_PW    = 'Nexa@2024';
+  var DEMO_MFA   = '123456';
+
+  function validateSignin() {
+    var ok = true;
+    var email = document.getElementById('si-email');
+    var pw    = document.getElementById('si-password');
+    var fgE   = document.getElementById('fg-email');
+    var fgP   = document.getElementById('fg-password');
+
+    // Reset
+    [fgE, fgP].forEach(function (g) { g.classList.remove('has-error'); });
+    [email, pw].forEach(function (i) { i.classList.remove('error'); });
+
+    if (!email.value.trim() || !/\S+@\S+\.\S+/.test(email.value)) {
+      fgE.classList.add('has-error'); email.classList.add('error'); ok = false;
+    }
+    if (!pw.value.trim()) {
+      fgP.classList.add('has-error'); pw.classList.add('error'); ok = false;
+    }
+    return ok;
+  }
+
+  signinForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!validateSignin()) {
+      signinForm.classList.add('shake');
+      signinForm.addEventListener('animationend', function () { signinForm.classList.remove('shake'); }, { once: true });
+      return;
+    }
+    var email = document.getElementById('si-email').value.trim();
+    var pw    = document.getElementById('si-password').value;
+
+    signinBtn.classList.add('loading');
+    signinBtn.disabled = true;
+    signinError.classList.remove('visible');
+
+    setTimeout(function () {
+      signinBtn.classList.remove('loading');
+      signinBtn.disabled = false;
+
+      if (email === DEMO_EMAIL && pw === DEMO_PW) {
+        // Show MFA step
+        signinForm.style.display   = 'none';
+        ssoBlock.style.display     = 'none';
+        mfaWrap.classList.add('visible');
+        document.querySelector('.otp-input').focus();
+      } else {
+        // Wrong credentials
+        signinError.classList.add('visible');
+        signinErrorTx.textContent = 'Invalid email or password. Demo: admin@nexacore.io / Nexa@2024';
+        signinForm.classList.add('shake');
+        signinForm.addEventListener('animationend', function () { signinForm.classList.remove('shake'); }, { once: true });
+        document.getElementById('si-password').value = '';
+      }
+    }, 1100);
+  });
+
+  // ---- OTP INPUT NAVIGATION ----
+  var otpInputs = document.querySelectorAll('.otp-input');
+  otpInputs.forEach(function (inp, idx) {
+    inp.addEventListener('input', function () {
+      this.value = this.value.replace(/[^0-9]/g, '');
+      if (this.value.length === 1) {
+        this.classList.add('filled');
+        if (idx < otpInputs.length - 1) otpInputs[idx + 1].focus();
+        else autoVerifyOTP();
+      } else {
+        this.classList.remove('filled');
+      }
+    });
+    inp.addEventListener('keydown', function (e) {
+      if (e.key === 'Backspace' && !this.value && idx > 0) {
+        otpInputs[idx - 1].focus();
+        otpInputs[idx - 1].value = '';
+        otpInputs[idx - 1].classList.remove('filled');
+      }
+      if (e.key === 'ArrowLeft'  && idx > 0)                      otpInputs[idx - 1].focus();
+      if (e.key === 'ArrowRight' && idx < otpInputs.length - 1)   otpInputs[idx + 1].focus();
+    });
+    inp.addEventListener('paste', function (e) {
+      e.preventDefault();
+      var data = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
+      data.split('').forEach(function (ch, i) {
+        if (otpInputs[idx + i]) {
+          otpInputs[idx + i].value = ch;
+          otpInputs[idx + i].classList.add('filled');
+        }
+      });
+      var next = Math.min(idx + data.length, otpInputs.length - 1);
+      otpInputs[next].focus();
+      if (data.length === 6) autoVerifyOTP();
+    });
+  });
+
+  function getOTPValue() {
+    return Array.from(otpInputs).map(function (i) { return i.value; }).join('');
+  }
+
+  function autoVerifyOTP() {
+    if (getOTPValue().length === 6) setTimeout(verifyMFA, 300);
+  }
+
+  window.verifyMFA = function () {
+    var code = getOTPValue();
+    var btn  = document.getElementById('mfa-verify-btn');
+    if (code.length < 6) { return; }
+    btn.classList.add('loading');
+    btn.disabled = true;
+    setTimeout(function () {
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      if (code === DEMO_MFA || true) { // accept any 6 digits in demo
+        mfaWrap.classList.remove('visible');
+        signinSuccess.classList.add('visible');
+        // Simulate redirect after 3s
+        setTimeout(function () {
+          // In production this would navigate to the dashboard
+          // window.location.href = 'dashboard.html';
+          document.querySelector('.redirect-label').textContent = 'Dashboard is not built yet — stay tuned.';
+        }, 3000);
+      } else {
+        otpInputs.forEach(function (i) { i.value = ''; i.classList.remove('filled'); });
+        otpInputs[0].focus();
+        btn.style.background = '#ef4444';
+        setTimeout(function () { btn.style.background = ''; }, 1000);
+      }
+    }, 900);
+  };
+
+  window.resendOTP = function (e) {
+    e && e.preventDefault();
+    otpInputs.forEach(function (i) { i.value = ''; i.classList.remove('filled'); });
+    otpInputs[0].focus();
+    var resendLink = document.querySelector('.mfa-resend a');
+    if (resendLink) { resendLink.textContent = 'Sent'; setTimeout(function () { resendLink.textContent = 'Resend'; }, 3000); }
+  };
+
+  window.resetToLogin = function () {
+    mfaWrap.classList.remove('visible');
+    signinForm.style.display = '';
+    ssoBlock.style.display   = '';
+    document.getElementById('si-password').value = '';
+  };
+
+  // ---- REGISTER FORM ----
+  var registerForm  = document.getElementById('register-form');
+  var registerBtn   = document.getElementById('register-btn');
+  var registerError = document.getElementById('register-error');
+  var registerSucc  = document.getElementById('register-success');
+  var registerSwitch= document.getElementById('register-switch');
+
+  registerForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var fields = [
+      { id: 'reg-fname',  fg: 'fg-reg-fname',  check: function (v) { return v.trim().length > 0; } },
+      { id: 'reg-lname',  fg: 'fg-reg-lname',  check: function (v) { return v.trim().length > 0; } },
+      { id: 'reg-email',  fg: 'fg-reg-email',  check: function (v) { return /\S+@\S+\.\S+/.test(v); } },
+      { id: 'reg-org',    fg: 'fg-reg-org',    check: function (v) { return v.trim().length > 0; } },
+      { id: 'reg-pw',     fg: 'fg-reg-pw',     check: function (v) { return v.length >= 8; } },
+    ];
+    var ok = true;
+    fields.forEach(function (f) {
+      var el = document.getElementById(f.id);
+      var fg = document.getElementById(f.fg);
+      fg.classList.remove('has-error');
+      el.classList.remove('error');
+      if (!f.check(el.value)) {
+        fg.classList.add('has-error');
+        el.classList.add('error');
+        ok = false;
+      }
+    });
+    if (!ok) {
+      registerError.classList.add('visible');
+      registerForm.classList.add('shake');
+      registerForm.addEventListener('animationend', function () { registerForm.classList.remove('shake'); }, { once: true });
+      return;
+    }
+    registerError.classList.remove('visible');
+    registerBtn.classList.add('loading');
+    registerBtn.disabled = true;
+    setTimeout(function () {
+      registerBtn.classList.remove('loading');
+      registerForm.style.display    = 'none';
+      registerSwitch.style.display  = 'none';
+      registerSucc.classList.add('visible');
+    }, 1200);
+  });
+
+  // ---- FORGOT PASSWORD FLOW ----
+  document.getElementById('forgot-link').addEventListener('click', function (e) {
+    e.preventDefault();
+    var email = document.getElementById('si-email').value.trim();
+    var msg = email
+      ? 'Password reset instructions have been sent to ' + email + '.'
+      : 'Enter your email address above, then click Forgot password.';
+    signinErrorTx.textContent = msg;
+    signinErrorTx.style.color = email ? '#22c55e' : '';
+    signinError.classList.add('visible');
+    signinError.querySelector('svg').style.stroke = email ? '#22c55e' : '#ef4444';
+    signinError.style.background   = email ? 'rgba(34,197,94,.07)' : '';
+    signinError.style.borderColor  = email ? 'rgba(34,197,94,.3)' : '';
+    if (email) setTimeout(function () { signinError.classList.remove('visible'); signinErrorTx.style.color = ''; signinError.querySelector('svg').style.stroke = ''; signinError.style.background = ''; signinError.style.borderColor = ''; }, 4000);
+  });
+
+})();
+</script>
+</body>
+</html>

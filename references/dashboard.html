@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — NEXACORE CMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* ============================================================ TOKENS */
+:root{
+  --brand-primary:#1b76bb;--brand-secondary:#0d4a78;--brand-accent:#00d4ff;--brand-warm:#f5a623;
+  --sidebar-w:240px;--topbar-h:60px;--transition:180ms ease;--radius:0;
+}
+[data-theme="dark"]{
+  --bg-base:#0a0a0a;--bg-surface:#111111;--bg-elevated:#1a1a1a;--bg-card:#161616;
+  --text-primary:#f0ede8;--text-secondary:#a8a5a0;--text-muted:#555550;
+  --border:#2a2a2a;--border-strong:#f0ede8;--shadow:rgba(0,0,0,.6);
+  --chart-grid:rgba(255,255,255,.05);
+}
+[data-theme="light"]{
+  --bg-base:#f5f4f0;--bg-surface:#ffffff;--bg-elevated:#eceae4;--bg-card:#ffffff;
+  --text-primary:#0e0e0e;--text-secondary:#4a4a4a;--text-muted:#8a8a8a;
+  --border:#d0cec8;--border-strong:#0e0e0e;--shadow:rgba(0,0,0,.12);
+  --chart-grid:rgba(0,0,0,.06);
+}
+/* ============================================================ RESET */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px;height:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--bg-base);color:var(--text-primary);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+input,select,textarea{font-family:inherit}
+::selection{background:var(--brand-primary);color:#fff}
+:focus-visible{outline:2px solid var(--brand-accent);outline-offset:2px}
+ul{list-style:none}
+/* ============================================================ LAYOUT */
+.db-shell{display:flex;min-height:100vh}
+/* SIDEBAR */
+.db-sidebar{
+  width:var(--sidebar-w);flex-shrink:0;
+  background:var(--bg-surface);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;height:100vh;
+  z-index:300;overflow-y:auto;overflow-x:hidden;
+  transition:width .25s ease,transform .25s ease;
+}
+.db-sidebar.collapsed{width:56px}
+.db-sidebar-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1rem;height:var(--topbar-h);
+  border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.db-logo{display:flex;align-items:center;gap:.6rem;min-width:0}
+.db-logo-mark{width:28px;height:28px;background:var(--brand-primary);position:relative;flex-shrink:0}
+.db-logo-mark::before,.db-logo-mark::after{content:'';position:absolute;background:#fff}
+.db-logo-mark::before{width:60%;height:2px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.db-logo-mark::after{width:2px;height:60%;top:50%;left:50%;transform:translate(-50%,-50%)}
+.db-logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;letter-spacing:.08em;white-space:nowrap;overflow:hidden;transition:opacity .2s}
+.db-logo-name span{color:var(--brand-primary)}
+.db-sidebar.collapsed .db-logo-name{opacity:0;width:0}
+.db-collapse-btn{width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color var(--transition)}
+.db-collapse-btn:hover{border-color:var(--brand-primary)}
+.db-collapse-btn svg{width:14px;height:14px;stroke:var(--text-muted);fill:none;stroke-width:2;transition:transform .25s}
+.db-sidebar.collapsed .db-collapse-btn svg{transform:rotate(180deg)}
+/* Nav */
+.db-nav{flex:1;padding:.75rem 0;overflow-y:auto}
+.db-nav-section-label{
+  font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--text-muted);
+  padding:.75rem 1rem .35rem;white-space:nowrap;overflow:hidden;
+  transition:opacity .2s;
+}
+.db-sidebar.collapsed .db-nav-section-label{opacity:0}
+.db-nav-item{
+  display:flex;align-items:center;gap:.75rem;
+  padding:.6rem 1rem;cursor:pointer;
+  border-left:3px solid transparent;
+  transition:background var(--transition),border-color var(--transition),color var(--transition);
+  position:relative;white-space:nowrap;
+}
+.db-nav-item:hover{background:var(--bg-elevated);color:var(--text-primary)}
+.db-nav-item.active{border-left-color:var(--brand-primary);background:rgba(27,118,187,.08);color:var(--brand-primary)}
+.db-nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;flex-shrink:0}
+.db-nav-item-label{font-size:.82rem;font-weight:500;transition:opacity .2s,width .2s}
+.db-sidebar.collapsed .db-nav-item-label{opacity:0;width:0;overflow:hidden}
+.db-nav-badge{
+  margin-left:auto;padding:.1rem .4rem;
+  background:var(--brand-primary);color:#fff;
+  font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.05em;
+  flex-shrink:0;
+  transition:opacity .2s;
+}
+.db-sidebar.collapsed .db-nav-badge{opacity:0}
+/* Sidebar bottom */
+.db-sidebar-bottom{
+  padding:.75rem 0;border-top:1px solid var(--border);flex-shrink:0;
+}
+.db-user-card{
+  display:flex;align-items:center;gap:.65rem;
+  padding:.65rem 1rem;
+  transition:background var(--transition);cursor:pointer;
+}
+.db-user-card:hover{background:var(--bg-elevated)}
+.db-user-avatar{
+  width:32px;height:32px;background:var(--brand-primary);
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.75rem;color:#fff;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.db-user-info{min-width:0;transition:opacity .2s}
+.db-sidebar.collapsed .db-user-info{opacity:0;width:0;overflow:hidden}
+.db-user-name{font-size:.8rem;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.db-user-role{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
+/* MAIN */
+.db-main{
+  flex:1;margin-left:var(--sidebar-w);
+  display:flex;flex-direction:column;min-height:100vh;
+  transition:margin-left .25s ease;
+}
+.db-main.sidebar-collapsed{margin-left:56px}
+/* TOPBAR */
+.db-topbar{
+  height:var(--topbar-h);background:var(--bg-surface);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:1rem;
+  padding:0 1.5rem;position:sticky;top:0;z-index:200;
+  flex-shrink:0;
+}
+.db-topbar-title{
+  font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;
+  color:var(--text-primary);flex:1;
+}
+.db-topbar-title span{color:var(--brand-primary)}
+.db-topbar-search{
+  display:flex;align-items:center;gap:.5rem;
+  background:var(--bg-elevated);border:1px solid var(--border);
+  padding:.4rem .85rem;min-width:220px;
+  transition:border-color var(--transition);
+}
+.db-topbar-search:focus-within{border-color:var(--brand-primary)}
+.db-topbar-search svg{width:13px;height:13px;stroke:var(--text-muted);fill:none;stroke-width:2;flex-shrink:0}
+.db-topbar-search input{background:none;border:none;outline:none;font-size:.8rem;color:var(--text-primary);width:100%}
+.db-topbar-search input::placeholder{color:var(--text-muted)}
+.db-topbar-actions{display:flex;align-items:center;gap:.5rem}
+.db-icon-btn{
+  width:36px;height:36px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;transition:border-color var(--transition),box-shadow var(--transition);
+}
+.db-icon-btn:hover{border-color:var(--brand-primary);box-shadow:2px 2px 0 var(--brand-primary)}
+.db-icon-btn svg{width:15px;height:15px;stroke:var(--text-secondary);fill:none;stroke-width:2}
+.db-notif-dot{
+  position:absolute;top:6px;right:6px;width:6px;height:6px;
+  background:#ef4444;
+}
+/* CONTENT AREA */
+.db-content{flex:1;padding:1.5rem;overflow-y:auto}
+/* PAGES */
+.db-page{display:none}
+.db-page.active{display:block}
+/* ============================================================ COMPONENTS */
+/* KPI Cards */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1.5rem}
+.kpi-card{
+  background:var(--bg-card);padding:1.25rem 1.5rem;
+  position:relative;overflow:hidden;
+  border-top:2px solid transparent;
+  transition:border-color var(--transition),background var(--transition);
+}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--brand-primary);transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+.kpi-card:hover::before{transform:scaleX(1)}
+.kpi-card:hover{background:var(--bg-elevated)}
+.kpi-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.6rem}
+.kpi-value{font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--text-primary);line-height:1;margin-bottom:.4rem}
+.kpi-change{font-size:.75rem;display:flex;align-items:center;gap:.3rem}
+.kpi-change.up{color:#22c55e}.kpi-change.down{color:#ef4444}.kpi-change.flat{color:var(--text-muted)}
+.kpi-change svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5}
+.kpi-icon{position:absolute;right:1.25rem;top:1.25rem;width:36px;height:36px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+.kpi-icon svg{width:16px;height:16px;stroke:var(--brand-primary);fill:none;stroke-width:1.8}
+/* Section headers */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.sec-title{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:.5rem}
+.sec-title::before{content:'';width:3px;height:16px;background:var(--brand-primary);flex-shrink:0}
+/* Chart cards */
+.chart-card{background:var(--bg-card);border:1px solid var(--border);padding:1.25rem;margin-bottom:1.5rem}
+.chart-wrap{position:relative}
+.chart-actions{display:flex;gap:.35rem}
+.chart-tab{padding:.3rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);border:1px solid var(--border);background:transparent;cursor:pointer;transition:color var(--transition),background var(--transition),border-color var(--transition)}
+.chart-tab.active,.chart-tab:hover{color:var(--brand-primary);border-color:var(--brand-primary);background:rgba(27,118,187,.08)}
+/* Table */
+.db-table{width:100%;border-collapse:collapse;font-size:.82rem}
+.db-table th{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);padding:.65rem 1rem;text-align:left;border-bottom:1px solid var(--border);background:var(--bg-elevated);white-space:nowrap}
+.db-table td{padding:.7rem 1rem;border-bottom:1px solid var(--border);color:var(--text-secondary);vertical-align:middle}
+.db-table tr:hover td{background:var(--bg-elevated);color:var(--text-primary)}
+.db-table tr:last-child td{border-bottom:none}
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:.3rem;padding:.18rem .55rem;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid}
+.badge-green{color:#22c55e;border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.07)}
+.badge-blue{color:var(--brand-primary);border-color:rgba(27,118,187,.3);background:rgba(27,118,187,.07)}
+.badge-amber{color:var(--brand-warm);border-color:rgba(245,166,35,.3);background:rgba(245,166,35,.07)}
+.badge-red{color:#ef4444;border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.07)}
+.badge-muted{color:var(--text-muted);border-color:var(--border);background:var(--bg-elevated)}
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;border-radius:0;cursor:pointer;transition:transform var(--transition),box-shadow var(--transition),background var(--transition),color var(--transition);white-space:nowrap}
+.btn-primary{background:var(--brand-warm);color:#0e0e0e;border:1px solid var(--brand-warm)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:2px 2px 0 var(--brand-secondary)}
+.btn-brand{background:var(--brand-primary);color:#fff;border:1px solid var(--brand-primary)}
+.btn-brand:hover{transform:translateY(-1px);box-shadow:2px 2px 0 var(--brand-secondary)}
+.btn-outline{background:transparent;color:var(--text-primary);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--brand-primary);color:var(--brand-primary);transform:translateY(-1px);box-shadow:2px 2px 0 var(--brand-primary)}
+.btn-ghost{background:transparent;color:var(--text-muted);border:1px solid var(--border);font-size:.72rem;padding:.4rem .75rem}
+.btn-ghost:hover{color:var(--text-primary);border-color:var(--text-primary)}
+.btn-danger{background:transparent;color:#ef4444;border:1px solid rgba(239,68,68,.3)}
+.btn-danger:hover{background:rgba(239,68,68,.1);transform:translateY(-1px)}
+.btn-sm{padding:.35rem .75rem;font-size:.7rem}
+.btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
+/* Form fields */
+.f-group{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.85rem}
+.f-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+.f-input,.f-select,.f-textarea{width:100%;padding:.6rem .85rem;background:var(--bg-elevated);border:1px solid var(--border);border-bottom:2px solid var(--border);color:var(--text-primary);font-size:.82rem;outline:none;border-radius:0;transition:border-color var(--transition),box-shadow var(--transition);font-family:'DM Sans',sans-serif}
+.f-input:focus,.f-select:focus,.f-textarea:focus{border-color:var(--brand-primary);border-bottom-color:var(--brand-primary);box-shadow:0 0 0 3px rgba(27,118,187,.1)}
+.f-input::placeholder,.f-textarea::placeholder{color:var(--text-muted)}
+.f-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23555550' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .85rem center;padding-right:2rem}
+.f-textarea{resize:vertical;min-height:80px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.f-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem}
+/* Modal */
+.db-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.db-modal-overlay.open{display:flex}
+.db-modal{background:var(--bg-surface);border:1px solid var(--border);border-top:3px solid var(--brand-primary);width:100%;max-width:560px;max-height:90vh;overflow-y:auto;animation:modal-in .2s ease}
+@keyframes modal-in{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+.db-modal-header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:1px solid var(--border)}
+.db-modal-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text-primary)}
+.db-modal-close{width:32px;height:32px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:border-color var(--transition)}
+.db-modal-close:hover{border-color:#ef4444}
+.db-modal-close svg{width:14px;height:14px;stroke:var(--text-muted);fill:none;stroke-width:2}
+.db-modal-body{padding:1.5rem}
+.db-modal-footer{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:.65rem}
+/* Toast */
+.db-toast-container{position:fixed;bottom:1.5rem;right:1.5rem;z-index:2000;display:flex;flex-direction:column;gap:.5rem}
+.db-toast{
+  display:flex;align-items:flex-start;gap:.75rem;
+  padding:.85rem 1.1rem;background:var(--bg-surface);
+  border:1px solid var(--border);border-left:3px solid var(--brand-primary);
+  min-width:280px;max-width:360px;
+  animation:toast-in .25s ease;font-size:.8rem;
+}
+.db-toast.success{border-left-color:#22c55e}
+.db-toast.error{border-left-color:#ef4444}
+.db-toast.warning{border-left-color:var(--brand-warm)}
+@keyframes toast-in{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.db-toast svg{width:14px;height:14px;stroke:var(--brand-primary);fill:none;stroke-width:2;flex-shrink:0;margin-top:.1rem}
+.db-toast.success svg{stroke:#22c55e}.db-toast.error svg{stroke:#ef4444}.db-toast.warning svg{stroke:var(--brand-warm)}
+.db-toast-msg{color:var(--text-secondary);line-height:1.4}
+.db-toast-msg strong{color:var(--text-primary);display:block;margin-bottom:.1rem;font-size:.82rem}
+/* Color swatch */
+.color-swatch{width:28px;height:28px;border:1px solid var(--border);cursor:pointer;display:inline-block;transition:transform var(--transition)}
+.color-swatch:hover{transform:scale(1.1)}
+/* Status indicator */
+.status-dot{width:7px;height:7px;flex-shrink:0}
+.status-dot.green{background:#22c55e}.status-dot.amber{background:var(--brand-warm)}.status-dot.red{background:#ef4444}.status-dot.blue{background:var(--brand-primary)}
+/* Panel grid */
+.panel-2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+.panel-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+.panel-3-1{display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+.panel-1-2{display:grid;grid-template-columns:1fr 2fr;gap:1.5rem;margin-bottom:1.5rem}
+/* Card */
+.db-card{background:var(--bg-card);border:1px solid var(--border);padding:1.25rem}
+/* Sparkline bar */
+.spark-bars{display:flex;align-items:flex-end;gap:3px;height:40px}
+.spark-bar{background:var(--brand-primary);opacity:.5;flex:1;min-width:6px;transition:opacity var(--transition)}
+.spark-bar:hover{opacity:1}
+/* Progress bar */
+.prog-bar{height:4px;background:var(--border);overflow:hidden;margin-top:.4rem}
+.prog-fill{height:100%;background:var(--brand-primary);transition:width .6s ease}
+/* Toggle switch */
+.toggle-wrap{display:flex;align-items:center;gap:.65rem}
+.toggle{position:relative;width:36px;height:20px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:var(--border);cursor:pointer;transition:background .2s}
+.toggle input:checked + .toggle-track{background:var(--brand-primary)}
+.toggle-thumb{position:absolute;height:14px;width:14px;left:3px;bottom:3px;background:#fff;transition:transform .2s}
+.toggle input:checked ~ .toggle-thumb{transform:translateX(16px)}
+.toggle-label{font-size:.8rem;color:var(--text-secondary)}
+/* Avatar stack */
+.avatar-stack{display:flex}
+.avatar-sm{width:26px;height:26px;background:var(--brand-primary);border:2px solid var(--bg-card);font-family:'Syne',sans-serif;font-weight:700;font-size:.58rem;color:#fff;display:flex;align-items:center;justify-content:center;margin-left:-6px;flex-shrink:0}
+.avatar-sm:first-child{margin-left:0}
+/* Drag handle */
+.drag-handle{cursor:grab;color:var(--text-muted);padding:0 .4rem}
+.drag-handle:active{cursor:grabbing}
+/* Accordion */
+.acc-item{border-bottom:1px solid var(--border)}
+.acc-header{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1rem;cursor:pointer;transition:background var(--transition)}
+.acc-header:hover{background:var(--bg-elevated)}
+.acc-title{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:var(--text-primary)}
+.acc-toggle{width:24px;height:24px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.acc-toggle svg{width:12px;height:12px;stroke:var(--text-muted);fill:none;stroke-width:2;transition:transform .25s}
+.acc-item.open .acc-toggle svg{transform:rotate(180deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .35s ease;padding:0 1rem}
+.acc-item.open .acc-body{max-height:600px;padding:0 1rem .85rem}
+/* Breadcrumb */
+.db-breadcrumb{display:flex;align-items:center;gap:.5rem;margin-bottom:1.25rem}
+.db-breadcrumb a,.db-breadcrumb span{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.db-breadcrumb span.cur{color:var(--brand-primary)}
+.db-breadcrumb-sep{color:var(--text-muted);font-size:.6rem}
+/* Tag input */
+.tag-list{display:flex;flex-wrap:wrap;gap:.35rem;padding:.5rem;background:var(--bg-elevated);border:1px solid var(--border);min-height:38px}
+.tag-chip{display:inline-flex;align-items:center;gap:.3rem;padding:.15rem .5rem;background:rgba(27,118,187,.12);border:1px solid rgba(27,118,187,.25);font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--brand-primary)}
+.tag-chip button{background:none;border:none;cursor:pointer;color:inherit;line-height:1;font-size:.8rem;padding:0}
+/* Scrollbar */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border)}
+::-webkit-scrollbar-thumb:hover{background:var(--text-muted)}
+/* Responsive */
+@media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.panel-3{grid-template-columns:1fr 1fr}.panel-3-1,.panel-1-2{grid-template-columns:1fr}}
+@media(max-width:768px){
+  .db-sidebar{transform:translateX(-100%)}
+  .db-sidebar.mobile-open{transform:translateX(0)}
+  .db-main{margin-left:0!important}
+  .panel-2,.panel-3,.f-row,.f-row-3{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+}
+/* Animations */
+.fade-in{animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="db-shell">
+<!-- ================================================================ SIDEBAR -->
+<aside class="db-sidebar" id="sidebar">
+  <div class="db-sidebar-top">
+    <div class="db-logo">
+      <div class="db-logo-mark"></div>
+      <span class="db-logo-name">NEXA<span>CORE</span></span>
+    </div>
+    <button class="db-collapse-btn" id="sidebar-collapse-btn" aria-label="Collapse sidebar">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+  </div>
+  <nav class="db-nav" role="navigation">
+    <div class="db-nav-section-label">Overview</div>
+    <div class="db-nav-item active" data-page="overview">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
+      <span class="db-nav-item-label">Overview</span>
+    </div>
+    <div class="db-nav-item" data-page="analytics">
+      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+      <span class="db-nav-item-label">Analytics</span>
+    </div>
+    <div class="db-nav-section-label">Content CMS</div>
+    <div class="db-nav-item" data-page="products">
+      <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+      <span class="db-nav-item-label">Products</span>
+    </div>
+    <div class="db-nav-item" data-page="services">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"></path></svg>
+      <span class="db-nav-item-label">Services</span>
+    </div>
+    <div class="db-nav-item" data-page="navigation">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      <span class="db-nav-item-label">Navigation</span>
+    </div>
+    <div class="db-nav-section-label">Customers</div>
+    <div class="db-nav-item" data-page="inquiries">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      <span class="db-nav-item-label">Inquiries</span>
+      <span class="db-nav-badge" id="badge-inquiries">7</span>
+    </div>
+    <div class="db-nav-item" data-page="bookings">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="0"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      <span class="db-nav-item-label">Bookings</span>
+      <span class="db-nav-badge" id="badge-bookings">3</span>
+    </div>
+    <div class="db-nav-item" data-page="subscribers">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+      <span class="db-nav-item-label">Subscribers</span>
+    </div>
+    <div class="db-nav-section-label">HR & Careers</div>
+    <div class="db-nav-item" data-page="jobs">
+      <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+      <span class="db-nav-item-label">Job Openings</span>
+    </div>
+    <div class="db-nav-item" data-page="resumes">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+      <span class="db-nav-item-label">Resumes</span>
+      <span class="db-nav-badge" id="badge-resumes">12</span>
+    </div>
+    <div class="db-nav-section-label">Site Settings</div>
+    <div class="db-nav-item" data-page="appearance">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"></path></svg>
+      <span class="db-nav-item-label">Appearance</span>
+    </div>
+    <div class="db-nav-item" data-page="settings">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <span class="db-nav-item-label">Settings</span>
+    </div>
+  </nav>
+  <div class="db-sidebar-bottom">
+    <div class="db-nav-item" data-page="support">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+      <span class="db-nav-item-label">Support</span>
+    </div>
+    <div class="db-user-card">
+      <div class="db-user-avatar">AR</div>
+      <div class="db-user-info">
+        <div class="db-user-name">Adrian Royce</div>
+        <div class="db-user-role">Administrator</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ================================================================ MAIN -->
+<div class="db-main" id="db-main">
+
+  <!-- TOPBAR -->
+  <header class="db-topbar">
+    <button class="db-icon-btn" id="mobile-sidebar-btn" style="display:none" aria-label="Open sidebar">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+    <div class="db-topbar-title" id="topbar-title">Overview <span>/ Dashboard</span></div>
+    <div class="db-topbar-search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" placeholder="Search anything..." id="global-search" aria-label="Global search">
+    </div>
+    <div class="db-topbar-actions">
+      <button class="db-icon-btn" onclick="showNotifications()" aria-label="Notifications">
+        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        <span class="db-notif-dot" id="notif-dot"></span>
+      </button>
+      <button class="db-icon-btn" id="theme-toggle" aria-label="Toggle theme">
+        <svg id="icon-sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+      <a href="index.html" class="btn btn-ghost btn-sm">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        View Site
+      </a>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <div class="db-content" id="db-content">
+
+<!-- ================================================================ PAGE: OVERVIEW -->
+<div class="db-page active fade-in" id="page-overview">
+  <div class="db-breadcrumb"><a href="#">Dashboard</a><span class="db-breadcrumb-sep">/</span><span class="cur">Overview</span></div>
+  <!-- KPI -->
+  <div class="kpi-grid" id="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Total Visitors (30d)</div>
+      <div class="kpi-value" id="kpi-visitors">—</div>
+      <div class="kpi-change up"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>+12.4% vs last month</div>
+      <div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Product Inquiries</div>
+      <div class="kpi-value" id="kpi-inquiries">—</div>
+      <div class="kpi-change up"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>+8.1% vs last month</div>
+      <div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Demo Bookings</div>
+      <div class="kpi-value" id="kpi-bookings">—</div>
+      <div class="kpi-change down"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>-2.3% vs last month</div>
+      <div class="kpi-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Newsletter Subscribers</div>
+      <div class="kpi-value" id="kpi-subs">—</div>
+      <div class="kpi-change up"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>+34 this week</div>
+      <div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div>
+    </div>
+  </div>
+  <!-- Charts row 1 -->
+  <div class="panel-3-1">
+    <div class="chart-card">
+      <div class="sec-header">
+        <div class="sec-title">Visitor Traffic</div>
+        <div class="chart-actions">
+          <button class="chart-tab active" onclick="switchChartTab(this,'traffic','7d')">7D</button>
+          <button class="chart-tab" onclick="switchChartTab(this,'traffic','30d')">30D</button>
+          <button class="chart-tab" onclick="switchChartTab(this,'traffic','90d')">90D</button>
+        </div>
+      </div>
+      <div class="chart-wrap" style="height:220px"><canvas id="chart-traffic"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="sec-header"><div class="sec-title">Traffic Sources</div></div>
+      <div class="chart-wrap" style="height:220px"><canvas id="chart-sources"></canvas></div>
+    </div>
+  </div>
+  <!-- Charts row 2 -->
+  <div class="panel-2">
+    <div class="chart-card">
+      <div class="sec-header">
+        <div class="sec-title">Inquiries by Product</div>
+        <div class="chart-actions">
+          <button class="chart-tab active" onclick="switchChartTab(this,'inq','bar')">Bar</button>
+          <button class="chart-tab" onclick="switchChartTab(this,'inq','line')">Line</button>
+        </div>
+      </div>
+      <div class="chart-wrap" style="height:200px"><canvas id="chart-inquiries"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="sec-header"><div class="sec-title">Visitor Geography</div></div>
+      <div class="chart-wrap" style="height:200px"><canvas id="chart-geo"></canvas></div>
+    </div>
+  </div>
+  <!-- Bottom row -->
+  <div class="panel-1-2">
+    <div class="db-card">
+      <div class="sec-header"><div class="sec-title">Quick Actions</div></div>
+      <div style="display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem">
+        <button class="btn btn-brand" style="width:100%;justify-content:flex-start" onclick="navigateTo('products')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Add Product</button>
+        <button class="btn btn-outline" style="width:100%;justify-content:flex-start" onclick="navigateTo('services')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Add Service</button>
+        <button class="btn btn-outline" style="width:100%;justify-content:flex-start" onclick="navigateTo('jobs')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Post Job Opening</button>
+        <button class="btn btn-outline" style="width:100%;justify-content:flex-start" onclick="navigateTo('appearance')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle></svg>Edit Brand Colors</button>
+        <button class="btn btn-ghost" style="width:100%;justify-content:flex-start" onclick="window.open('index.html','_blank')"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Preview Site</button>
+      </div>
+    </div>
+    <div class="db-card">
+      <div class="sec-header"><div class="sec-title">Recent Activity</div></div>
+      <div id="activity-feed" style="display:flex;flex-direction:column;gap:0"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ PAGE: ANALYTICS -->
+<div class="db-page fade-in" id="page-analytics">
+  <div class="db-breadcrumb"><a href="#" onclick="navigateTo('overview')">Dashboard</a><span class="db-breadcrumb-sep">/</span><span class="cur">Analytics</span></div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">Page Views</div><div class="kpi-value">148,320</div><div class="kpi-change up"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>+19.2%</div><div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div></div>
+    <div class="kpi-card"><div class="kpi-label">Avg. Session</div><div class="kpi-value">3m 42s</div><div class="kpi-change flat">— same as last month</div><div class="kpi-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div></div>
+    <div class="kpi-card"><div class="kpi-label">Bounce Rate</div><div class="kpi-value">31.4%</div><div class="kpi-change down"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>-4.1% (improved)</div><div class="kpi-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div></div>
+    <div class="kpi-card"><div class="kpi-label">Conversion Rate</div><div class="kpi-value">4.8%</div><div class="kpi-change up"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>+0.6pp</div><div class="kpi-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>
+  </div>
+  <div class="panel-3-1">
+    <div class="chart-card">
+      <div class="sec-header"><div class="sec-title">Page Views Over Time</div><div class="chart-actions"><button class="chart-tab active">Weekly</button><button class="chart-tab">Monthly</button></div></div>
+      <div class="chart-wrap" style="height:240px"><canvas id="chart-pageviews"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="sec-header"><div class="sec-title">Devices</div></div>
+      <div class="chart-wrap" style="height:240px"><canvas id="chart-devices"></canvas></div>
+    </div>
+  </div>
+  <div class="panel-2">
+    <div class="chart-card">
+      <div class="sec-header"><div class="sec-title">Top Pages</div></div>
+      <table class="db-table"><thead><tr><th>Page</th><th>Views</th><th>Avg Time</th><th>Exit Rate</th></tr></thead><tbody id="top-pages-body"></tbody></table>
+    </div>
+    <div class="chart-card">
+      <div class="sec-header"><div class="sec-title">Funnel Analysis</div></div>
+      <div style="display:flex;flex-direction:column;gap:.75rem;margin-top:.5rem" id="funnel-vis"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ PAGE: PRODUCTS -->
+<div class="db-page fade-in" id="page-products">
+  <div class="db-breadcrumb"><a href="#" onclick="navigateTo('overview')">Dashboard</a><span class="db-breadcrumb-sep">/</span><span class="cur">Products</span></div>
+  <div class="sec-header">
+    <div class="sec-title">Product Catalogue</div>
+    <button class="btn btn-brand btn-sm" onclick="openModal('modal-product','Add New Product')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Add Product</button>
+  </div>
+  <div class="chart-card" style="margin-bottom:0">
+    <table class="db-table" id="products-table">
+      <thead><tr><th>Name</th><th>Category</th><th>Status</th><th>Inquiries</th><th>Featured</th><th>Actions</th></tr></thead>
+      <tbody id="products-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ================================================================ PAGE: SERVICES -->
+<div class="db-page fade-in" id="page-services">
+  <div class="db-breadcrumb"><a href="#" onclick="navigateTo('overview')">Dashboard</a><span class="db-breadcrumb-sep">/</span><span class="cur">Services</span></div>
+  <div class="sec-header">
+    <div class="sec-title">Services Management</div>
+    <button class="btn btn-brand btn-sm" onclick="openModal('modal-service','Add New Service')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Add Service</button>
+  </div>
+  <div class="chart-card" style="margin-bottom:0">
+    <table class="db-table">
+      <thead><tr><th>Service Name</th><th>Category</th><th>Leads</th><th>Status</th><th>Highlight</th><th>Actions</th></tr></thead>
+      <tbody id="services-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ================================================================ PAGE: NAVIGATION -->
+<div class="db-page fade-in" id="page-navigation">
+  <div class="db-breadcrumb"><a href="#" onclick="navigateTo('overview')">Dashboard</a><span class="db-breadcrumb-sep">/</span><span class="cur">Navigation</span></div>
+  <div class="panel-2">
+    <div class="db-card">
+      <div class="sec-header"><div class="sec-title">Mega Menu Items</div><button class="btn btn-brand btn-sm" onclick="openModal('modal-navitem','Add Menu Item')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Add</button></div>
+      <div id="nav-menu-list" style="margin-top:.75rem;display:flex;flex-direction:column;gap:0;border:1px solid var(--border)"></div>
+    </div>
+    <div class="db-card">
+      <div class="sec-header"><div class="sec-title">CTA Settings</div></div>
+      <div class="f-group"><label class="f-label">Primary CTA Label</label><input class="f-input" id="cta-label" value="Get Started"></div>
+      <div class="f-group"><label class="f-label">Primary CTA URL</label><input class="f-input" id="cta-url" value="contact.html"></div>
+      <div class="f-group"><label class="f-label">Secondary CTA Label</label><input class="f-input" id="cta2-label" value="Book a Demo"></div>
+      <div class="f-group"><label class="f-label">Secondary CTA URL</label><input class="f-input" id="cta2-url" value="contact.html#book-demo"></div>
+      <div class="f-group">
+        <div class="toggle-wrap">
+          <label class="toggle"><input type="checkbox" id="nav-sticky" checked><span class="toggle-track"></span><span class="toggle-thumb"></span></label>
+          <span class="toggle-label">Sticky Navigation</span>
+        </div>
+      </div>
+      <button class="btn btn-brand" style="width:100%;justify-content:center;margin-top:.5rem" onclick="saveSettings('Navigation settings')">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ PAGE: INQUIRIES -->
+<div class="db-page fade-in" id="page-inquiries">
+  <div class="db-breadcrumb"><a href="#" onclick="navigateTo('overview')">Dashboard</a><span class="db-breadcrumb-sep">/</span><span class="cur">Inquiries</span></div>
+  <div class="panel-2" style="margin-bottom:1rem">
+    <div class="db-card"><div class="kpi-label">Open</div><div class="kpi-value" style="font-size:1.6rem">7</div></div>
+    <div class="db-card"><div class="kpi-label">Resolved (30d)</div><div class="kpi-value" style="font-size:1.6rem">43</div></div>
+  </div>
+  <div class="chart-card" style="margin-bottom:0">
+    <div class="sec-header"><div class="sec-title">All Inquiries</div>
+      <div style="display:flex;gap:.5rem">
+        <select class="f-select" style="width:auto;padding:.35rem .85rem .35rem .5rem;font-size:.75rem" id="inq-filter">
+          <option value="">All Types</option>
+          <option>Product Inquiry</option>
+          <option>Get Started</option>
+          <option>Contact</option>
+        </select>
+        <select class="f-select" style="width:auto;padding:.35rem .85rem .35rem .5rem;font-size:.75rem" id="inq-status-filter">
+          <option value="">All Status</option>
+          <option>New</option>
+          <option>In Progress</option>
+          <option>Resolved</option>
+        </select>
+      </div>
+    </div>
+    <table class="db-table"><thead><tr><th>Name</th><th>Type</th><th>Subject</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody id="inquiries-tbody"></tbody></table>
+  </div>
+</div>
+
+<!-- ================================================================ PAGE: BOOKINGS -->
+<div class="db-page fade-in" id="page-bookings">
+  <div class="db-breadcrumb"><a href="#" onclick="navigateTo('overview')">Dashboard</a><span class="db-breadcrumb-sep">/</span><span class="cur">Demo Bookings</span></div>
+  <div class="chart-card">
+    <div class="sec-header"><div class="sec-title">Upcoming Demos</div></div>
+    <table class="db-table"><thead><tr><th>Name</th><th>Company</th><th>Date</th><th>Time</th><th>Architect</th><th>Products</th><th>Status</th><th>Action</th></tr></thead><tbody id="bookings-tbody"></tbody></table>
+  </div>
+  <div class="panel-2">
+    <div class="chart-card" style="margin-bottom:0">
+      <div class="sec-header"><div class="sec-title">Bookings by Month</div></div>
+      <div class="chart-wrap" style="height:180px"><canvas id="chart-bookings-trend"></canvas></div>
+    </div>
+    <div class="chart-card" style="margin-bottom:0">
+      <div class="sec-header"><div class="sec-title">Product Focus Distribution</div></div>
+      <div class="chart-wrap" style="height:180px"><canvas id="chart-bookings-dist"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ PAGE: SUBSCRIBERS -->
+<div class="db-page fade-in" id="page-subscribers">
+  <div class="db-breadcrumb"><a href="#" onclick="navigateTo('overview')">Dashboard</a><span class="db-breadcrumb-sep">/</span><span class="cur">Subscribers</span></div>
+  <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi-card"><div class="kpi-label">Total Subscribers</div><div class="kpi-value">2,841</div><div class="kpi-change up"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>+34 this week</div></div>
+    <div class="kpi-card"><div class="kpi-label">Open Rate (last)</div><div class="kpi-value">42.1%</div><div class="kpi-change up"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>+2.4pp</div></div>
+    <div class="kpi-card"><div class="kpi-label">Unsubscribed</div><div class="kpi-value">18</div><div class="kpi-change flat">— this month</div></div>
+  </div>
+  <div class="panel-3-1">
+    <div class="chart-card">
+      <div class="sec-header"><div class="sec-title">Subscriber Growth</div></div>
+      <div class="chart-wrap" style="height:200px"><canvas id="chart-sub-growth"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="sec-header"><div class="sec-title">Subscription Sources</div></div>
+      <div class="chart-wrap" style="height:200px"><canvas id="chart-sub-sources"></canvas></div>
+    </div>
+  </div>
+  <div class="chart-card" style="margin-bottom:0">
+    <div class="sec-header"><div class="sec-title">Recent Subscribers</div><button class="btn btn-outline btn-sm">Export CSV</button></div>
+    <table class="db-table"><thead><tr><th>Email</th><th>Source</th><th>Date</th><th>Status</th></tr></thead><tbody id="subscribers-tbody"></tbody></table>
+  </div>
+</div>
+
+<!-- ================================================================ PAGE: JOBS -->
+<div class="db-page fade-in" id="page-jobs">
+  <div class="db-breadcrumb"><a href="#" onclick="navigateTo('overview')">Dashboard</a><span class="db-breadcrumb-sep">/</span><span class="cur">Job Openings</span></div>
+  <div class="sec-header">
+    <div class="sec-title">Open Positions</div>
+    <button class="btn btn-brand btn-sm" onclick="openModal('modal-job','Post New Job Opening')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Post Job</button>
+  </div>
+  <div class="chart-card" style="margin-bottom:1.5rem">
+    <table class="db-table"><thead><tr><th>Title</th><th>Department</th><th>Location</th><th>Type</th><th>Applicants</th><th>Status</th><th>Actions</th></tr></thead><tbody id="jobs-tbody"></tbody></table>
+  </div>
+  <div class="panel-2">
+    <div class="chart-card" style="margin-bottom:0">
+      <div class="sec-header"><div class="sec-title">Applications by Dept</div></div>
+      <div class="chart-wrap" style="height:180px"><canvas id="chart-jobs-dept"></canvas></div>
+    </div>
+    <div class="db-card" style="margin-bottom:0">
+      <div class="sec-header"><div class="sec-title">Hiring Pipeline</div></div>
+      <div style="display:flex;flex-direction:column;gap:.75rem;margin-top:.5rem" id="hiring-pipeline"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ PAGE: RESUMES -->
+<div class="db-page fade-in" id="page-resumes">
+  <div class="db-breadcrumb"><a href="#" onclick="navigateTo('overview')">Dashboard</a><span class="db-breadcrumb-sep">/</span><span class="cur">Resumes</span></div>
+  <div class="sec-header">
+    <div class="sec-title">Resume Applications</div>
+    <div style="display:flex;gap:.5rem">
+      <select class="f-select" style="width:auto;font-size:.75rem;padding:.35rem .85rem .35rem .5rem" id="resume-dept-filter"><option value="">All Departments</option><option>Engineering</option><option>Product</option><option>Operations</option><option>Go-to-Market</option></select>
+      <select class="f-select" style="width:auto;font-size:.75rem;padding:.35rem .85rem .35rem .5rem" id="resume-status-filter"><option value="">All Status</option><option>New</option><option>Reviewing</option><option>Interview</option><option>Offer</option><option>Rejected</option></select>
+    </div>
+  </div>
+  <div class="chart-card" style="margin-bottom:0">
+    <table class="db-table"><thead><tr><th>Applicant</th><th>Role Applied</th><th>Dept</th><th>Applied</th><th>Stage</th><th>Score</th><th>Actions</th></tr></thead><tbody id="resumes-tbody"></tbody></table>
+  </div>
+</div>
+
+<!-- ================================================================ PAGE: APPEARANCE -->
+<div class="db-page fade-in" id="page-appearance">
+  <div class="db-breadcrumb"><a href="#" onclick="navigateTo('overview')">Dashboard</a><span class="db-breadcrumb-sep">/</span><span class="cur">Appearance</span></div>
+  <div class="panel-2">
+    <!-- Colors -->
+    <div class="db-card">
+      <div class="sec-header"><div class="sec-title">Brand Colors</div></div>
+      <div style="display:flex;flex-direction:column;gap:1rem;margin-top:.75rem">
+        <div class="f-group">
+          <label class="f-label">Primary Color</label>
+          <div style="display:flex;gap:.65rem;align-items:center">
+            <input type="color" id="color-primary" value="#1b76bb" style="width:44px;height:36px;border:1px solid var(--border);background:none;cursor:pointer;padding:2px">
+            <input class="f-input" id="color-primary-hex" value="#1b76bb" style="font-family:'JetBrains Mono',monospace;font-size:.8rem">
+          </div>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Secondary Color</label>
+          <div style="display:flex;gap:.65rem;align-items:center">
+            <input type="color" id="color-secondary" value="#0d4a78" style="width:44px;height:36px;border:1px solid var(--border);background:none;cursor:pointer;padding:2px">
+            <input class="f-input" id="color-secondary-hex" value="#0d4a78" style="font-family:'JetBrains Mono',monospace;font-size:.8rem">
+          </div>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Accent Color</label>
+          <div style="display:flex;gap:.65rem;align-items:center">
+            <input type="color" id="color-accent" value="#00d4ff" style="width:44px;height:36px;border:1px solid var(--border);background:none;cursor:pointer;padding:2px">
+            <input class="f-input" id="color-accent-hex" value="#00d4ff" style="font-family:'JetBrains Mono',monospace;font-size:.8rem">
+          </div>
+        </div>
+        <div class="f-group">
+          <label class="f-label">CTA / Warm Color</label>
+          <div style="display:flex;gap:.65rem;align-items:center">
+            <input type="color" id="color-warm" value="#f5a623" style="width:44px;height:36px;border:1px solid var(--border);background:none;cursor:pointer;padding:2px">
+            <input class="f-input" id="color-warm-hex" value="#f5a623" style="font-family:'JetBrains Mono',monospace;font-size:.8rem">
+          </div>
+        </div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.25rem" id="color-preview-bar"></div>
+        <button class="btn btn-primary" onclick="applyBrandColors()" style="width:100%;justify-content:center">Apply Colors to Site</button>
+      </div>
+    </div>
+    <!-- Typography + Layout -->
+    <div class="db-card">
+      <div class="sec-header"><div class="sec-title">Typography</div></div>
+      <div class="f-group"><label class="f-label">Display Font</label>
+        <select class="f-select" id="font-display"><option>Syne</option><option>Space Grotesk</option><option>Cabinet Grotesk</option><option>Neue Haas Grotesk</option></select>
+      </div>
+      <div class="f-group"><label class="f-label">Body Font</label>
+        <select class="f-select" id="font-body"><option>DM Sans</option><option>Inter</option><option>Plus Jakarta Sans</option><option>Outfit</option></select>
+      </div>
+      <div class="f-group"><label class="f-label">Mono Font</label>
+        <select class="f-select" id="font-mono"><option>JetBrains Mono</option><option>IBM Plex Mono</option><option>Fira Code</option></select>
+      </div>
+      <div class="sec-header" style="margin-top:1rem"><div class="sec-title">Site Toggles</div></div>
+      <div style="display:flex;flex-direction:column;gap:.75rem;margin-top:.5rem">
+        <div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label">Dark mode default</span></div>
+        <div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label">Show scroll progress rail</span></div>
+        <div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label">Enable loading screen</span></div>
+        <div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label">Cookie consent banner</span></div>
+      </div>
+      <button class="btn btn-brand" onclick="saveSettings('Appearance settings')" style="width:100%;justify-content:center;margin-top:1.25rem">Save Appearance</button>
+    </div>
+  </div>
+  <!-- Hero content -->
+  <div class="db-card">
+    <div class="sec-header"><div class="sec-title">Homepage Hero Content</div></div>
+    <div class="f-row" style="margin-bottom:.75rem">
+      <div class="f-group" style="margin-bottom:0"><label class="f-label">Headline Line 1</label><input class="f-input" value="Infrastructure"></div>
+      <div class="f-group" style="margin-bottom:0"><label class="f-label">Headline Line 2</label><input class="f-input" value="That Scales."></div>
+    </div>
+    <div class="f-group"><label class="f-label">Subheadline</label><textarea class="f-textarea" style="min-height:60px">NEXACORE delivers cloud-native platforms, intelligent automation, and enterprise security architecture that empowers organizations to operate at the speed of modern business.</textarea></div>
+    <div class="f-row">
+      <div class="f-group" style="margin-bottom:0"><label class="f-label">Primary CTA</label><input class="f-input" value="Explore Platform"></div>
+      <div class="f-group" style="margin-bottom:0"><label class="f-label">Secondary CTA</label><input class="f-input" value="Book a Demo"></div>
+    </div>
+    <button class="btn btn-brand" onclick="saveSettings('Hero content')" style="margin-top:1rem">Save Hero</button>
+  </div>
+</div>
+
+<!-- ================================================================ PAGE: SETTINGS -->
+<div class="db-page fade-in" id="page-settings">
+  <div class="db-breadcrumb"><a href="#" onclick="navigateTo('overview')">Dashboard</a><span class="db-breadcrumb-sep">/</span><span class="cur">Settings</span></div>
+  <div class="panel-2">
+    <div class="db-card">
+      <div class="sec-header"><div class="sec-title">Company Info</div></div>
+      <div class="f-group"><label class="f-label">Company Name</label><input class="f-input" value="NEXACORE, Inc."></div>
+      <div class="f-group"><label class="f-label">Tagline</label><input class="f-input" value="Enterprise Technology Solutions"></div>
+      <div class="f-group"><label class="f-label">Support Email</label><input class="f-input" type="email" value="hello@nexacore.io"></div>
+      <div class="f-group"><label class="f-label">Sales Phone</label><input class="f-input" value="+1 (512) 400-7700"></div>
+      <div class="f-group"><label class="f-label">HQ Address</label><textarea class="f-textarea" style="min-height:60px">200 Congress Avenue, Suite 14F, Austin, TX 78701</textarea></div>
+      <button class="btn btn-brand" onclick="saveSettings('Company info')" style="width:100%;justify-content:center;margin-top:.5rem">Save</button>
+    </div>
+    <div class="db-card">
+      <div class="sec-header"><div class="sec-title">SEO & Meta</div></div>
+      <div class="f-group"><label class="f-label">Site Title</label><input class="f-input" value="NEXACORE — Enterprise Technology Solutions"></div>
+      <div class="f-group"><label class="f-label">Meta Description</label><textarea class="f-textarea" style="min-height:60px">NEXACORE delivers enterprise-grade software infrastructure, cloud architecture, and digital transformation services.</textarea></div>
+      <div class="f-group"><label class="f-label">OG Image URL</label><input class="f-input" value="/assets/og-image.png"></div>
+      <div class="f-group"><label class="f-label">Google Analytics ID</label><input class="f-input" placeholder="G-XXXXXXXXXX"></div>
+      <div class="f-group"><label class="f-label">Keywords</label>
+        <div class="tag-list" id="seo-tags">
+          <span class="tag-chip">enterprise software<button onclick="removeTag(this)">x</button></span>
+          <span class="tag-chip">cloud migration<button onclick="removeTag(this)">x</button></span>
+          <span class="tag-chip">DevSecOps<button onclick="removeTag(this)">x</button></span>
+        </div>
+      </div>
+      <button class="btn btn-brand" onclick="saveSettings('SEO settings')" style="width:100%;justify-content:center;margin-top:.5rem">Save</button>
+    </div>
+  </div>
+  <div class="panel-2">
+    <div class="db-card">
+      <div class="sec-header"><div class="sec-title">Social Links</div></div>
+      <div class="f-group"><label class="f-label">LinkedIn</label><input class="f-input" placeholder="https://linkedin.com/company/nexacore"></div>
+      <div class="f-group"><label class="f-label">Twitter / X</label><input class="f-input" placeholder="https://twitter.com/nexacore"></div>
+      <div class="f-group"><label class="f-label">GitHub</label><input class="f-input" placeholder="https://github.com/nexacore"></div>
+      <div class="f-group"><label class="f-label">YouTube</label><input class="f-input" placeholder="https://youtube.com/@nexacore"></div>
+      <button class="btn btn-brand" onclick="saveSettings('Social links')" style="width:100%;justify-content:center;margin-top:.5rem">Save</button>
+    </div>
+    <div class="db-card">
+      <div class="sec-header"><div class="sec-title">Security & Access</div></div>
+      <div style="display:flex;flex-direction:column;gap:.75rem;margin-bottom:1rem">
+        <div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label">Enforce 2FA for all admins</span></div>
+        <div class="toggle-wrap"><label class="toggle"><input type="checkbox"><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label">Maintenance mode</span></div>
+        <div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label">GDPR cookie banner</span></div>
+      </div>
+      <div class="f-group"><label class="f-label">Session Timeout (hours)</label><input class="f-input" type="number" value="8"></div>
+      <div class="f-group"><label class="f-label">Allowed IP Whitelist</label><textarea class="f-textarea" style="min-height:55px" placeholder="One IP per line"></textarea></div>
+      <button class="btn btn-danger" onclick="showToast('warning','Security Reset','All sessions have been invalidated.')" style="width:100%;justify-content:center;margin-top:.5rem">Invalidate All Sessions</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ PAGE: SUPPORT -->
+<div class="db-page fade-in" id="page-support">
+  <div class="db-breadcrumb"><a href="#" onclick="navigateTo('overview')">Dashboard</a><span class="db-breadcrumb-sep">/</span><span class="cur">Support</span></div>
+  <div class="panel-3">
+    <div class="db-card"><div class="kpi-label">Open Tickets</div><div class="kpi-value" style="font-size:1.6rem;color:#ef4444">4</div></div>
+    <div class="db-card"><div class="kpi-label">Resolved (30d)</div><div class="kpi-value" style="font-size:1.6rem;color:#22c55e">61</div></div>
+    <div class="db-card"><div class="kpi-label">Avg Response</div><div class="kpi-value" style="font-size:1.6rem">1.8h</div></div>
+  </div>
+  <div class="chart-card">
+    <div class="sec-header"><div class="sec-title">Support Tickets</div><button class="btn btn-brand btn-sm" onclick="openModal('modal-ticket','Create Support Ticket')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>New Ticket</button></div>
+    <table class="db-table"><thead><tr><th>ID</th><th>Subject</th><th>Requester</th><th>Type</th><th>Priority</th><th>Status</th><th>Assigned</th></tr></thead><tbody id="support-tbody"></tbody></table>
+  </div>
+</div>
+
+  </div><!-- end db-content -->
+</div><!-- end db-main -->
+</div><!-- end db-shell -->
+
+<!-- ================================================================ MODALS -->
+<div class="db-modal-overlay" id="modal-product">
+  <div class="db-modal">
+    <div class="db-modal-header"><span class="db-modal-title" id="modal-product-title">Add New Product</span><button class="db-modal-close" onclick="closeModal('modal-product')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+    <div class="db-modal-body">
+      <div class="f-row"><div class="f-group" style="margin-bottom:0"><label class="f-label">Product Name</label><input class="f-input" id="prod-name" placeholder="e.g. CoreSync"></div><div class="f-group" style="margin-bottom:0"><label class="f-label">Category Tag</label><input class="f-input" id="prod-tag" placeholder="e.g. Integration"></div></div>
+      <div class="f-group" style="margin-top:.75rem"><label class="f-label">Short Description</label><textarea class="f-textarea" id="prod-desc" placeholder="One-liner describing what this product does..."></textarea></div>
+      <div class="f-row"><div class="f-group" style="margin-bottom:0"><label class="f-label">Status</label><select class="f-select" id="prod-status"><option>Active</option><option>Beta</option><option>Coming Soon</option><option>Deprecated</option></select></div><div class="f-group" style="margin-bottom:0"><label class="f-label">Icon (SVG path)</label><input class="f-input" id="prod-icon" placeholder="M3 9h18..."></div></div>
+      <div class="f-group" style="margin-top:.75rem">
+        <div class="toggle-wrap"><label class="toggle"><input type="checkbox" id="prod-featured"><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label">Feature in mega menu highlight</span></div>
+      </div>
+    </div>
+    <div class="db-modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-product')">Cancel</button><button class="btn btn-brand" onclick="saveProduct()">Save Product</button></div>
+  </div>
+</div>
+
+<div class="db-modal-overlay" id="modal-service">
+  <div class="db-modal">
+    <div class="db-modal-header"><span class="db-modal-title" id="modal-service-title">Add New Service</span><button class="db-modal-close" onclick="closeModal('modal-service')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+    <div class="db-modal-body">
+      <div class="f-row"><div class="f-group" style="margin-bottom:0"><label class="f-label">Service Name</label><input class="f-input" id="svc-name" placeholder="e.g. Cloud Migration"></div><div class="f-group" style="margin-bottom:0"><label class="f-label">Category</label><select class="f-select" id="svc-cat"><option>Core Services</option><option>Managed Services</option><option>Advisory</option></select></div></div>
+      <div class="f-group" style="margin-top:.75rem"><label class="f-label">Description</label><textarea class="f-textarea" id="svc-desc"></textarea></div>
+      <div class="f-row"><div class="f-group" style="margin-bottom:0"><label class="f-label">Status</label><select class="f-select" id="svc-status"><option>Active</option><option>Draft</option></select></div><div class="f-group" style="margin-bottom:0"><label class="f-label">Service Number (e.g. 01)</label><input class="f-input" id="svc-num" placeholder="07"></div></div>
+      <div class="f-group" style="margin-top:.75rem"><div class="toggle-wrap"><label class="toggle"><input type="checkbox" id="svc-highlight"><span class="toggle-track"></span><span class="toggle-thumb"></span></label><span class="toggle-label">Show in mega menu highlight</span></div></div>
+    </div>
+    <div class="db-modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-service')">Cancel</button><button class="btn btn-brand" onclick="saveService()">Save Service</button></div>
+  </div>
+</div>
+
+<div class="db-modal-overlay" id="modal-job">
+  <div class="db-modal" style="max-width:620px">
+    <div class="db-modal-header"><span class="db-modal-title">Post New Job Opening</span><button class="db-modal-close" onclick="closeModal('modal-job')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+    <div class="db-modal-body">
+      <div class="f-row"><div class="f-group" style="margin-bottom:0"><label class="f-label">Job Title</label><input class="f-input" id="job-title" placeholder="e.g. Senior Cloud Engineer"></div><div class="f-group" style="margin-bottom:0"><label class="f-label">Department</label><select class="f-select" id="job-dept"><option>Engineering</option><option>Product</option><option>Operations</option><option>Go-to-Market</option><option>HR</option><option>Finance</option></select></div></div>
+      <div class="f-row" style="margin-top:.75rem"><div class="f-group" style="margin-bottom:0"><label class="f-label">Location</label><input class="f-input" id="job-loc" placeholder="Austin, TX / Remote"></div><div class="f-group" style="margin-bottom:0"><label class="f-label">Type</label><select class="f-select" id="job-type"><option>Full-time</option><option>Contract</option><option>Part-time</option><option>Internship</option></select></div></div>
+      <div class="f-group" style="margin-top:.75rem"><label class="f-label">Job Description</label><textarea class="f-textarea" style="min-height:100px" id="job-desc" placeholder="Role overview, responsibilities, requirements..."></textarea></div>
+      <div class="f-row"><div class="f-group" style="margin-bottom:0"><label class="f-label">Salary Range</label><input class="f-input" id="job-salary" placeholder="$120,000 – $160,000"></div><div class="f-group" style="margin-bottom:0"><label class="f-label">Application Deadline</label><input class="f-input" type="date" id="job-deadline"></div></div>
+    </div>
+    <div class="db-modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-job')">Cancel</button><button class="btn btn-brand" onclick="saveJob()">Publish Opening</button></div>
+  </div>
+</div>
+
+<div class="db-modal-overlay" id="modal-navitem">
+  <div class="db-modal">
+    <div class="db-modal-header"><span class="db-modal-title">Add Menu Item</span><button class="db-modal-close" onclick="closeModal('modal-navitem')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+    <div class="db-modal-body">
+      <div class="f-row"><div class="f-group" style="margin-bottom:0"><label class="f-label">Label</label><input class="f-input" id="nav-label" placeholder="e.g. Case Studies"></div><div class="f-group" style="margin-bottom:0"><label class="f-label">URL</label><input class="f-input" id="nav-url" placeholder="/case-studies"></div></div>
+      <div class="f-row" style="margin-top:.75rem"><div class="f-group" style="margin-bottom:0"><label class="f-label">Parent Menu</label><select class="f-select" id="nav-parent"><option>Resources</option><option>Products</option><option>Services</option><option>About Us</option><option>Top Level</option></select></div><div class="f-group" style="margin-bottom:0"><label class="f-label">Position</label><select class="f-select" id="nav-pos"><option>End</option><option>Beginning</option></select></div></div>
+    </div>
+    <div class="db-modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-navitem')">Cancel</button><button class="btn btn-brand" onclick="saveNavItem()">Add Item</button></div>
+  </div>
+</div>
+
+<div class="db-modal-overlay" id="modal-ticket">
+  <div class="db-modal">
+    <div class="db-modal-header"><span class="db-modal-title">Create Support Ticket</span><button class="db-modal-close" onclick="closeModal('modal-ticket')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+    <div class="db-modal-body">
+      <div class="f-group"><label class="f-label">Subject</label><input class="f-input" placeholder="Brief description of issue"></div>
+      <div class="f-row"><div class="f-group" style="margin-bottom:0"><label class="f-label">Type</label><select class="f-select"><option>Bug Report</option><option>Feature Request</option><option>General Query</option><option>Billing</option></select></div><div class="f-group" style="margin-bottom:0"><label class="f-label">Priority</label><select class="f-select"><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></div></div>
+      <div class="f-group" style="margin-top:.75rem"><label class="f-label">Description</label><textarea class="f-textarea" style="min-height:100px" placeholder="Describe the issue in detail..."></textarea></div>
+    </div>
+    <div class="db-modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-ticket')">Cancel</button><button class="btn btn-brand" onclick="closeModal('modal-ticket');showToast('success','Ticket Created','Assigned to support team.')">Submit</button></div>
+  </div>
+</div>
+
+<!-- Inquiry detail modal -->
+<div class="db-modal-overlay" id="modal-inquiry">
+  <div class="db-modal" style="max-width:580px">
+    <div class="db-modal-header"><span class="db-modal-title">Inquiry Details</span><button class="db-modal-close" onclick="closeModal('modal-inquiry')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+    <div class="db-modal-body" id="inquiry-detail-body"></div>
+    <div class="db-modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-inquiry')">Close</button><button class="btn btn-brand" onclick="closeModal('modal-inquiry');showToast('success','Marked Resolved','Inquiry has been resolved.')">Mark Resolved</button></div>
+  </div>
+</div>
+
+<!-- Resume detail modal -->
+<div class="db-modal-overlay" id="modal-resume">
+  <div class="db-modal" style="max-width:560px">
+    <div class="db-modal-header"><span class="db-modal-title">Applicant Profile</span><button class="db-modal-close" onclick="closeModal('modal-resume')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+    <div class="db-modal-body" id="resume-detail-body"></div>
+    <div class="db-modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-resume')">Close</button>
+      <button class="btn btn-danger btn-sm" onclick="closeModal('modal-resume');showToast('warning','Rejected','Applicant notified.')">Reject</button>
+      <button class="btn btn-brand" onclick="closeModal('modal-resume');showToast('success','Interview Scheduled','Calendar invite sent.')">Schedule Interview</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="db-toast-container" id="toast-container"></div>
+
+<script>
+/* ================================================================ DATA STORE */
+const DB = {
+  products:[
+    {id:1,name:'NexaFlow',category:'Automation',status:'Active',inquiries:48,featured:true,desc:'Visual workflow automation engine with AI decision nodes.'},
+    {id:2,name:'CoreSync',category:'Integration',status:'Active',inquiries:31,featured:false,desc:'Real-time bidirectional data synchronization platform.'},
+    {id:3,name:'SecureVault',category:'Security',status:'Active',inquiries:27,featured:false,desc:'Zero-trust identity and access management.'},
+    {id:4,name:'PulseMetrics',category:'Observability',status:'Active',inquiries:22,featured:false,desc:'Full-stack observability with AI anomaly detection.'},
+    {id:5,name:'CloudOrchestra',category:'Infrastructure',status:'Active',inquiries:19,featured:false,desc:'Unified multi-cloud infrastructure management.'},
+    {id:6,name:'DeskCanvas',category:'ITSM',status:'Beta',inquiries:14,featured:false,desc:'Intelligent service desk and ITSM suite.'},
+  ],
+  services:[
+    {id:1,name:'Cloud Migration',category:'Core Services',leads:28,status:'Active',highlight:false,num:'01'},
+    {id:2,name:'DevSecOps',category:'Core Services',leads:21,status:'Active',highlight:false,num:'02'},
+    {id:3,name:'Cybersecurity',category:'Managed Services',leads:18,status:'Active',highlight:false,num:'03'},
+    {id:4,name:'Data Engineering',category:'Core Services',leads:15,status:'Active',highlight:false,num:'04'},
+    {id:5,name:'Managed Infrastructure',category:'Managed Services',leads:12,status:'Active',highlight:false,num:'05'},
+    {id:6,name:'Digital Transformation Advisory',category:'Advisory',leads:9,status:'Active',highlight:true,num:'06'},
+  ],
+  inquiries:[
+    {id:1,name:'James Whitmore',type:'Product Inquiry',subject:'NexaFlow pricing for 200 users',date:'2026-03-19',status:'New',email:'jwhitmore@meridian.com',message:'We are evaluating workflow automation tools for our 200-person operations team. Can you provide enterprise pricing and a data processing addendum?'},
+    {id:2,name:'Sophia Reyes',type:'Get Started',subject:'HIPAA-compliant data pipeline',date:'2026-03-18',status:'In Progress',email:'sreyes@arcturus.health',message:'We need a HIPAA-compliant data pipeline for patient records. Interested in CoreSync + SecureVault bundle.'},
+    {id:3,name:'Daniel Kim',type:'Product Inquiry',subject:'CloudOrchestra multi-region setup',date:'2026-03-17',status:'New',email:'dkim@stratosys.com',message:'Our logistics platform spans AWS us-east-1, eu-west-1, and ap-southeast-1. Looking for unified orchestration.'},
+    {id:4,name:'Amanda Lee',type:'Contact',subject:'SOC 2 compliance review',date:'2026-03-16',status:'New',email:'alee@pinnacle.energy',message:'We passed our ISO audit using SecureVault. Need to start SOC 2 prep — who should we speak with?'},
+    {id:5,name:'Robert Chang',type:'Get Started',subject:'Starter plan for seed-stage startup',date:'2026-03-15',status:'In Progress',email:'rchang@startupco.com',message:'We are a 12-person team looking to set up monitoring and alerting from day one.'},
+    {id:6,name:'Fatima Al-Hassan',type:'Product Inquiry',subject:'DeskCanvas ITSM integration',date:'2026-03-14',status:'Resolved',email:'falhassan@halcyon.sa',message:'Can DeskCanvas integrate with ServiceNow? We need a migration path.'},
+    {id:7,name:'Lucas Moreira',type:'Contact',subject:'Partnership program enquiry',date:'2026-03-13',status:'New',email:'lmoreira@partners.io',message:'We are a systems integrator in Brazil and want to explore reseller arrangements.'},
+  ],
+  bookings:[
+    {id:1,name:'Marcus Webb',company:'Luminos Education',date:'2026-03-22',time:'10:00 AM',architect:'Kavya Menon',products:'Full Suite',status:'Confirmed'},
+    {id:2,name:'Priya Nair',company:'Orelix Manufacturing',date:'2026-03-23',time:'02:00 PM',architect:'Rahul Patel',products:'CloudOrchestra',status:'Confirmed'},
+    {id:3,name:'David Okonkwo',company:'Celadon Retail',date:'2026-03-24',time:'11:00 AM',architect:'Kavya Menon',products:'NexaFlow',status:'Pending'},
+    {id:4,name:'Elena Fischer',company:'Quantex Corp',date:'2026-03-25',time:'03:00 PM',architect:'Adrian Royce',products:'SecureVault',status:'Confirmed'},
+    {id:5,name:'Tom Walsh',company:'Ironbay Gov',date:'2026-03-26',time:'09:00 AM',architect:'Rahul Patel',products:'Full Suite',status:'Cancelled'},
+  ],
+  subscribers:[
+    {email:'cto@meridian.com',source:'Homepage CTA',date:'2026-03-19',status:'Active'},
+    {email:'devops@novaris.com',source:'Blog Post',date:'2026-03-18',status:'Active'},
+    {email:'arch@stratosys.com',source:'Product Page',date:'2026-03-18',status:'Active'},
+    {email:'it@celadon.com',source:'Footer Form',date:'2026-03-17',status:'Active'},
+    {email:'pm@halcyon.sa',source:'Homepage CTA',date:'2026-03-16',status:'Active'},
+    {email:'security@pinnacle.com',source:'Trust Center',date:'2026-03-15',status:'Unsubscribed'},
+    {email:'eng@luminos.edu',source:'Blog Post',date:'2026-03-14',status:'Active'},
+  ],
+  jobs:[
+    {id:1,title:'Senior Cloud Engineer',dept:'Engineering',location:'Austin, TX / Remote',type:'Full-time',applicants:24,status:'Active'},
+    {id:2,title:'Product Manager — NexaFlow',dept:'Product',location:'Remote',type:'Full-time',applicants:31,status:'Active'},
+    {id:3,title:'Security Architect',dept:'Engineering',location:'Austin, TX',type:'Full-time',applicants:18,status:'Active'},
+    {id:4,title:'DevSecOps Engineer',dept:'Engineering',location:'Remote',type:'Full-time',applicants:14,status:'Active'},
+    {id:5,title:'Enterprise Sales Lead — EMEA',dept:'Go-to-Market',location:'London, UK',type:'Full-time',applicants:22,status:'Active'},
+    {id:6,title:'Solutions Architect Intern',dept:'Operations',location:'Austin, TX',type:'Internship',applicants:47,status:'Active'},
+    {id:7,title:'Data Engineer',dept:'Engineering',location:'Remote',type:'Full-time',applicants:19,status:'Draft'},
+  ],
+  resumes:[
+    {id:1,name:'Arjun Sharma',role:'Senior Cloud Engineer',dept:'Engineering',applied:'2026-03-18',stage:'Interview',score:88,email:'arjun.s@gmail.com',phone:'+1 512 000 0001'},
+    {id:2,name:'Sophie Lambert',role:'Product Manager',dept:'Product',applied:'2026-03-17',stage:'Reviewing',score:76,email:'sophiel@gmail.com',phone:'+1 512 000 0002'},
+    {id:3,name:'Kwame Asante',role:'Security Architect',dept:'Engineering',applied:'2026-03-17',stage:'New',score:91,email:'kasante@gmail.com',phone:'+1 512 000 0003'},
+    {id:4,name:'Maria Santos',role:'DevSecOps Engineer',dept:'Engineering',applied:'2026-03-16',stage:'Offer',score:85,email:'msantos@gmail.com',phone:'+1 512 000 0004'},
+    {id:5,name:'Ivan Petrov',role:'Data Engineer',dept:'Engineering',applied:'2026-03-15',stage:'Rejected',score:62,email:'ipetrov@gmail.com',phone:'+1 512 000 0005'},
+    {id:6,name:'Amira Hassan',role:'Enterprise Sales Lead',dept:'Go-to-Market',applied:'2026-03-14',stage:'Interview',score:80,email:'ahassan@gmail.com',phone:'+1 512 000 0006'},
+    {id:7,name:'Luca Bianchi',role:'Solutions Architect Intern',dept:'Operations',applied:'2026-03-13',stage:'New',score:73,email:'lbianchi@gmail.com',phone:'+1 512 000 0007'},
+    {id:8,name:'Yuki Tanaka',role:'Senior Cloud Engineer',dept:'Engineering',applied:'2026-03-12',stage:'Reviewing',score:82,email:'ytanaka@gmail.com',phone:'+1 512 000 0008'},
+    {id:9,name:'Chisom Obi',role:'Product Manager',dept:'Product',applied:'2026-03-11',stage:'New',score:69,email:'cobi@gmail.com',phone:'+1 512 000 0009'},
+    {id:10,name:'Fatima Zahra',role:'DevSecOps Engineer',dept:'Engineering',applied:'2026-03-10',stage:'Interview',score:87,email:'fzahra@gmail.com',phone:'+1 512 000 0010'},
+    {id:11,name:'Carlos Mendes',role:'Solutions Architect Intern',dept:'Operations',applied:'2026-03-09',stage:'New',score:71,email:'cmendes@gmail.com',phone:'+1 512 000 0011'},
+    {id:12,name:'Nadia Bloom',role:'Enterprise Sales Lead',dept:'Go-to-Market',applied:'2026-03-08',stage:'Reviewing',score:78,email:'nbloom@gmail.com',phone:'+1 512 000 0012'},
+  ],
+  navItems:[
+    {label:'FAQs',url:'/faqs',parent:'Resources'},
+    {label:'Case Studies',url:'/case-studies',parent:'Resources'},
+    {label:'Documentation',url:'/docs',parent:'Resources'},
+    {label:'Gallery',url:'/gallery',parent:'Resources'},
+    {label:'Trust Center',url:'/trust',parent:'Resources'},
+    {label:'Overview',url:'/about',parent:'About Us'},
+    {label:'Team',url:'/about#team',parent:'About Us'},
+    {label:'Careers',url:'/careers',parent:'About Us'},
+  ],
+  support:[
+    {id:'TK-001',subject:'PulseMetrics data gap — 6h outage',requester:'J. Whitmore',type:'Bug Report',priority:'Critical',status:'Open',assigned:'Kavya Menon'},
+    {id:'TK-002',subject:'SSO config for Okta integration',requester:'D. Kim',type:'General Query',priority:'Medium',status:'In Progress',assigned:'Rahul Patel'},
+    {id:'TK-003',subject:'Billing invoice discrepancy Q1',requester:'A. Lee',type:'Billing',priority:'High',status:'Open',assigned:'Anna Byrne'},
+    {id:'TK-004',subject:'CloudOrchestra cost anomaly alert',requester:'S. Reyes',type:'Bug Report',priority:'High',status:'Open',assigned:'Kavya Menon'},
+    {id:'TK-005',subject:'Feature request: webhook retry logic',requester:'M. Webb',type:'Feature Request',priority:'Low',status:'Resolved',assigned:'Sofia Larsen'},
+    {id:'TK-006',subject:'API rate limit increase request',requester:'R. Chang',type:'General Query',priority:'Medium',status:'Resolved',assigned:'Tom Walsh'},
+  ],
+};
+
+/* ================================================================ CHARTS */
+let charts = {};
+Chart.defaults.color = '#555550';
+Chart.defaults.font.family = "'JetBrains Mono', monospace";
+Chart.defaults.font.size = 10;
+
+function chartDefaults(ctx){
+  return {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a1a1a',borderColor:'#2a2a2a',borderWidth:1,titleColor:'#f0ede8',bodyColor:'#a8a5a0',padding:10,cornerRadius:0}},
+    scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#555550'}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#555550'}}}
+  };
+}
+
+function initCharts(){
+  const brand='#1b76bb', accent='#00d4ff', warm='#f5a623';
+  const dark = document.documentElement.getAttribute('data-theme')==='dark';
+  const gridColor = dark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.05)';
+  const tickColor = dark ? '#555550' : '#8a8a8a';
+
+  // Traffic
+  const trafficCtx = document.getElementById('chart-traffic');
+  if(trafficCtx && !charts.traffic){
+    charts.traffic = new Chart(trafficCtx,{
+      type:'line',
+      data:{
+        labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        datasets:[{
+          label:'Visitors',
+          data:[1240,1580,1320,1890,2100,980,760],
+          borderColor:brand,backgroundColor:'rgba(27,118,187,.12)',
+          fill:true,tension:.35,pointRadius:3,pointBackgroundColor:brand,borderWidth:2
+        },{
+          label:'Page Views',
+          data:[3200,4100,3600,5200,5800,2400,2100],
+          borderColor:accent,backgroundColor:'transparent',
+          tension:.35,pointRadius:3,pointBackgroundColor:accent,borderWidth:2,borderDash:[4,4]
+        }]
+      },
+      options:{...chartDefaults(trafficCtx),plugins:{...chartDefaults(trafficCtx).plugins,legend:{display:true,position:'top',labels:{color:tickColor,usePointStyle:true,pointStyle:'rect',boxWidth:8,padding:16}}},scales:{x:{grid:{color:gridColor},ticks:{color:tickColor}},y:{grid:{color:gridColor},ticks:{color:tickColor}}}}
+    });
+  }
+
+  // Sources (doughnut)
+  const srcCtx = document.getElementById('chart-sources');
+  if(srcCtx && !charts.sources){
+    charts.sources = new Chart(srcCtx,{
+      type:'doughnut',
+      data:{
+        labels:['Organic','Direct','Referral','Social','Email'],
+        datasets:[{data:[38,24,18,12,8],backgroundColor:[brand,'#0d4a78',accent,warm,'#22c55e'],borderWidth:2,borderColor:'#111'}]
+      },
+      options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:true,position:'right',labels:{color:tickColor,usePointStyle:true,boxWidth:8,padding:12}},tooltip:{backgroundColor:'#1a1a1a',borderColor:'#2a2a2a',borderWidth:1,titleColor:'#f0ede8',bodyColor:'#a8a5a0',cornerRadius:0}}}
+    });
+  }
+
+  // Inquiries by product (bar)
+  const inqCtx = document.getElementById('chart-inquiries');
+  if(inqCtx && !charts.inquiries){
+    charts.inquiries = new Chart(inqCtx,{
+      type:'bar',
+      data:{
+        labels:['NexaFlow','CoreSync','SecureVault','PulseMetrics','CloudOrchestra','DeskCanvas'],
+        datasets:[{label:'Inquiries',data:[48,31,27,22,19,14],backgroundColor:[brand,brand,brand,brand,brand,brand].map((c,i)=>i===0?brand:`${brand}99`),borderWidth:0}]
+      },
+      options:{...chartDefaults(inqCtx),scales:{x:{grid:{display:false},ticks:{color:tickColor}},y:{grid:{color:gridColor},ticks:{color:tickColor}}},plugins:{...chartDefaults(inqCtx).plugins,legend:{display:false}}}
+    });
+  }
+
+  // Geography (horizontal bar)
+  const geoCtx = document.getElementById('chart-geo');
+  if(geoCtx && !charts.geo){
+    charts.geo = new Chart(geoCtx,{
+      type:'bar',
+      data:{
+        labels:['United States','United Kingdom','Germany','Singapore','Australia','Canada','India'],
+        datasets:[{label:'Visitors',data:[4820,2340,1890,1540,1210,980,860],backgroundColor:`${brand}cc`,borderWidth:0}]
+      },
+      options:{...chartDefaults(geoCtx),indexAxis:'y',scales:{x:{grid:{color:gridColor},ticks:{color:tickColor}},y:{grid:{display:false},ticks:{color:tickColor}}},plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a1a1a',borderColor:'#2a2a2a',borderWidth:1,titleColor:'#f0ede8',bodyColor:'#a8a5a0',cornerRadius:0}}}
+    });
+  }
+
+  // Page views
+  const pvCtx = document.getElementById('chart-pageviews');
+  if(pvCtx && !charts.pageviews){
+    const wks = ['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12'];
+    charts.pageviews = new Chart(pvCtx,{
+      type:'line',
+      data:{labels:wks,datasets:[{label:'Page Views',data:[9800,11200,10400,13500,12800,14200,13100,15400,16200,14800,17100,18300],borderColor:brand,backgroundColor:`${brand}18`,fill:true,tension:.4,pointRadius:2,borderWidth:2}]},
+      options:{...chartDefaults(pvCtx),scales:{x:{grid:{color:gridColor},ticks:{color:tickColor}},y:{grid:{color:gridColor},ticks:{color:tickColor}}}}
+    });
+  }
+
+  // Devices (pie)
+  const devCtx = document.getElementById('chart-devices');
+  if(devCtx && !charts.devices){
+    charts.devices = new Chart(devCtx,{
+      type:'pie',
+      data:{labels:['Desktop','Mobile','Tablet'],datasets:[{data:[64,28,8],backgroundColor:[brand,accent,warm],borderWidth:2,borderColor:'#111'}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{color:tickColor,usePointStyle:true,boxWidth:8,padding:12}},tooltip:{backgroundColor:'#1a1a1a',borderColor:'#2a2a2a',borderWidth:1,titleColor:'#f0ede8',bodyColor:'#a8a5a0',cornerRadius:0}}}
+    });
+  }
+
+  // Bookings trend
+  const btCtx = document.getElementById('chart-bookings-trend');
+  if(btCtx && !charts.bookingsTrend){
+    charts.bookingsTrend = new Chart(btCtx,{
+      type:'bar',
+      data:{labels:['Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Bookings',data:[18,24,19,28,31,26],backgroundColor:`${brand}cc`,borderWidth:0}]},
+      options:{...chartDefaults(btCtx),scales:{x:{grid:{display:false},ticks:{color:tickColor}},y:{grid:{color:gridColor},ticks:{color:tickColor}}}}
+    });
+  }
+
+  // Bookings dist (doughnut)
+  const bdCtx = document.getElementById('chart-bookings-dist');
+  if(bdCtx && !charts.bookingsDist){
+    charts.bookingsDist = new Chart(bdCtx,{
+      type:'doughnut',
+      data:{labels:['Full Suite','NexaFlow','CloudOrchestra','SecureVault','CoreSync'],datasets:[{data:[32,24,18,16,10],backgroundColor:[brand,'#0d4a78',accent,warm,'#22c55e'],borderWidth:2,borderColor:'#111'}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:true,position:'right',labels:{color:tickColor,usePointStyle:true,boxWidth:8,padding:10,font:{size:9}}},tooltip:{backgroundColor:'#1a1a1a',borderColor:'#2a2a2a',borderWidth:1,titleColor:'#f0ede8',bodyColor:'#a8a5a0',cornerRadius:0}}}
+    });
+  }
+
+  // Subscriber growth
+  const sgCtx = document.getElementById('chart-sub-growth');
+  if(sgCtx && !charts.subGrowth){
+    charts.subGrowth = new Chart(sgCtx,{
+      type:'line',
+      data:{labels:['Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Subscribers',data:[2200,2380,2490,2610,2750,2841],borderColor:brand,backgroundColor:`${brand}18`,fill:true,tension:.4,pointRadius:3,borderWidth:2}]},
+      options:{...chartDefaults(sgCtx),scales:{x:{grid:{color:gridColor},ticks:{color:tickColor}},y:{grid:{color:gridColor},ticks:{color:tickColor},min:2000}}}
+    });
+  }
+
+  // Sub sources
+  const ssCtx = document.getElementById('chart-sub-sources');
+  if(ssCtx && !charts.subSources){
+    charts.subSources = new Chart(ssCtx,{
+      type:'doughnut',
+      data:{labels:['Homepage CTA','Footer Form','Blog Post','Product Page','Trust Center'],datasets:[{data:[42,22,18,12,6],backgroundColor:[brand,'#0d4a78',accent,warm,'#22c55e'],borderWidth:2,borderColor:'#111'}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:true,position:'right',labels:{color:tickColor,usePointStyle:true,boxWidth:8,padding:10,font:{size:9}}},tooltip:{backgroundColor:'#1a1a1a',borderColor:'#2a2a2a',borderWidth:1,titleColor:'#f0ede8',bodyColor:'#a8a5a0',cornerRadius:0}}}
+    });
+  }
+
+  // Jobs dept
+  const jdCtx = document.getElementById('chart-jobs-dept');
+  if(jdCtx && !charts.jobsDept){
+    charts.jobsDept = new Chart(jdCtx,{
+      type:'bar',
+      data:{labels:['Engineering','Product','Ops','GTM','HR'],datasets:[{label:'Applicants',data:[75,31,47,22,12],backgroundColor:`${brand}cc`,borderWidth:0}]},
+      options:{...chartDefaults(jdCtx),scales:{x:{grid:{display:false},ticks:{color:tickColor}},y:{grid:{color:gridColor},ticks:{color:tickColor}}}}
+    });
+  }
+}
+
+/* ================================================================ RENDER FUNCTIONS */
+function renderKPIs(){
+  const animate = (el,target,suffix)=>{
+    let cur=0;const step=target/60;
+    const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=(cur>=1000?Math.round(cur).toLocaleString():Math.round(cur))+suffix;if(cur>=target)clearInterval(t);},20);
+  };
+  animate(document.getElementById('kpi-visitors'),24840,'');
+  animate(document.getElementById('kpi-inquiries'),161,'');
+  animate(document.getElementById('kpi-bookings'),26,'');
+  animate(document.getElementById('kpi-subs'),2841,'');
+}
+
+function renderActivity(){
+  const items=[
+    {icon:'msg',color:'#1b76bb',text:'New inquiry from <strong>James Whitmore</strong> — NexaFlow pricing',time:'12 min ago'},
+    {icon:'cal',color:'#22c55e',text:'Demo booking confirmed — <strong>Marcus Webb</strong>, Mar 22',time:'1 hr ago'},
+    {icon:'user',color:'#f5a623',text:'New resume — <strong>Arjun Sharma</strong> for Senior Cloud Engineer',time:'2 hr ago'},
+    {icon:'sub',color:'#00d4ff',text:'34 new subscribers this week',time:'Today'},
+    {icon:'prod',color:'#1b76bb',text:'Product <strong>DeskCanvas</strong> status updated to Beta',time:'Yesterday'},
+    {icon:'ticket',color:'#ef4444',text:'Critical ticket <strong>TK-001</strong> assigned to Kavya Menon',time:'Yesterday'},
+  ];
+  const feed=document.getElementById('activity-feed');
+  if(!feed)return;
+  feed.innerHTML=items.map(it=>`
+    <div style="display:flex;align-items:flex-start;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--border)">
+      <div style="width:28px;height:28px;background:${it.color}22;border:1px solid ${it.color}44;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">
+        <div style="width:6px;height:6px;background:${it.color}"></div>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:.8rem;color:var(--text-secondary);line-height:1.4">${it.text}</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text-muted);margin-top:.25rem;letter-spacing:.06em">${it.time}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderProducts(){
+  const tb=document.getElementById('products-tbody');if(!tb)return;
+  tb.innerHTML=DB.products.map(p=>`
+    <tr>
+      <td><strong style="color:var(--text-primary);font-size:.85rem">${p.name}</strong></td>
+      <td><span class="badge badge-blue">${p.category}</span></td>
+      <td><span class="badge ${p.status==='Active'?'badge-green':p.status==='Beta'?'badge-amber':'badge-muted'}">${p.status}</span></td>
+      <td><span class="t-mono" style="color:var(--brand-primary)">${p.inquiries}</span></td>
+      <td>${p.featured?'<span class="badge badge-amber">Featured</span>':'<span style="color:var(--text-muted);font-size:.75rem">—</span>'}</td>
+      <td>
+        <div style="display:flex;gap:.4rem">
+          <button class="btn btn-ghost btn-sm" onclick="editProduct(${p.id})"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path></svg></button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function renderServices(){
+  const tb=document.getElementById('services-tbody');if(!tb)return;
+  tb.innerHTML=DB.services.map(s=>`
+    <tr>
+      <td><strong style="color:var(--text-primary)">${s.name}</strong></td>
+      <td><span class="badge badge-muted">${s.category}</span></td>
+      <td><span class="t-mono" style="color:var(--brand-primary)">${s.leads}</span></td>
+      <td><span class="badge ${s.status==='Active'?'badge-green':'badge-amber'}">${s.status}</span></td>
+      <td>${s.highlight?'<span class="badge badge-blue">Highlighted</span>':'<span style="color:var(--text-muted);font-size:.75rem">—</span>'}</td>
+      <td>
+        <div style="display:flex;gap:.4rem">
+          <button class="btn btn-ghost btn-sm" onclick="showToast('success','Edit Mode','Editing ${s.name}')">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="showToast('warning','Removed','${s.name} removed.')">Delete</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function renderInquiries(){
+  const tb=document.getElementById('inquiries-tbody');if(!tb)return;
+  tb.innerHTML=DB.inquiries.map(inq=>`
+    <tr>
+      <td><strong style="color:var(--text-primary);font-size:.85rem">${inq.name}</strong><div style="font-size:.72rem;color:var(--text-muted)">${inq.email}</div></td>
+      <td><span class="badge ${inq.type==='Product Inquiry'?'badge-blue':inq.type==='Get Started'?'badge-green':'badge-muted'}">${inq.type}</span></td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${inq.subject}</td>
+      <td><span class="t-mono" style="font-size:.72rem">${inq.date}</span></td>
+      <td><span class="badge ${inq.status==='New'?'badge-amber':inq.status==='In Progress'?'badge-blue':'badge-green'}">${inq.status}</span></td>
+      <td><button class="btn btn-ghost btn-sm" onclick="viewInquiry(${inq.id})">View</button></td>
+    </tr>`).join('');
+}
+
+function renderBookings(){
+  const tb=document.getElementById('bookings-tbody');if(!tb)return;
+  tb.innerHTML=DB.bookings.map(b=>`
+    <tr>
+      <td><strong style="color:var(--text-primary)">${b.name}</strong></td>
+      <td>${b.company}</td>
+      <td><span class="t-mono" style="font-size:.72rem">${b.date}</span></td>
+      <td><span class="t-mono" style="font-size:.72rem;color:var(--brand-primary)">${b.time}</span></td>
+      <td style="font-size:.8rem">${b.architect}</td>
+      <td><span class="badge badge-blue">${b.products}</span></td>
+      <td><span class="badge ${b.status==='Confirmed'?'badge-green':b.status==='Pending'?'badge-amber':'badge-red'}">${b.status}</span></td>
+      <td>
+        <div style="display:flex;gap:.35rem">
+          ${b.status!=='Cancelled'?`<button class="btn btn-ghost btn-sm" onclick="showToast('success','Reschedule','Rescheduling ${b.name}...')">Reschedule</button>`:''}
+          ${b.status==='Pending'?`<button class="btn btn-brand btn-sm" onclick="confirmBooking(${b.id})">Confirm</button>`:''}
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function renderSubscribers(){
+  const tb=document.getElementById('subscribers-tbody');if(!tb)return;
+  tb.innerHTML=DB.subscribers.map(s=>`
+    <tr>
+      <td><span class="t-mono" style="font-size:.8rem">${s.email}</span></td>
+      <td><span class="badge badge-muted">${s.source}</span></td>
+      <td><span class="t-mono" style="font-size:.72rem">${s.date}</span></td>
+      <td><span class="badge ${s.status==='Active'?'badge-green':'badge-red'}">${s.status}</span></td>
+    </tr>`).join('');
+}
+
+function renderJobs(){
+  const tb=document.getElementById('jobs-tbody');if(!tb)return;
+  tb.innerHTML=DB.jobs.map(j=>`
+    <tr>
+      <td><strong style="color:var(--text-primary)">${j.title}</strong></td>
+      <td><span class="badge badge-blue">${j.dept}</span></td>
+      <td style="font-size:.8rem">${j.location}</td>
+      <td><span class="badge badge-muted">${j.type}</span></td>
+      <td><span class="t-mono" style="color:var(--brand-primary)">${j.applicants}</span></td>
+      <td><span class="badge ${j.status==='Active'?'badge-green':'badge-amber'}">${j.status}</span></td>
+      <td>
+        <div style="display:flex;gap:.35rem">
+          <button class="btn btn-ghost btn-sm" onclick="showToast('success','Edit','Editing ${j.title.replace(/'/g,"\\'")}')">Edit</button>
+          <button class="btn btn-outline btn-sm" onclick="navigateTo('resumes')">Applicants (${j.applicants})</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function renderResumes(){
+  const tb=document.getElementById('resumes-tbody');if(!tb)return;
+  const stageColor={New:'badge-amber',Reviewing:'badge-blue',Interview:'badge-blue',Offer:'badge-green',Rejected:'badge-red'};
+  tb.innerHTML=DB.resumes.map(r=>`
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:.6rem">
+          <div style="width:28px;height:28px;background:var(--brand-primary);font-family:'Syne',sans-serif;font-weight:700;font-size:.62rem;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0">${r.name.split(' ').map(n=>n[0]).join('')}</div>
+          <div><div style="font-size:.85rem;font-weight:600;color:var(--text-primary)">${r.name}</div><div style="font-size:.7rem;color:var(--text-muted)">${r.email}</div></div>
+        </div>
+      </td>
+      <td style="font-size:.8rem">${r.role}</td>
+      <td><span class="badge badge-muted">${r.dept}</span></td>
+      <td><span class="t-mono" style="font-size:.72rem">${r.applied}</span></td>
+      <td><span class="badge ${stageColor[r.stage]||'badge-muted'}">${r.stage}</span></td>
+      <td>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <div style="width:60px;height:4px;background:var(--border);overflow:hidden"><div style="height:100%;background:${r.score>=80?'#22c55e':r.score>=65?'#1b76bb':'#f5a623'};width:${r.score}%"></div></div>
+          <span class="t-mono" style="font-size:.72rem;color:${r.score>=80?'#22c55e':r.score>=65?'#1b76bb':'#f5a623'}">${r.score}</span>
+        </div>
+      </td>
+      <td><button class="btn btn-ghost btn-sm" onclick="viewResume(${r.id})">View</button></td>
+    </tr>`).join('');
+}
+
+function renderNavItems(){
+  const list=document.getElementById('nav-menu-list');if(!list)return;
+  list.innerHTML=DB.navItems.map((item,i)=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:.65rem 1rem;border-bottom:1px solid var(--border);transition:background var(--transition)" onmouseover="this.style.background='var(--bg-elevated)'" onmouseout="this.style.background=''">
+      <div>
+        <div style="font-size:.82rem;font-weight:500;color:var(--text-primary)">${item.label}</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-muted)">${item.parent} → ${item.url}</div>
+      </div>
+      <button class="btn btn-danger btn-sm" onclick="removeNavItem(${i})"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>`).join('');
+}
+
+function renderTopPages(){
+  const tb=document.getElementById('top-pages-body');if(!tb)return;
+  const pages=[
+    {page:'/ (Home)',views:'48,320',time:'4m 12s',exit:'22%'},
+    {page:'/products',views:'22,180',time:'3m 44s',exit:'31%'},
+    {page:'/contact',views:'18,640',time:'5m 02s',exit:'18%'},
+    {page:'/about',views:'14,220',time:'3m 18s',exit:'29%'},
+    {page:'/services',views:'12,880',time:'2m 55s',exit:'35%'},
+  ];
+  tb.innerHTML=pages.map(p=>`<tr><td style="font-family:'JetBrains Mono',monospace;font-size:.75rem">${p.page}</td><td style="color:var(--brand-primary);font-family:'JetBrains Mono',monospace">${p.views}</td><td style="font-family:'JetBrains Mono',monospace">${p.time}</td><td>${p.exit}</td></tr>`).join('');
+}
+
+function renderFunnel(){
+  const el=document.getElementById('funnel-vis');if(!el)return;
+  const steps=[
+    {label:'Visited Site',value:24840,pct:100,color:'var(--brand-primary)'},
+    {label:'Viewed Products/Services',value:11200,pct:45,color:'var(--brand-primary)'},
+    {label:'Visited Contact/Get Started',value:4820,pct:19,color:'var(--brand-accent)'},
+    {label:'Submitted Form',value:2310,pct:9.3,color:'var(--brand-warm)'},
+    {label:'Became Customer',value:340,pct:1.4,color:'#22c55e'},
+  ];
+  el.innerHTML=steps.map(s=>`
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem">
+        <span style="font-size:.78rem;color:var(--text-secondary)">${s.label}</span>
+        <span class="t-mono" style="font-size:.75rem;color:var(--text-primary)">${s.value.toLocaleString()} <span style="color:var(--text-muted)">(${s.pct}%)</span></span>
+      </div>
+      <div style="height:6px;background:var(--border);overflow:hidden">
+        <div style="height:100%;background:${s.color};width:${s.pct}%;transition:width .8s ease"></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderHiringPipeline(){
+  const el=document.getElementById('hiring-pipeline');if(!el)return;
+  const stages=[
+    {stage:'New Applications',count:45,color:'var(--text-muted)'},
+    {stage:'Reviewing',count:28,color:'var(--brand-primary)'},
+    {stage:'Interviews',count:14,color:'var(--brand-accent)'},
+    {stage:'Offers Extended',count:4,color:'var(--brand-warm)'},
+    {stage:'Hired',count:2,color:'#22c55e'},
+  ];
+  el.innerHTML=stages.map(s=>`
+    <div style="display:flex;align-items:center;gap:.75rem">
+      <div style="width:80px;font-size:.72rem;color:var(--text-muted);text-align:right;flex-shrink:0">${s.stage}</div>
+      <div style="flex:1;height:22px;background:var(--border);overflow:hidden;position:relative">
+        <div style="height:100%;background:${s.color};width:${(s.count/45)*100}%;transition:width .8s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:.4rem">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:#fff;font-weight:700">${s.count}</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function renderSupport(){
+  const tb=document.getElementById('support-tbody');if(!tb)return;
+  const prioColor={Critical:'badge-red',High:'badge-amber',Medium:'badge-blue',Low:'badge-muted'};
+  tb.innerHTML=DB.support.map(t=>`
+    <tr>
+      <td><span class="t-mono" style="font-size:.75rem;color:var(--brand-primary)">${t.id}</span></td>
+      <td style="font-size:.82rem;color:var(--text-primary)">${t.subject}</td>
+      <td style="font-size:.8rem">${t.requester}</td>
+      <td><span class="badge badge-muted">${t.type}</span></td>
+      <td><span class="badge ${prioColor[t.priority]}">${t.priority}</span></td>
+      <td><span class="badge ${t.status==='Resolved'?'badge-green':t.status==='Open'?'badge-red':'badge-blue'}">${t.status}</span></td>
+      <td style="font-size:.8rem">${t.assigned}</td>
+    </tr>`).join('');
+}
+
+function renderColorPreview(){
+  const el=document.getElementById('color-preview-bar');if(!el)return;
+  const colors=[
+    {label:'Primary',id:'color-primary'},
+    {label:'Secondary',id:'color-secondary'},
+    {label:'Accent',id:'color-accent'},
+    {label:'Warm',id:'color-warm'},
+  ];
+  el.innerHTML=colors.map(c=>{
+    const inp=document.getElementById(c.id);
+    const val=inp?inp.value:'#1b76bb';
+    return `<div style="display:flex;flex-direction:column;align-items:center;gap:.3rem"><div style="width:40px;height:40px;background:${val};border:1px solid var(--border)"></div><span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--text-muted)">${c.label}</span></div>`;
+  }).join('');
+}
+
+/* ================================================================ INTERACTIONS */
+window.navigateTo = function(page){
+  document.querySelectorAll('.db-page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.db-nav-item').forEach(i=>i.classList.remove('active'));
+  const pageEl=document.getElementById('page-'+page);
+  const navEl=document.querySelector(`[data-page="${page}"]`);
+  if(pageEl){pageEl.classList.add('active');pageEl.classList.remove('fade-in');void pageEl.offsetWidth;pageEl.classList.add('fade-in');}
+  if(navEl)navEl.classList.add('active');
+  const titles={overview:'Overview',analytics:'Analytics',products:'Products',services:'Services',navigation:'Navigation',inquiries:'Inquiries',bookings:'Demo Bookings',subscribers:'Subscribers',jobs:'Job Openings',resumes:'Resumes',appearance:'Appearance',settings:'Settings',support:'Support'};
+  const tb=document.getElementById('topbar-title');
+  if(tb)tb.innerHTML=`${titles[page]||page} <span>/ Dashboard</span>`;
+  // Init charts lazily
+  setTimeout(initCharts,50);
+};
+
+window.openModal = function(id, title){
+  const modal=document.getElementById(id);
+  if(!modal)return;
+  if(title){const t=modal.querySelector('.db-modal-title');if(t)t.textContent=title;}
+  modal.classList.add('open');
+};
+
+window.closeModal = function(id){
+  const modal=document.getElementById(id);
+  if(modal)modal.classList.remove('open');
+};
+
+window.showToast = function(type, title, msg){
+  const icons={success:'<polyline points="20 6 9 17 4 12"></polyline>',error:'<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>',warning:'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>'};
+  const container=document.getElementById('toast-container');
+  const toast=document.createElement('div');
+  toast.className=`db-toast ${type}`;
+  toast.innerHTML=`<svg viewBox="0 0 24 24">${icons[type]||icons.success}</svg><div class="db-toast-msg"><strong>${title}</strong>${msg}</div>`;
+  container.appendChild(toast);
+  setTimeout(()=>{toast.style.opacity='0';toast.style.transform='translateX(20px)';toast.style.transition='all .3s ease';setTimeout(()=>toast.remove(),300);},3500);
+};
+
+window.saveSettings = function(label){
+  showToast('success','Saved',`${label} saved successfully.`);
+};
+
+window.saveProduct = function(){
+  const name=document.getElementById('prod-name').value.trim();
+  if(!name){showToast('error','Error','Product name is required.');return;}
+  const newProd={id:DB.products.length+1,name,category:document.getElementById('prod-tag').value||'General',status:document.getElementById('prod-status').value,inquiries:0,featured:document.getElementById('prod-featured').checked,desc:document.getElementById('prod-desc').value};
+  DB.products.push(newProd);
+  closeModal('modal-product');
+  renderProducts();
+  showToast('success','Product Added',`${name} has been added to the catalogue.`);
+  document.getElementById('prod-name').value='';
+  document.getElementById('prod-desc').value='';
+};
+
+window.editProduct = function(id){
+  const p=DB.products.find(x=>x.id===id);
+  if(!p)return;
+  document.getElementById('prod-name').value=p.name;
+  document.getElementById('prod-tag').value=p.category;
+  document.getElementById('prod-desc').value=p.desc;
+  document.getElementById('prod-status').value=p.status;
+  openModal('modal-product',`Edit: ${p.name}`);
+};
+
+window.deleteProduct = function(id){
+  const p=DB.products.find(x=>x.id===id);
+  if(!p)return;
+  if(confirm(`Remove ${p.name} from the catalogue?`)){
+    DB.products=DB.products.filter(x=>x.id!==id);
+    renderProducts();
+    showToast('warning','Removed',`${p.name} removed.`);
+  }
+};
+
+window.saveService = function(){
+  const name=document.getElementById('svc-name').value.trim();
+  if(!name){showToast('error','Error','Service name required.');return;}
+  const len=DB.services.length;
+  DB.services.push({id:len+1,name,category:document.getElementById('svc-cat').value,leads:0,status:document.getElementById('svc-status').value,highlight:document.getElementById('svc-highlight').checked,num:document.getElementById('svc-num').value||String(len+1).padStart(2,'0')});
+  closeModal('modal-service');
+  renderServices();
+  showToast('success','Service Added',`${name} added.`);
+};
+
+window.saveJob = function(){
+  const title=document.getElementById('job-title').value.trim();
+  if(!title){showToast('error','Error','Job title required.');return;}
+  DB.jobs.push({id:DB.jobs.length+1,title,dept:document.getElementById('job-dept').value,location:document.getElementById('job-loc').value,type:document.getElementById('job-type').value,applicants:0,status:'Active'});
+  closeModal('modal-job');
+  renderJobs();
+  showToast('success','Job Posted',`"${title}" is now live.`);
+  document.getElementById('badge-resumes').textContent=String(DB.resumes.length);
+};
+
+window.saveNavItem = function(){
+  const label=document.getElementById('nav-label').value.trim();
+  if(!label){showToast('error','Error','Label required.');return;}
+  DB.navItems.push({label,url:document.getElementById('nav-url').value||'#',parent:document.getElementById('nav-parent').value});
+  closeModal('modal-navitem');
+  renderNavItems();
+  showToast('success','Menu Item Added',`"${label}" added to navigation.`);
+};
+
+window.removeNavItem = function(i){
+  DB.navItems.splice(i,1);
+  renderNavItems();
+  showToast('warning','Removed','Navigation item removed.');
+};
+
+window.viewInquiry = function(id){
+  const inq=DB.inquiries.find(x=>x.id===id);if(!inq)return;
+  const body=document.getElementById('inquiry-detail-body');
+  body.innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
+      <div><div class="f-label" style="margin-bottom:.3rem">From</div><div style="font-weight:600;color:var(--text-primary)">${inq.name}</div><div style="font-size:.78rem;color:var(--text-muted)">${inq.email}</div></div>
+      <div><div class="f-label" style="margin-bottom:.3rem">Type & Date</div><span class="badge badge-blue">${inq.type}</span><div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-muted);margin-top:.3rem">${inq.date}</div></div>
+    </div>
+    <div style="margin-bottom:1rem"><div class="f-label" style="margin-bottom:.4rem">Subject</div><div style="font-size:.9rem;font-weight:600;color:var(--text-primary)">${inq.subject}</div></div>
+    <div style="margin-bottom:1.25rem"><div class="f-label" style="margin-bottom:.4rem">Message</div><div style="background:var(--bg-elevated);border:1px solid var(--border);padding:.85rem;font-size:.82rem;color:var(--text-secondary);line-height:1.6">${inq.message}</div></div>
+    <div class="f-group"><label class="f-label">Reply</label><textarea class="f-textarea" style="min-height:80px" placeholder="Type your response..."></textarea></div>
+    <div class="f-group"><label class="f-label">Assign To</label><select class="f-select"><option>Kavya Menon</option><option>Rahul Patel</option><option>Adrian Royce</option><option>Anna Byrne</option></select></div>`;
+  openModal('modal-inquiry');
+};
+
+window.viewResume = function(id){
+  const r=DB.resumes.find(x=>x.id===id);if(!r)return;
+  const stageColor={New:'badge-amber',Reviewing:'badge-blue',Interview:'badge-blue',Offer:'badge-green',Rejected:'badge-red'};
+  const scoreColor=r.score>=80?'#22c55e':r.score>=65?'#1b76bb':'#f5a623';
+  document.getElementById('resume-detail-body').innerHTML=`
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)">
+      <div style="width:52px;height:52px;background:var(--brand-primary);font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0">${r.name.split(' ').map(n=>n[0]).join('')}</div>
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text-primary)">${r.name}</div>
+        <div style="font-size:.82rem;color:var(--text-secondary);margin-top:.15rem">${r.role}</div>
+        <div style="display:flex;gap:.5rem;margin-top:.4rem"><span class="badge badge-blue">${r.dept}</span><span class="badge ${stageColor[r.stage]}">${r.stage}</span></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
+      <div><div class="f-label" style="margin-bottom:.3rem">Email</div><div style="font-size:.82rem;color:var(--text-primary)">${r.email}</div></div>
+      <div><div class="f-label" style="margin-bottom:.3rem">Phone</div><div style="font-size:.82rem;color:var(--text-primary)">${r.phone}</div></div>
+      <div><div class="f-label" style="margin-bottom:.3rem">Applied</div><div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-primary)">${r.applied}</div></div>
+      <div><div class="f-label" style="margin-bottom:.3rem">AI Match Score</div><div style="font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;color:${scoreColor}">${r.score}/100</div></div>
+    </div>
+    <div class="f-group"><label class="f-label">Stage</label><select class="f-select"><option ${r.stage==='New'?'selected':''}>New</option><option ${r.stage==='Reviewing'?'selected':''}>Reviewing</option><option ${r.stage==='Interview'?'selected':''}>Interview</option><option ${r.stage==='Offer'?'selected':''}>Offer</option><option ${r.stage==='Rejected'?'selected':''}>Rejected</option></select></div>
+    <div class="f-group"><label class="f-label">Notes</label><textarea class="f-textarea" style="min-height:70px" placeholder="Add internal notes about this candidate..."></textarea></div>`;
+  openModal('modal-resume');
+};
+
+window.confirmBooking = function(id){
+  const b=DB.bookings.find(x=>x.id===id);if(!b)return;
+  b.status='Confirmed';
+  renderBookings();
+  showToast('success','Confirmed',`${b.name}'s demo has been confirmed.`);
+  const badge=document.getElementById('badge-bookings');
+  if(badge) badge.textContent=String(Math.max(0,parseInt(badge.textContent)-1));
+};
+
+window.applyBrandColors = function(){
+  const primary=document.getElementById('color-primary').value;
+  const secondary=document.getElementById('color-secondary').value;
+  const accent=document.getElementById('color-accent').value;
+  const warm=document.getElementById('color-warm').value;
+  document.documentElement.style.setProperty('--brand-primary',primary);
+  document.documentElement.style.setProperty('--brand-secondary',secondary);
+  document.documentElement.style.setProperty('--brand-accent',accent);
+  document.documentElement.style.setProperty('--brand-warm',warm);
+  renderColorPreview();
+  showToast('success','Colors Applied','Brand colors updated across the dashboard. Save to persist.');
+};
+
+window.switchChartTab = function(btn, chart, mode){
+  btn.closest('.chart-actions').querySelectorAll('.chart-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+};
+
+window.removeTag = function(btn){
+  btn.closest('.tag-chip').remove();
+};
+
+window.showNotifications = function(){
+  document.getElementById('notif-dot').style.display='none';
+  showToast('success','Notifications','You have 3 unread notifications.');
+};
+
+/* ================================================================ COLOR PICKER SYNC */
+['primary','secondary','accent','warm'].forEach(name=>{
+  const picker=document.getElementById(`color-${name}`);
+  const hex=document.getElementById(`color-${name}-hex`);
+  if(picker&&hex){
+    picker.addEventListener('input',()=>{hex.value=picker.value;renderColorPreview();});
+    hex.addEventListener('input',()=>{if(/^#[0-9a-fA-F]{6}$/.test(hex.value)){picker.value=hex.value;renderColorPreview();}});
+  }
+});
+
+/* ================================================================ THEME */
+const html=document.documentElement;
+const themeBtn=document.getElementById('theme-toggle');
+const iconSun=document.getElementById('icon-sun');
+const iconMoon=document.getElementById('icon-moon');
+function applyTheme(t){
+  html.setAttribute('data-theme',t);
+  iconSun.style.display=t==='dark'?'block':'none';
+  iconMoon.style.display=t==='light'?'block':'none';
+  localStorage.setItem('nexacore-theme',t);
+  // Destroy charts so they re-init with correct colors
+  Object.values(charts).forEach(c=>{try{c.destroy()}catch(e){}});
+  charts={};
+  setTimeout(initCharts,100);
+}
+applyTheme(localStorage.getItem('nexacore-theme')||'dark');
+themeBtn.addEventListener('click',()=>applyTheme(html.getAttribute('data-theme')==='dark'?'light':'dark'));
+
+/* ================================================================ SIDEBAR */
+const sidebar=document.getElementById('sidebar');
+const dbMain=document.getElementById('db-main');
+document.getElementById('sidebar-collapse-btn').addEventListener('click',()=>{
+  sidebar.classList.toggle('collapsed');
+  dbMain.classList.toggle('sidebar-collapsed');
+});
+// Mobile
+const mobileSidebarBtn=document.getElementById('mobile-sidebar-btn');
+if(window.innerWidth<=768){mobileSidebarBtn.style.display='flex';}
+mobileSidebarBtn.addEventListener('click',()=>{sidebar.classList.toggle('mobile-open');});
+window.addEventListener('resize',()=>{
+  if(window.innerWidth<=768){mobileSidebarBtn.style.display='flex';}
+  else{mobileSidebarBtn.style.display='none';sidebar.classList.remove('mobile-open');}
+});
+
+/* ================================================================ NAV */
+document.querySelectorAll('.db-nav-item[data-page]').forEach(item=>{
+  item.addEventListener('click',()=>navigateTo(item.dataset.page));
+});
+
+/* ================================================================ CLOSE MODAL ON OVERLAY CLICK */
+document.querySelectorAll('.db-modal-overlay').forEach(overlay=>{
+  overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.classList.remove('open');});
+});
+
+/* ================================================================ ESC KEY */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') document.querySelectorAll('.db-modal-overlay.open').forEach(m=>m.classList.remove('open'));
+});
+
+/* ================================================================ FILTERS */
+document.getElementById('inq-filter')?.addEventListener('change',function(){renderInquiries();});
+document.getElementById('resume-dept-filter')?.addEventListener('change',function(){renderResumes();});
+document.getElementById('resume-status-filter')?.addEventListener('change',function(){renderResumes();});
+
+/* ================================================================ GLOBAL SEARCH */
+document.getElementById('global-search').addEventListener('input',function(){
+  const q=this.value.toLowerCase().trim();
+  if(!q)return;
+  const pages=['products','services','inquiries','jobs','resumes','bookings'];
+  let found=false;
+  for(const page of pages){
+    const el=document.getElementById('page-'+page);
+    if(!el)continue;
+    const text=el.innerText.toLowerCase();
+    if(text.includes(q)){navigateTo(page);found=true;break;}
+  }
+  if(!found&&q.length>1) showToast('warning','Search',`No results found for "${q}"`);
+});
+
+/* ================================================================ INIT */
+window.addEventListener('DOMContentLoaded',()=>{
+  renderKPIs();
+  renderActivity();
+  renderProducts();
+  renderServices();
+  renderInquiries();
+  renderBookings();
+  renderSubscribers();
+  renderJobs();
+  renderResumes();
+  renderNavItems();
+  renderTopPages();
+  renderFunnel();
+  renderHiringPipeline();
+  renderSupport();
+  renderColorPreview();
+  setTimeout(initCharts,150);
+  // Welcome toast
+  setTimeout(()=>showToast('success','Dashboard Ready','Welcome back, Adrian.'),600);
+});
+</script>
+</body>
+</html>

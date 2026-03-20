@@ -1,0 +1,63 @@
+/* ============================================================
+   DESIGN TOKENS & CSS CUSTOM PROPERTIES
+   ============================================================ */
+
+@theme inline {
+  /* Brand Colors */
+  --color-brand-primary: #1b76bb;
+  --color-brand-secondary: #0d4a78;
+  --color-brand-accent: #00d4ff;
+  --color-brand-warm: #f5a623;
+
+  /* Fonts */
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-display: var(--font-syne), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+:root {
+  /* Layout Tokens */
+  --nav-height: 64px;
+  --left-rail: 72px;
+  --max-w: 1440px;
+  --transition: 200ms ease;
+  --transition-slow: 400ms ease;
+
+  /* Brand Colors (CSS Variables for dynamic access) */
+  --brand-primary: #1b76bb;
+  --brand-secondary: #0d4a78;
+  --brand-accent: #00d4ff;
+  --brand-warm: #f5a623;
+}
+
+/* ============================================================
+   THEME: LIGHT
+   ============================================================ */
+[data-theme="light"] {
+  --bg-base: #f5f4f0;
+  --bg-surface: #ffffff;
+  --bg-elevated: #eceae4;
+  --bg-dark-band: #e0ded8;
+  --text-primary: #0e0e0e;
+  --text-secondary: #4a4a4a;
+  --text-muted: #8a8a8a;
+  --border: #d0cec8;
+  --border-strong: #0e0e0e;
+  --shadow-offset: rgba(0,0,0,0.15);
+}
+
+/* ============================================================
+   THEME: DARK (Default)
+   ============================================================ */
+[data-theme="dark"] {
+  --bg-base: #0a0a0a;
+  --bg-surface: #111111;
+  --bg-elevated: #1a1a1a;
+  --bg-dark-band: #0e0e0e;
+  --text-primary: #f0ede8;
+  --text-secondary: #a8a5a0;
+  --text-muted: #555550;
+  --border: #2a2a2a;
+  --border-strong: #f0ede8;
+  --shadow-offset: rgba(0,0,0,0.6);
+}

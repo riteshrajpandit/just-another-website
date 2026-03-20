@@ -1,0 +1,88 @@
+/* ============================================================
+   LAYOUT UTILITIES
+   ============================================================ */
+
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem) 0 calc(var(--left-rail) + clamp(1rem, 3vw, 2rem));
+}
+
+.container--full {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+}
+
+.section-pad {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+}
+
+/* ============================================================
+   SECTION COMMON
+   ============================================================ */
+
+.section-header {
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section-eyebrow-line {
+  width: 24px;
+  height: 2px;
+  background: var(--brand-primary);
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+
+/* Animate on scroll */
+.anim-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.anim-up.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   RESPONSIVE UTILITIES
+   ============================================================ */
+
+@media (max-width: 1279px) {
+  .container {
+    padding-left: clamp(1rem, 3vw, 2rem);
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --left-rail: 0px;
+  }
+  .container {
+    padding-left: clamp(1rem, 5vw, 1.5rem);
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

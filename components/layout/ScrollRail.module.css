@@ -1,0 +1,120 @@
+/* Scroll Rail / Progress System styles */
+
+.scrollRail {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: var(--left-rail);
+  height: 100vh;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: calc(var(--nav-height) + 2rem);
+  pointer-events: none;
+}
+
+.scrollProgressTrack {
+  position: absolute;
+  left: 16px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: var(--border);
+}
+
+.scrollProgressFill {
+  width: 100%;
+  height: 0%;
+  background: var(--brand-primary);
+  transition: height 0.1s linear;
+}
+
+.sectionDots {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+  pointer-events: all;
+}
+
+.sectionDot {
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.sectionDotActive {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+
+.sectionDot:hover {
+  border-color: var(--brand-accent);
+}
+
+.sectionLabelVert {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
+}
+
+.sectionLabelVertVisible {
+  opacity: 1;
+  color: var(--brand-primary);
+}
+
+/* Scroll to top */
+.scrollTop {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 200;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease, box-shadow var(--transition);
+  pointer-events: none;
+}
+
+.scrollTopVisible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.scrollTop:hover {
+  box-shadow: 3px 3px 0 var(--brand-primary);
+}
+
+.scrollTop svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--text-primary);
+  fill: none;
+  stroke-width: 2;
+}
+
+/* Responsive */
+@media (max-width: 1279px) {
+  .scrollRail { display: none; }
+}

@@ -1,0 +1,269 @@
+/**
+ * @file Contact Panel component
+ * @description Contact Us section with form, contact details, offices, and map
+ */
+
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui';
+import { contactHero, contactDetails, offices, slaResponseTimes, subjectOptions } from '@/data/contact';
+
+const Check = ({ size = 12 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+// Contact Icons
+const EmailIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+    <polyline points="22,6 12,13 2,6" />
+  </svg>
+);
+
+const PhoneIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.49 2 2 0 0 1 3.57 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+  </svg>
+);
+
+const ChatIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+  </svg>
+);
+
+const PartnershipIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+);
+
+const getContactIcon = (iconType: string) => {
+  switch (iconType) {
+    case 'email':
+      return <EmailIcon />;
+    case 'phone':
+      return <PhoneIcon />;
+    case 'chat':
+      return <ChatIcon />;
+    case 'partnership':
+      return <PartnershipIcon />;
+    default:
+      return <EmailIcon />;
+  }
+};
+
+export function ContactPanel() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+  };
+
+  return (
+    <div className="page-panel" id="panel-contact">
+      {/* Hero Section */}
+      <section className="demo-hero" data-section-name="CONTACT">
+        <div className="demo-hero-bg" aria-hidden="true" />
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+          <nav className="gs-hero-crumb anim-up in" aria-label="Breadcrumb">
+            <Link href="/">Home</Link>
+            <span className="gs-hero-crumb-sep">/</span>
+            <span className="gs-hero-crumb-cur">Contact Us</span>
+          </nav>
+          <div className="contact-hero-grid">
+            <div>
+              <h1 className="t-display anim-up in" style={{ transitionDelay: '0.1s' }}>
+                <span style={{ color: 'var(--text-primary)', display: 'block' }}>
+                  {contactHero.headline.line1}
+                </span>
+                <span style={{ color: 'var(--brand-primary)', display: 'block' }}>
+                  {contactHero.headline.line2}
+                </span>
+              </h1>
+              <p
+                className="t-body anim-up in"
+                style={{ maxWidth: '460px', marginTop: '1.25rem', transitionDelay: '0.2s' }}
+              >
+                {contactHero.description}
+              </p>
+            </div>
+
+            {/* Quick Contact Form */}
+            <div className="form-card anim-up in" style={{ position: 'static', transitionDelay: '0.2s' }}>
+              {!submitted ? (
+                <>
+                  <div className="form-card-title">Send a Message</div>
+                  <div className="form-card-sub">We respond to every enquiry within 4 business hours.</div>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label className="form-label">Full Name</label>
+                      <input
+                        className="form-input"
+                        type="text"
+                        placeholder="Your name"
+                        value={formData.name}
+                        onChange={(e) => handleInputChange('name', e.target.value)}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Email</label>
+                      <input
+                        className="form-input"
+                        type="email"
+                        placeholder="you@company.com"
+                        value={formData.email}
+                        onChange={(e) => handleInputChange('email', e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Subject</label>
+                    <select
+                      className="form-select"
+                      value={formData.subject}
+                      onChange={(e) => handleInputChange('subject', e.target.value)}
+                    >
+                      <option value="">Select topic</option>
+                      {subjectOptions.map((subject) => (
+                        <option key={subject} value={subject}>
+                          {subject}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Message</label>
+                    <textarea
+                      className="form-textarea"
+                      style={{ minHeight: '120px' }}
+                      placeholder="Describe your enquiry in as much detail as helps..."
+                      value={formData.message}
+                      onChange={(e) => handleInputChange('message', e.target.value)}
+                    />
+                  </div>
+                  <div className="form-submit-row">
+                    <Button variant="brand" className="btn-full" onClick={handleSubmit}>
+                      Send Message
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <div className="form-success visible">
+                  <div className="form-success-icon">
+                    <Check size={24} />
+                  </div>
+                  <div className="form-success-title">Message Sent</div>
+                  <div className="form-success-text">
+                    Our team will respond within 4 business hours. You will receive a copy at your email
+                    address.
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Details + Map Section */}
+      <section id="contact-details" className="section-pad" data-section-name="OFFICES">
+        <div className="container">
+          <div className="contact-grid">
+            {/* Left: Contact Cards + Offices */}
+            <div>
+              <div className="section-eyebrow anim-up in">
+                <div className="section-eyebrow-line" />
+                <span className="t-label">Get in Touch</span>
+              </div>
+              <h2 className="t-h2 anim-up in" style={{ marginBottom: '2rem', transitionDelay: '0.08s' }}>
+                Direct
+                <br />
+                <span style={{ color: 'var(--brand-primary)' }}>Contact Lines</span>
+              </h2>
+
+              {/* Contact Details Grid */}
+              <div className="contact-details-grid anim-up in" style={{ transitionDelay: '0.12s' }}>
+                {contactDetails.map((detail) => (
+                  <div key={detail.id} className="contact-detail-card">
+                    <div className="contact-detail-icon">{getContactIcon(detail.icon)}</div>
+                    <div className="contact-detail-label">{detail.label}</div>
+                    <div className="contact-detail-value">{detail.value}</div>
+                    <div className="contact-detail-sub">{detail.subtext}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Office Locations */}
+              <div className="offices-list anim-up in" style={{ transitionDelay: '0.18s' }}>
+                {offices.map((office) => (
+                  <div key={office.id} className="office-item">
+                    <div className="office-flag">{office.flag}</div>
+                    <div>
+                      <div className="office-city">{office.city}</div>
+                      <div className="office-address">{office.address}</div>
+                      <div className="office-type">{office.type}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: Map + SLA */}
+            <div className="anim-up in" style={{ transitionDelay: '0.15s' }}>
+              {/* Map Block */}
+              <div className="map-block">
+                <div className="map-overlay">
+                  <div className="map-overlay-label">Global HQ</div>
+                  <div className="map-overlay-name">Austin, Texas</div>
+                </div>
+                <iframe
+                  className="map-embed"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3445.913844857527!2d-97.74287202396168!3d30.268280174880936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8644b50ab3a1bf8f%3A0x5b14e03d2c7ae284!2s200%20Congress%20Ave%2C%20Austin%2C%20TX%2078701!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="NEXACORE Austin HQ location map"
+                  aria-label="Map showing NEXACORE headquarters at 200 Congress Avenue, Austin Texas"
+                />
+              </div>
+
+              {/* SLA Response Times */}
+              <div className="sla-card" style={{ marginTop: '1.5rem' }}>
+                <div className="sla-header">Response Time Commitments</div>
+                <div className="sla-items">
+                  {slaResponseTimes.map((item) => (
+                    <div key={item.id} className="sla-item">
+                      <div>
+                        <div className="sla-item-title">{item.title}</div>
+                        <div className="sla-item-desc">{item.description}</div>
+                      </div>
+                      <div className="sla-item-time t-mono" style={{ color: item.color }}>
+                        {item.time}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}

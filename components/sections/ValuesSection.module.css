@@ -1,0 +1,112 @@
+/* Values Section styles */
+
+.values {
+  background: var(--bg-base);
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.valueCard {
+  background: var(--bg-surface);
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background var(--transition);
+  cursor: default;
+}
+
+.valueCard:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 4px 4px 0 var(--brand-primary);
+  border-color: var(--brand-primary);
+  background: var(--bg-elevated);
+  z-index: 1;
+}
+
+.valueBgNum {
+  position: absolute;
+  right: -0.25rem;
+  bottom: -1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 10vw, 8rem);
+  font-weight: 800;
+  color: var(--brand-primary);
+  opacity: 0.04;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.valueCard:hover .valueBgNum {
+  opacity: 0.08;
+}
+
+.valueIcon {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.valueCard:hover .valueIcon {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+
+.valueIcon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--brand-primary);
+  fill: none;
+  stroke-width: 1.5;
+  transition: stroke var(--transition);
+}
+
+.valueCard:hover .valueIcon svg {
+  stroke: #ffffff;
+}
+
+.valueNum {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--brand-primary);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.valueTitle {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.85rem;
+  line-height: 1.2;
+}
+
+.valueDesc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .valuesGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .valuesGrid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,240 @@
+/* Hero Section styles */
+
+.hero {
+  min-height: 100vh;
+  padding-top: var(--nav-height);
+  background: var(--bg-base);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.5;
+}
+
+.heroBlob {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(27, 118, 187, 0.12), transparent 70%);
+  top: 10%;
+  left: 20%;
+  pointer-events: none;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+}
+
+.heroEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.heroEyebrowLine {
+  width: 40px;
+  height: 1px;
+  background: var(--brand-primary);
+}
+
+.heroHeadline {
+  margin-bottom: 1.5rem;
+}
+
+.heroHeadline .line1 {
+  color: var(--text-primary);
+  display: block;
+}
+
+.heroHeadline .line2 {
+  color: var(--brand-primary);
+  display: block;
+}
+
+.heroSub {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: var(--text-secondary);
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
+.heroCtas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.heroMeta {
+  display: flex;
+  gap: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.heroMetaItem .num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  display: block;
+}
+
+.heroMetaItem .lbl {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+/* Hero visual */
+.heroVisual {
+  position: relative;
+  height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroGeoOuter {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border: 1px solid var(--border);
+  transform: rotate(15deg);
+  animation: geoRotate 20s linear infinite;
+}
+
+.heroGeoInner {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border: 1px solid var(--brand-primary);
+  opacity: 0.6;
+  transform: rotate(-8deg);
+  animation: geoRotateR 15s linear infinite;
+}
+
+.heroGeoCore {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: var(--brand-primary);
+  opacity: 0.15;
+}
+
+.heroGeoAccent {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: var(--brand-accent);
+  opacity: 0.6;
+  top: 30%;
+  right: 20%;
+  animation: pulseBox 3s ease-in-out infinite;
+}
+
+.heroGeoDot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--brand-warm);
+  bottom: 25%;
+  left: 22%;
+}
+
+@keyframes geoRotate { to { transform: rotate(375deg); } }
+@keyframes geoRotateR { to { transform: rotate(-368deg); } }
+@keyframes pulseBox {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.1); }
+}
+
+/* Scroll cue */
+.scrollCue {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.scrollCueLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.scrollCueArrow {
+  width: 1px;
+  height: 40px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollCueArrow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: var(--brand-primary);
+  animation: scrollDrop 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollDrop {
+  0% { top: -50%; }
+  100% { top: 100%; }
+}
+
+/* Animate hero on load */
+.heroAnimate {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.heroAnimateIn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .heroGrid { grid-template-columns: 1fr; }
+  .heroVisual { height: 280px; margin-top: 2rem; }
+}
+
+@media (max-width: 767px) {
+  .heroGrid { grid-template-columns: 1fr; gap: 0; }
+  .heroVisual { display: none; }
+  .heroMeta { flex-wrap: wrap; gap: 1rem; }
+  .heroCtas { flex-direction: column; }
+}

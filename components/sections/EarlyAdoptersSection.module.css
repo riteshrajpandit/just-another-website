@@ -1,0 +1,123 @@
+/* Early Adopters Section styles */
+
+.earlyAdopters { background: var(--bg-base); }
+
+.adoptersGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 3rem;
+}
+
+.adopterCard {
+  background: var(--bg-surface);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: background var(--transition);
+}
+
+.adopterCard:hover { background: var(--bg-elevated); }
+
+.adopterBadge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  background: rgba(27,118,187,0.1);
+  border: 1px solid rgba(27,118,187,0.3);
+  color: var(--brand-primary);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.adopterName {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.adopterIndustry {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Timeline */
+.timelineWrap {
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.timeline {
+  display: flex;
+  gap: 0;
+  min-width: max-content;
+  padding: 1.5rem 2rem;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
+  transform: translateY(-1rem);
+}
+
+.timelineItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 160px;
+  position: relative;
+}
+
+.timelineDot {
+  width: 12px;
+  height: 12px;
+  background: var(--brand-primary);
+  border: 2px solid var(--bg-base);
+  position: relative;
+  z-index: 1;
+}
+
+.timelineYear {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--brand-primary);
+  font-weight: 700;
+}
+
+.timelineEvent {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 130px;
+  line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .adoptersGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .adoptersGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 479px) {
+  .adoptersGrid { grid-template-columns: 1fr; }
+}

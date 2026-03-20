@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Started — NEXACORE</title>
+<meta name="description" content="Start your NEXACORE journey — get started with our platform or book a personalised demo with a senior solutions architect.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS — consistent with index.html + about.html
+   ============================================================ */
+:root {
+  --brand-primary:   #1b76bb;
+  --brand-secondary: #0d4a78;
+  --brand-accent:    #00d4ff;
+  --brand-warm:      #f5a623;
+  --nav-height:      64px;
+  --left-rail:       72px;
+  --max-w:           1440px;
+  --transition:      200ms ease;
+  --transition-slow: 400ms ease;
+}
+[data-theme="light"] {
+  --bg-base:        #f5f4f0;
+  --bg-surface:     #ffffff;
+  --bg-elevated:    #eceae4;
+  --bg-dark-band:   #e0ded8;
+  --text-primary:   #0e0e0e;
+  --text-secondary: #4a4a4a;
+  --text-muted:     #8a8a8a;
+  --border:         #d0cec8;
+  --border-strong:  #0e0e0e;
+  --shadow-offset:  rgba(0,0,0,0.15);
+}
+[data-theme="dark"] {
+  --bg-base:        #0a0a0a;
+  --bg-surface:     #111111;
+  --bg-elevated:    #1a1a1a;
+  --bg-dark-band:   #050505;
+  --text-primary:   #f0ede8;
+  --text-secondary: #a8a5a0;
+  --text-muted:     #555550;
+  --border:         #2a2a2a;
+  --border-strong:  #f0ede8;
+  --shadow-offset:  rgba(0,0,0,0.6);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'DM Sans',sans-serif;font-weight:400;
+  background-color:var(--bg-base);color:var(--text-primary);
+  line-height:1.6;overflow-x:hidden;
+  transition:background-color .3s ease,color .3s ease;
+}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+ul,ol{list-style:none}
+img{max-width:100%;display:block;object-fit:cover}
+::selection{background:var(--brand-primary);color:#fff}
+:focus-visible{outline:2px solid var(--brand-accent);outline-offset:2px}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.t-display{font-family:'Syne',sans-serif;font-size:clamp(3rem,7vw,6.5rem);font-weight:800;line-height:1.0;letter-spacing:-.02em}
+.t-h2{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.02em}
+.t-h3{font-family:'Syne',sans-serif;font-size:clamp(1.25rem,2vw,1.75rem);font-weight:700;line-height:1.2}
+.t-h4{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;line-height:1.3}
+.t-body{font-size:clamp(.95rem,1.2vw,1.1rem);font-weight:400;line-height:1.7;color:var(--text-secondary)}
+.t-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+.t-mono{font-family:'JetBrains Mono',monospace}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 clamp(1rem,3vw,2rem) 0 calc(var(--left-rail) + clamp(1rem,3vw,2rem))}
+.container--full{max-width:var(--max-w);margin:0 auto;padding:0 clamp(1rem,3vw,2rem)}
+.section-pad{padding:clamp(4rem,8vw,7rem) 0}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;border-radius:0;transition:transform var(--transition),box-shadow var(--transition),background var(--transition),color var(--transition);cursor:pointer;white-space:nowrap}
+.btn-primary{background:var(--brand-warm);color:#0e0e0e;border:1px solid var(--brand-warm)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:3px 3px 0 var(--brand-secondary)}
+.btn-outline{background:transparent;color:var(--text-primary);border:1px solid var(--border-strong)}
+.btn-outline:hover{transform:translateY(-2px);box-shadow:3px 3px 0 var(--brand-primary);border-color:var(--brand-primary);color:var(--brand-primary)}
+.btn-brand{background:var(--brand-primary);color:#fff;border:1px solid var(--brand-primary)}
+.btn-brand:hover{transform:translateY(-2px);box-shadow:3px 3px 0 var(--brand-secondary)}
+.btn-white{background:#fff;color:#0e0e0e;border:1px solid #fff}
+.btn-white:hover{transform:translateY(-2px);box-shadow:3px 3px 0 rgba(255,255,255,.3)}
+.btn-white-outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5)}
+.btn-white-outline:hover{border-color:#fff;transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:#f0ede8;border:1px solid #2a2a2a;font-size:.8rem;padding:.5rem 1rem}
+.btn-ghost:hover{background:#1a1a1a}
+.btn-sm{padding:.5rem 1rem;font-size:.75rem}
+.btn-full{width:100%;justify-content:center}
+
+/* ============================================================
+   SCROLL RAIL
+   ============================================================ */
+#scroll-rail{position:fixed;left:0;top:0;width:var(--left-rail);height:100vh;z-index:100;display:flex;flex-direction:column;align-items:center;padding-top:calc(var(--nav-height) + 2rem);pointer-events:none}
+#scroll-progress-track{position:absolute;left:16px;top:0;width:2px;height:100%;background:var(--border)}
+#scroll-progress-fill{width:100%;height:0%;background:var(--brand-primary);transition:height .1s linear}
+.section-dots{display:flex;flex-direction:column;gap:.6rem;align-items:center;pointer-events:all;margin-top:80px}
+.section-dot{width:6px;height:6px;border:1px solid var(--text-muted);background:transparent;cursor:pointer;transition:all .3s ease;flex-shrink:0}
+.section-dot.active{background:var(--brand-primary);border-color:var(--brand-primary)}
+.section-dot:hover{border-color:var(--brand-accent)}
+.section-label-vert{writing-mode:vertical-rl;text-orientation:mixed;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-top:.75rem;opacity:0;transition:opacity .3s ease,color .3s ease;white-space:nowrap}
+.section-label-vert.visible{opacity:1;color:var(--brand-primary)}
+#scroll-top{position:fixed;bottom:2rem;right:2rem;width:48px;height:48px;background:var(--bg-surface);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:200;opacity:0;transform:translateY(20px);transition:opacity .3s ease,transform .3s ease,box-shadow var(--transition);pointer-events:none}
+#scroll-top.visible{opacity:1;transform:translateY(0);pointer-events:all}
+#scroll-top:hover{box-shadow:3px 3px 0 var(--brand-primary)}
+#scroll-top svg{width:18px;height:18px;stroke:var(--text-primary);fill:none;stroke-width:2}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+#navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:var(--bg-surface);border-bottom:1px solid var(--border);z-index:500;display:flex;align-items:center;transition:background .3s ease,border-color .3s ease}
+[data-theme="dark"] #navbar{background:rgba(17,17,17,.92);backdrop-filter:blur(12px)}
+[data-theme="light"] #navbar{background:rgba(255,255,255,.92);backdrop-filter:blur(12px)}
+.nav-inner{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 clamp(1rem,3vw,2rem);display:flex;align-items:center;justify-content:space-between;gap:2rem}
+.nav-logo{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.nav-logo-mark{width:32px;height:32px;background:var(--brand-primary);position:relative;flex-shrink:0}
+.nav-logo-mark::before,.nav-logo-mark::after{content:'';position:absolute;background:#fff}
+.nav-logo-mark::before{width:60%;height:2px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.nav-logo-mark::after{width:2px;height:60%;top:50%;left:50%;transform:translate(-50%,-50%)}
+.nav-logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.1em;color:var(--text-primary)}
+.nav-logo-name span{color:var(--brand-primary)}
+.nav-links{display:flex;align-items:center;gap:0;flex:1;justify-content:center}
+.nav-item{position:relative}
+.nav-link{display:flex;align-items:center;gap:.35rem;padding:0 1rem;height:var(--nav-height);font-size:.78rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);border-left:3px solid transparent;transition:color var(--transition),border-color var(--transition);white-space:nowrap}
+.nav-link:hover,.nav-item:hover .nav-link{color:var(--text-primary);border-left-color:var(--brand-accent)}
+.nav-link.active{color:var(--brand-primary);border-left-color:var(--brand-primary)}
+.nav-link svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;transition:transform var(--transition);flex-shrink:0}
+.nav-item:hover .nav-link svg{transform:rotate(180deg)}
+.nav-actions{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.theme-toggle{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);background:transparent;cursor:pointer;transition:border-color var(--transition),box-shadow var(--transition)}
+.theme-toggle:hover{border-color:var(--brand-primary);box-shadow:2px 2px 0 var(--brand-primary)}
+.theme-toggle svg{width:16px;height:16px;stroke:var(--text-secondary);fill:none;stroke-width:2}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:1px solid var(--border);background:transparent}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text-primary);transition:transform .3s ease,opacity .3s ease}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+#mobile-nav{position:fixed;inset:0;top:var(--nav-height);background:var(--bg-surface);z-index:490;overflow-y:auto;padding:1.5rem;transform:translateX(100%);transition:transform .3s ease}
+#mobile-nav.open{transform:translateX(0)}
+.mobile-nav-item{border-bottom:1px solid var(--border)}
+.mobile-nav-link{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;font-size:.9rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--text-primary);cursor:pointer}
+.mobile-nav-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .3s ease}
+.mobile-nav-link.open svg{transform:rotate(180deg)}
+.mobile-submenu{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.mobile-submenu.open{max-height:600px}
+.mobile-sub-item{padding:.6rem 0 .6rem 1rem;font-size:.85rem;color:var(--text-secondary);border-left:2px solid var(--border);margin-bottom:.25rem;cursor:pointer;transition:color var(--transition),border-color var(--transition)}
+.mobile-sub-item:hover{color:var(--brand-primary);border-left-color:var(--brand-primary)}
+
+/* ============================================================
+   SECTION COMMON
+   ============================================================ */
+.section-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.section-eyebrow-line{width:24px;height:2px;background:var(--brand-primary)}
+.anim-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+.anim-up.in{opacity:1;transform:translateY(0)}
+
+/* ============================================================
+   PAGE SWITCH TABS
+   ============================================================ */
+.page-tabs-bar{
+  position:sticky;
+  top:var(--nav-height);
+  z-index:300;
+  background:var(--bg-dark-band);
+  border-bottom:1px solid var(--border);
+}
+.page-tabs-inner{
+  display:flex;
+  align-items:stretch;
+  max-width:var(--max-w);
+  margin:0 auto;
+  padding:0 clamp(1rem,3vw,2rem) 0 calc(var(--left-rail) + clamp(1rem,3vw,2rem));
+}
+.page-tab{
+  display:flex;align-items:center;gap:.6rem;
+  padding:0 2rem;
+  height:52px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-muted);
+  border:none;background:transparent;cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:color var(--transition),border-color var(--transition),background var(--transition);
+  white-space:nowrap;
+}
+.page-tab:hover{color:var(--text-primary);background:var(--bg-elevated)}
+.page-tab.active{color:var(--brand-primary);border-bottom-color:var(--brand-primary)}
+.page-tab-dot{width:6px;height:6px;background:currentColor;flex-shrink:0;transition:background var(--transition)}
+
+/* ============================================================
+   PAGE PANELS
+   ============================================================ */
+.page-panel{display:none}
+.page-panel.active{display:block}
+
+/* ============================================================
+   *** GET STARTED PAGE ***
+   ============================================================ */
+
+/* --- Hero strip --- */
+.gs-hero{
+  background:var(--bg-base);
+  border-bottom:1px solid var(--border);
+  padding:clamp(3rem,6vw,5rem) 0 0;
+  position:relative;
+  overflow:hidden;
+}
+.gs-hero-bg{
+  position:absolute;inset:0;
+  background-image:radial-gradient(circle,var(--border) 1px,transparent 1px);
+  background-size:28px 28px;opacity:.5;pointer-events:none;
+}
+.gs-hero-blob{
+  position:absolute;width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(27,118,187,.1),transparent 70%);
+  top:-100px;right:0;pointer-events:none;
+}
+.gs-hero-inner{position:relative;z-index:1}
+.gs-hero-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(2rem,4vw,4rem);align-items:end;
+}
+.gs-hero-crumb{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem}
+.gs-hero-crumb a{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);transition:color var(--transition)}
+.gs-hero-crumb a:hover{color:var(--brand-primary)}
+.gs-hero-crumb-sep,.gs-hero-crumb-cur{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+.gs-hero-crumb-sep{color:var(--text-muted)}
+.gs-hero-crumb-cur{color:var(--brand-primary)}
+.gs-plan-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+  border-top:1px solid var(--border);
+  margin-top:clamp(2rem,4vw,3.5rem);
+}
+.gs-plan-item{
+  background:var(--bg-surface);
+  padding:1.5rem;
+  border-top:2px solid transparent;
+  transition:border-color var(--transition),background var(--transition);
+  cursor:pointer;
+}
+.gs-plan-item:hover,.gs-plan-item.recommended{border-top-color:var(--brand-primary)}
+.gs-plan-item.recommended{background:var(--bg-elevated)}
+.gs-plan-badge{
+  display:inline-block;padding:.18rem .55rem;
+  background:var(--brand-warm);color:#0e0e0e;
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  letter-spacing:.1em;text-transform:uppercase;font-weight:500;
+  margin-bottom:.75rem;
+}
+.gs-plan-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:.35rem}
+.gs-plan-price{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:var(--brand-primary);line-height:1;margin-bottom:.25rem}
+.gs-plan-price sup{font-size:.85rem;vertical-align:top;margin-top:.2rem}
+.gs-plan-price span{font-size:.7rem;color:var(--text-muted);font-weight:400}
+.gs-plan-desc{font-size:.78rem;color:var(--text-secondary);line-height:1.5;margin-bottom:1rem}
+.gs-plan-features{display:flex;flex-direction:column;gap:.4rem}
+.gs-plan-feature{display:flex;align-items:flex-start;gap:.5rem;font-size:.75rem;color:var(--text-secondary)}
+.gs-plan-feature svg{width:12px;height:12px;stroke:var(--brand-primary);fill:none;stroke-width:2.5;flex-shrink:0;margin-top:.15rem}
+
+/* --- Get Started Form Section --- */
+.gs-form-section{background:var(--bg-base)}
+.gs-form-layout{
+  display:grid;grid-template-columns:1fr 420px;
+  gap:clamp(2rem,4vw,4rem);align-items:start;
+}
+.gs-form-left{}
+.gs-steps{
+  display:flex;flex-direction:column;gap:0;
+  margin-top:2rem;
+  border:1px solid var(--border);
+}
+.gs-step{
+  display:flex;align-items:flex-start;gap:1.25rem;
+  padding:1.25rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  transition:background var(--transition);
+  cursor:default;
+}
+.gs-step:last-child{border-bottom:none}
+.gs-step:hover{background:var(--bg-elevated)}
+.gs-step-num{
+  width:36px;height:36px;
+  background:var(--brand-primary);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;
+  color:#fff;flex-shrink:0;
+}
+.gs-step-content{}
+.gs-step-title{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:var(--text-primary);margin-bottom:.3rem}
+.gs-step-desc{font-size:.8rem;color:var(--text-secondary);line-height:1.5}
+
+/* Trust badges below steps */
+.gs-trust-row{
+  display:flex;flex-wrap:wrap;gap:.5rem;
+  margin-top:1.5rem;
+}
+.gs-trust-badge{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.35rem .85rem;
+  border:1px solid var(--border);
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);
+  background:var(--bg-elevated);
+}
+.gs-trust-badge svg{width:12px;height:12px;stroke:var(--brand-primary);fill:none;stroke-width:2}
+
+/* ============================================================
+   FORM CARD (shared between Get Started + Book a Demo)
+   ============================================================ */
+.form-card{
+  background:var(--bg-surface);
+  border:1px solid var(--border);
+  border-top:3px solid var(--brand-primary);
+  padding:2rem;
+  position:sticky;top:calc(var(--nav-height) + 64px);
+}
+.form-card-title{
+  font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;
+  color:var(--text-primary);margin-bottom:.35rem;
+}
+.form-card-sub{font-size:.82rem;color:var(--text-secondary);margin-bottom:1.5rem;line-height:1.5}
+
+/* Form field system */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem}
+.form-row--full{grid-template-columns:1fr}
+.form-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.75rem}
+.form-group:last-child{margin-bottom:0}
+.form-label{
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);
+}
+.form-input,
+.form-select,
+.form-textarea{
+  width:100%;padding:.7rem .9rem;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  border-bottom:2px solid var(--border);
+  color:var(--text-primary);
+  font-family:'DM Sans',sans-serif;font-size:.88rem;
+  border-radius:0;outline:none;
+  transition:border-color var(--transition),background var(--transition),box-shadow var(--transition);
+  appearance:none;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus{
+  border-color:var(--brand-primary);
+  border-bottom-color:var(--brand-primary);
+  background:var(--bg-surface);
+  box-shadow:0 0 0 3px rgba(27,118,187,.1);
+}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--text-muted)}
+.form-input.error,.form-select.error,.form-textarea.error{
+  border-color:#ef4444;border-bottom-color:#ef4444;
+}
+.form-error-msg{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.08em;color:#ef4444;display:none}
+.form-group.has-error .form-error-msg{display:block}
+.form-textarea{resize:vertical;min-height:90px}
+.form-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23555550' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.25rem;cursor:pointer}
+
+/* Checkbox & radio custom */
+.form-check-group{display:flex;flex-direction:column;gap:.5rem}
+.form-check{display:flex;align-items:flex-start;gap:.65rem;cursor:pointer}
+.form-check input{width:0;height:0;opacity:0;position:absolute}
+.form-check-box{
+  width:16px;height:16px;
+  border:1px solid var(--border);
+  background:var(--bg-elevated);
+  flex-shrink:0;margin-top:.15rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color var(--transition),background var(--transition);
+}
+.form-check input:checked + .form-check-box{background:var(--brand-primary);border-color:var(--brand-primary)}
+.form-check input:checked + .form-check-box::after{content:'';display:block;width:8px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.form-check-label{font-size:.82rem;color:var(--text-secondary);line-height:1.4}
+
+/* Radio pill group */
+.form-radio-group{display:flex;flex-wrap:wrap;gap:.5rem}
+.form-radio-pill{position:relative}
+.form-radio-pill input{position:absolute;opacity:0;width:0;height:0}
+.form-radio-pill-label{
+  display:inline-block;padding:.45rem 1rem;
+  border:1px solid var(--border);
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-muted);cursor:pointer;
+  transition:border-color var(--transition),color var(--transition),background var(--transition);
+}
+.form-radio-pill input:checked + .form-radio-pill-label{
+  border-color:var(--brand-primary);color:var(--brand-primary);background:rgba(27,118,187,.08);
+}
+.form-radio-pill-label:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+
+/* Submit area */
+.form-submit-row{margin-top:1.25rem;display:flex;flex-direction:column;gap:.75rem}
+.form-privacy{font-size:.72rem;color:var(--text-muted);line-height:1.5}
+.form-privacy a{color:var(--brand-accent);text-decoration:underline}
+
+/* Progress stepper inside form card */
+.form-stepper{
+  display:flex;align-items:center;
+  gap:0;margin-bottom:1.5rem;
+  border:1px solid var(--border);
+  overflow:hidden;
+}
+.form-stepper-step{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  padding:.55rem .5rem;
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-muted);
+  border-right:1px solid var(--border);
+  background:var(--bg-elevated);
+  gap:.4rem;cursor:pointer;
+  transition:background var(--transition),color var(--transition);
+}
+.form-stepper-step:last-child{border-right:none}
+.form-stepper-step.active{background:var(--brand-primary);color:#fff}
+.form-stepper-step.done{background:rgba(27,118,187,.15);color:var(--brand-primary)}
+.form-stepper-step-num{
+  width:18px;height:18px;
+  border:1px solid currentColor;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.55rem;font-weight:700;flex-shrink:0;
+}
+.form-stepper-step.done .form-stepper-step-num{border:none;background:var(--brand-primary);color:#fff}
+.form-stepper-step.done .form-stepper-step-num::after{content:'';display:block;width:7px;height:4px;border-left:1.5px solid #fff;border-bottom:1.5px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+
+/* Multi-step form panels */
+.form-step-panel{display:none}
+.form-step-panel.active{display:block}
+
+/* Success state */
+.form-success{
+  display:none;flex-direction:column;align-items:center;
+  gap:1rem;padding:2rem;text-align:center;
+}
+.form-success.visible{display:flex}
+.form-success-icon{
+  width:56px;height:56px;
+  background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);
+  display:flex;align-items:center;justify-content:center;
+}
+.form-success-icon svg{width:24px;height:24px;stroke:#22c55e;fill:none;stroke-width:2}
+.form-success-title{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;color:var(--text-primary)}
+.form-success-text{font-size:.85rem;color:var(--text-secondary);line-height:1.6}
+
+/* ============================================================
+   *** BOOK A DEMO PAGE ***
+   ============================================================ */
+.demo-hero{
+  background:var(--bg-base);
+  border-bottom:1px solid var(--border);
+  padding:clamp(3rem,6vw,5rem) 0 0;
+  position:relative;overflow:hidden;
+}
+.demo-hero-bg{position:absolute;inset:0;background-image:radial-gradient(circle,var(--border) 1px,transparent 1px);background-size:28px 28px;opacity:.5;pointer-events:none}
+.demo-hero-blob{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.08),transparent 70%);top:-80px;right:5%;pointer-events:none}
+
+/* Calendar-style slot picker */
+.slot-section{background:var(--bg-base)}
+.slot-layout{
+  display:grid;grid-template-columns:1fr 400px;
+  gap:clamp(2rem,4vw,4rem);align-items:start;
+}
+.calendar-widget{
+  border:1px solid var(--border);
+  background:var(--bg-surface);
+  overflow:hidden;
+}
+.cal-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.25rem;
+  border-bottom:1px solid var(--border);
+  background:var(--bg-elevated);
+}
+.cal-nav-btn{
+  width:32px;height:32px;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;background:transparent;
+  transition:border-color var(--transition),box-shadow var(--transition);
+}
+.cal-nav-btn:hover{border-color:var(--brand-primary);box-shadow:2px 2px 0 var(--brand-primary)}
+.cal-nav-btn svg{width:14px;height:14px;stroke:var(--text-primary);fill:none;stroke-width:2}
+.cal-month-label{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:var(--text-primary)}
+.cal-weekdays{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  border-bottom:1px solid var(--border);
+}
+.cal-weekday{
+  padding:.65rem 0;text-align:center;
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);
+  border-right:1px solid var(--border);
+}
+.cal-weekday:last-child{border-right:none}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr)}
+.cal-day{
+  aspect-ratio:1;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:.78rem;
+  color:var(--text-secondary);
+  border-right:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+  transition:background var(--transition),color var(--transition),border-color var(--transition);
+  position:relative;
+}
+.cal-day:nth-child(7n){border-right:none}
+.cal-day.empty{cursor:default;color:var(--text-muted);opacity:.3}
+.cal-day.past{cursor:default;color:var(--text-muted);opacity:.25}
+.cal-day:not(.empty):not(.past):hover{background:rgba(27,118,187,.1);color:var(--brand-primary)}
+.cal-day.selected{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
+.cal-day.today::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:4px;height:4px;background:var(--brand-warm);border-radius:50%}
+.cal-day.has-slots::before{content:'';position:absolute;top:4px;right:4px;width:4px;height:4px;background:var(--brand-accent)}
+.cal-day.selected.has-slots::before{background:#fff}
+
+/* Time slots */
+.time-slots-section{
+  border:1px solid var(--border);
+  background:var(--bg-surface);
+  overflow:hidden;
+}
+.time-slots-header{
+  padding:.85rem 1.25rem;
+  border-bottom:1px solid var(--border);
+  background:var(--bg-elevated);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.time-slots-date{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--text-primary)}
+.time-slots-tz{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.time-slots-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--border);
+  max-height:320px;overflow-y:auto;
+}
+.time-slot{
+  padding:.75rem 1rem;
+  background:var(--bg-surface);
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;
+  letter-spacing:.08em;color:var(--text-secondary);
+  cursor:pointer;
+  transition:background var(--transition),color var(--transition);
+  text-align:center;
+  border:1px solid transparent;
+}
+.time-slot:hover{background:rgba(27,118,187,.08);color:var(--brand-primary)}
+.time-slot.selected{background:var(--brand-primary);color:#fff}
+.time-slot.unavailable{cursor:default;opacity:.3;pointer-events:none;text-decoration:line-through}
+
+/* Architect profile card */
+.architect-card{
+  border:1px solid var(--border);
+  background:var(--bg-surface);
+  padding:1.5rem;
+  display:flex;flex-direction:column;gap:1rem;
+}
+.arch-header{display:flex;align-items:center;gap:1rem}
+.arch-avatar{
+  width:52px;height:52px;
+  background:var(--brand-primary);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:#fff;
+  flex-shrink:0;
+}
+.arch-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text-primary)}
+.arch-role{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.arch-bio{font-size:.82rem;color:var(--text-secondary);line-height:1.6}
+.arch-specialties{display:flex;flex-wrap:wrap;gap:.4rem}
+.arch-specialty{
+  padding:.2rem .55rem;border:1px solid var(--border);
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);
+}
+
+/* What to expect */
+.expect-list{
+  display:flex;flex-direction:column;gap:0;
+  border:1px solid var(--border);
+}
+.expect-item{
+  display:flex;align-items:flex-start;gap:1rem;
+  padding:1rem 1.25rem;
+  border-bottom:1px solid var(--border);
+  transition:background var(--transition);
+}
+.expect-item:last-child{border-bottom:none}
+.expect-item:hover{background:var(--bg-elevated)}
+.expect-num{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  color:var(--brand-primary);font-weight:700;flex-shrink:0;
+  margin-top:.15rem;
+}
+.expect-item-title{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;color:var(--text-primary);margin-bottom:.2rem}
+.expect-item-text{font-size:.78rem;color:var(--text-secondary);line-height:1.5}
+
+/* ============================================================
+   CONTACT DETAILS + MAP
+   ============================================================ */
+#contact-details{background:var(--bg-elevated);border-top:1px solid var(--border)}
+
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(2rem,4vw,4rem);align-items:start;
+}
+
+/* Map block */
+.map-block{
+  border:1px solid var(--border);
+  overflow:hidden;
+  position:relative;
+}
+.map-embed{
+  width:100%;aspect-ratio:4/3;
+  border:none;display:block;
+  filter:grayscale(30%) contrast(1.05);
+  transition:filter var(--transition-slow);
+}
+.map-embed:hover{filter:grayscale(0%) contrast(1)}
+.map-overlay{
+  position:absolute;
+  top:0;left:0;
+  padding:.65rem 1rem;
+  background:var(--bg-surface);
+  border:1px solid var(--border);
+  border-top:2px solid var(--brand-primary);
+  margin:.75rem;
+}
+.map-overlay-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.map-overlay-name{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;color:var(--text-primary)}
+
+/* Contact detail cards */
+.contact-details-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--border);border:1px solid var(--border);
+}
+.contact-detail-card{
+  background:var(--bg-surface);padding:1.5rem;
+  display:flex;flex-direction:column;gap:.75rem;
+  border:2px solid transparent;
+  transition:border-color var(--transition),transform var(--transition),box-shadow var(--transition);
+}
+.contact-detail-card:hover{
+  border-color:var(--brand-primary);
+  transform:translate(-2px,-2px);
+  box-shadow:3px 3px 0 var(--brand-primary);
+  z-index:1;position:relative;
+}
+.contact-detail-icon{
+  width:40px;height:40px;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--transition),border-color var(--transition);
+}
+.contact-detail-card:hover .contact-detail-icon{background:var(--brand-primary);border-color:var(--brand-primary)}
+.contact-detail-icon svg{width:18px;height:18px;stroke:var(--brand-primary);fill:none;stroke-width:1.5;transition:stroke var(--transition)}
+.contact-detail-card:hover .contact-detail-icon svg{stroke:#fff}
+.contact-detail-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+.contact-detail-value{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:var(--text-primary);line-height:1.3}
+.contact-detail-sub{font-size:.78rem;color:var(--text-secondary)}
+
+/* Office locations list */
+.offices-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);margin-top:1.5rem}
+.office-item{
+  display:flex;align-items:flex-start;gap:1.25rem;
+  padding:1.25rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  transition:background var(--transition);
+}
+.office-item:last-child{border-bottom:none}
+.office-item:hover{background:var(--bg-elevated)}
+.office-flag{
+  width:36px;height:36px;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  font-weight:700;color:var(--brand-primary);flex-shrink:0;
+}
+.office-city{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:var(--text-primary)}
+.office-address{font-size:.78rem;color:var(--text-secondary);line-height:1.5}
+.office-type{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.15rem .45rem;border:1px solid var(--border);color:var(--text-muted);width:fit-content;margin-top:.4rem}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+#footer{background:var(--bg-dark-band);border-top:3px solid var(--brand-primary)}
+.footer-main{display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:clamp(1.5rem,3vw,3rem);padding:clamp(3rem,6vw,5rem) 0 3rem}
+.footer-brand{display:flex;flex-direction:column;gap:1.25rem}
+.footer-logo{display:flex;align-items:center;gap:.75rem}
+.footer-logo-mark{width:36px;height:36px;background:var(--brand-primary);position:relative;flex-shrink:0}
+.footer-logo-mark::before,.footer-logo-mark::after{content:'';position:absolute;background:#fff}
+.footer-logo-mark::before{width:60%;height:2px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.footer-logo-mark::after{width:2px;height:60%;top:50%;left:50%;transform:translate(-50%,-50%)}
+.footer-logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:.1em;color:var(--text-primary)}
+.footer-tagline{font-size:.85rem;color:var(--text-muted);line-height:1.6;max-width:240px}
+.footer-newsletter{display:flex;gap:0}
+.footer-newsletter input{flex:1;padding:.7rem 1rem;background:var(--bg-surface);border:1px solid var(--border);border-right:none;color:var(--text-primary);font-family:'DM Sans',sans-serif;font-size:.82rem;border-radius:0;outline:none;transition:border-color var(--transition);min-width:0}
+.footer-newsletter input:focus{border-color:var(--brand-primary)}
+.footer-newsletter input::placeholder{color:var(--text-muted)}
+.footer-newsletter button{padding:.7rem 1rem;background:var(--brand-primary);color:#fff;border:1px solid var(--brand-primary);font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background var(--transition)}
+.footer-newsletter button:hover{background:var(--brand-secondary)}
+.footer-social{display:flex;gap:.5rem}
+.social-icon{width:36px;height:36px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color var(--transition),background var(--transition)}
+.social-icon:hover{border-color:var(--brand-primary);background:var(--brand-primary)}
+.social-icon svg{width:16px;height:16px;stroke:var(--text-secondary);fill:none;stroke-width:2}
+.social-icon:hover svg{stroke:#fff}
+.footer-col-title{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-primary);margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
+.footer-links{display:flex;flex-direction:column;gap:.6rem}
+.footer-link{font-size:.82rem;color:var(--text-muted);transition:color var(--transition)}
+.footer-link:hover{color:var(--brand-accent)}
+.footer-bottom{padding:1.25rem 0;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.footer-copyright{font-size:.78rem;color:var(--text-muted)}
+.footer-legal{display:flex;gap:1.5rem;flex-wrap:wrap}
+.footer-legal a{font-size:.78rem;color:var(--text-muted);transition:color var(--transition)}
+.footer-legal a:hover{color:var(--brand-accent)}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1279px){
+  .container{padding-left:clamp(1rem,3vw,2rem)}
+  #scroll-rail{display:none}
+  .page-tabs-inner{padding-left:clamp(1rem,3vw,2rem)}
+}
+@media (max-width:1023px){
+  .gs-hero-grid{grid-template-columns:1fr}
+  .gs-plan-strip{grid-template-columns:1fr}
+  .gs-form-layout{grid-template-columns:1fr}
+  .form-card{position:static}
+  .slot-layout{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .footer-main{grid-template-columns:repeat(2,1fr)}
+  .footer-brand{grid-column:1/-1}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .page-tab{padding:0 1rem}
+}
+@media (max-width:767px){
+  .gs-plan-strip{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .contact-details-grid{grid-template-columns:1fr}
+  .footer-main{grid-template-columns:1fr 1fr}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+  .nav-actions .btn{display:none}
+  .page-tab span:not(.page-tab-dot){display:none}
+  .page-tab{padding:0 1rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+
+<!-- SCROLL RAIL -->
+<aside id="scroll-rail" aria-hidden="true">
+  <div id="scroll-progress-track"><div id="scroll-progress-fill"></div></div>
+  <nav class="section-dots">
+    <div class="section-dot active" data-section="page-top"         title="Top"></div>
+    <div class="section-dot"        data-section="form-anchor"      title="Form"></div>
+    <div class="section-dot"        data-section="contact-details"  title="Contact"></div>
+  </nav>
+  <div class="section-label-vert" id="section-label-vert">START</div>
+</aside>
+
+<button id="scroll-top" aria-label="Scroll to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<!-- NAVBAR -->
+<header>
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="NEXACORE Home">
+        <div class="nav-logo-mark" aria-hidden="true"></div>
+        <span class="nav-logo-name">NEXA<span>CORE</span></span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="index.html#products" class="nav-link">Products <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></a></li>
+        <li class="nav-item"><a href="index.html#services" class="nav-link">Services <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Resources <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About Us <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <svg id="icon-sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <a href="#" class="btn btn-primary btn-sm active-tab-btn">Get Started</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div id="mobile-nav" role="navigation" aria-label="Mobile navigation">
+    <ul role="list">
+      <li class="mobile-nav-item"><div class="mobile-nav-link"><a href="index.html" style="color:inherit">Home</a></div></li>
+      <li class="mobile-nav-item"><div class="mobile-nav-link" data-toggle="mob-products">Products<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div><div class="mobile-submenu" id="mob-products"><div class="mobile-sub-item">NexaFlow</div><div class="mobile-sub-item">CoreSync</div><div class="mobile-sub-item">SecureVault</div></div></li>
+      <li class="mobile-nav-item"><div class="mobile-nav-link"><a href="about.html" style="color:inherit">About Us</a></div></li>
+    </ul>
+    <div style="margin-top:2rem;display:flex;flex-direction:column;gap:.75rem">
+      <button class="btn btn-primary" onclick="switchTab('get-started')" style="justify-content:center">Get Started</button>
+      <button class="btn btn-outline" onclick="switchTab('book-demo')" style="justify-content:center">Book a Demo</button>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE TABS BAR -->
+<div class="page-tabs-bar" id="page-top">
+  <div class="page-tabs-inner">
+    <button class="page-tab active" data-tab="get-started" aria-selected="true">
+      <span class="page-tab-dot"></span>
+      <span>Get Started</span>
+    </button>
+    <button class="page-tab" data-tab="book-demo" aria-selected="false">
+      <span class="page-tab-dot"></span>
+      <span>Book a Demo</span>
+    </button>
+    <button class="page-tab" data-tab="contact" aria-selected="false">
+      <span class="page-tab-dot"></span>
+      <span>Contact Us</span>
+    </button>
+  </div>
+</div>
+
+<main>
+
+<!-- ============================================================
+     PANEL 1 — GET STARTED
+     ============================================================ -->
+<div class="page-panel active" id="panel-get-started">
+
+  <!-- Hero -->
+  <section class="gs-hero" data-section-name="GET STARTED">
+    <div class="gs-hero-bg" aria-hidden="true"></div>
+    <div class="gs-hero-blob" aria-hidden="true"></div>
+    <div class="container gs-hero-inner">
+      <div class="gs-hero-grid">
+        <div>
+          <nav class="gs-hero-crumb anim-up" aria-label="Breadcrumb" style="transition-delay:.05s">
+            <a href="index.html">Home</a>
+            <span class="gs-hero-crumb-sep">/</span>
+            <span class="gs-hero-crumb-cur">Get Started</span>
+          </nav>
+          <h1 class="t-display anim-up" style="transition-delay:.15s">
+            <span style="color:var(--text-primary);display:block">Start in</span>
+            <span style="color:var(--brand-primary);display:block">Minutes.</span>
+          </h1>
+          <p class="t-body anim-up" style="max-width:500px;margin-top:1.25rem;transition-delay:.25s">
+            Choose a plan, submit your details, and a NEXACORE onboarding engineer will reach out within one business day to configure your environment and get your team running.
+          </p>
+        </div>
+        <div class="anim-up" style="transition-delay:.2s">
+          <div style="display:flex;flex-direction:column;gap:1rem;padding:1.5rem;border:1px solid var(--border);background:var(--bg-surface);border-top:2px solid var(--brand-primary)">
+            <div style="display:flex;align-items:center;gap:.75rem">
+              <div style="width:8px;height:8px;background:#22c55e"></div>
+              <span class="t-label">All systems operational</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.5rem">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem .75rem;border:1px solid var(--border);background:var(--bg-elevated)">
+                <span style="font-size:.78rem;color:var(--text-secondary)">Average onboarding time</span>
+                <span class="t-mono" style="font-size:.82rem;color:var(--brand-primary);font-weight:700">1 business day</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem .75rem;border:1px solid var(--border);background:var(--bg-elevated)">
+                <span style="font-size:.78rem;color:var(--text-secondary)">Dedicated onboarding engineer</span>
+                <span class="t-mono" style="font-size:.82rem;color:#22c55e;font-weight:700">Included</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem .75rem;border:1px solid var(--border);background:var(--bg-elevated)">
+                <span style="font-size:.78rem;color:var(--text-secondary)">Free trial period</span>
+                <span class="t-mono" style="font-size:.82rem;color:var(--brand-primary);font-weight:700">30 days</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem .75rem;border:1px solid var(--border);background:var(--bg-elevated)">
+                <span style="font-size:.78rem;color:var(--text-secondary)">Credit card required</span>
+                <span class="t-mono" style="font-size:.82rem;color:var(--text-muted)">No</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plan strip -->
+      <div class="gs-plan-strip anim-up" style="transition-delay:.3s">
+        <div class="gs-plan-item">
+          <div class="gs-plan-name">Starter</div>
+          <div class="gs-plan-price"><sup>$</sup>299<span>/mo</span></div>
+          <div class="gs-plan-desc">For growing teams getting their first enterprise infrastructure layer in place.</div>
+          <div class="gs-plan-features">
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Up to 10 users</div>
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>3 NexaCore products</div>
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Standard SLA</div>
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Email support</div>
+          </div>
+        </div>
+        <div class="gs-plan-item recommended">
+          <div class="gs-plan-badge">Most Popular</div>
+          <div class="gs-plan-name">Professional</div>
+          <div class="gs-plan-price"><sup>$</sup>899<span>/mo</span></div>
+          <div class="gs-plan-desc">For mid-market organizations requiring deeper integration and compliance tooling.</div>
+          <div class="gs-plan-features">
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Up to 100 users</div>
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Full product suite</div>
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>99.9% SLA</div>
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Priority support, 24/7</div>
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>SSO and audit logs</div>
+          </div>
+        </div>
+        <div class="gs-plan-item">
+          <div class="gs-plan-name">Enterprise</div>
+          <div class="gs-plan-price" style="font-size:1.2rem;padding-top:.3rem">Custom Pricing</div>
+          <div class="gs-plan-desc" style="margin-top:.65rem">For large organizations with complex infrastructure, compliance, and multi-region requirements.</div>
+          <div class="gs-plan-features">
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Unlimited users</div>
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Custom SLA (up to 99.99%)</div>
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Dedicated CSM</div>
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>On-premise option</div>
+            <div class="gs-plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>Custom integrations</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Form + Steps -->
+  <section class="gs-form-section section-pad" id="form-anchor" data-section-name="FORM">
+    <div class="container">
+      <div class="gs-form-layout">
+        <!-- Left: steps + trust -->
+        <div>
+          <div class="section-eyebrow anim-up">
+            <div class="section-eyebrow-line"></div>
+            <span class="t-label">How It Works</span>
+          </div>
+          <h2 class="t-h2 anim-up" style="margin-bottom:1.5rem;transition-delay:.08s">
+            Three Steps to<br><span style="color:var(--brand-primary)">Production-Ready</span>
+          </h2>
+          <div class="gs-steps anim-up" style="transition-delay:.14s">
+            <div class="gs-step">
+              <div class="gs-step-num">01</div>
+              <div class="gs-step-content">
+                <div class="gs-step-title">Submit Your Details</div>
+                <div class="gs-step-desc">Tell us about your organization, team size, and the products you are interested in. No commitment required — this is purely exploratory.</div>
+              </div>
+            </div>
+            <div class="gs-step">
+              <div class="gs-step-num">02</div>
+              <div class="gs-step-content">
+                <div class="gs-step-title">Meet Your Onboarding Engineer</div>
+                <div class="gs-step-desc">Within one business day, a dedicated NEXACORE engineer contacts you to map your current architecture and design the integration plan.</div>
+              </div>
+            </div>
+            <div class="gs-step">
+              <div class="gs-step-num">03</div>
+              <div class="gs-step-content">
+                <div class="gs-step-title">Go Live</div>
+                <div class="gs-step-desc">Your environment is provisioned and configured. Your team gets access, training is scheduled, and you have a direct line to engineering support for the first 90 days.</div>
+              </div>
+            </div>
+          </div>
+          <div class="gs-trust-row anim-up" style="transition-delay:.2s">
+            <span class="gs-trust-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>SOC 2 Type II</span>
+            <span class="gs-trust-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>ISO 27001</span>
+            <span class="gs-trust-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>GDPR Ready</span>
+            <span class="gs-trust-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>HIPAA Compliant</span>
+          </div>
+        </div>
+
+        <!-- Right: multi-step form -->
+        <div class="form-card anim-up" style="transition-delay:.1s">
+          <!-- Stepper -->
+          <div class="form-stepper" id="gs-stepper" role="tablist">
+            <div class="form-stepper-step active" data-step="1" role="tab" aria-selected="true">
+              <div class="form-stepper-step-num">1</div>
+              <span>Company</span>
+            </div>
+            <div class="form-stepper-step" data-step="2" role="tab" aria-selected="false">
+              <div class="form-stepper-step-num">2</div>
+              <span>Needs</span>
+            </div>
+            <div class="form-stepper-step" data-step="3" role="tab" aria-selected="false">
+              <div class="form-stepper-step-num">3</div>
+              <span>Confirm</span>
+            </div>
+          </div>
+
+          <div id="gs-form-body">
+            <!-- Step 1 -->
+            <div class="form-step-panel active" id="gs-step-1">
+              <div class="form-card-title">Your Organisation</div>
+              <div class="form-card-sub">Tell us who you are so we can assign the right specialist.</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="gs-fname">First Name</label>
+                  <input class="form-input" id="gs-fname" type="text" placeholder="Adrian" required>
+                  <span class="form-error-msg">Required</span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="gs-lname">Last Name</label>
+                  <input class="form-input" id="gs-lname" type="text" placeholder="Royce" required>
+                  <span class="form-error-msg">Required</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="gs-email">Work Email</label>
+                <input class="form-input" id="gs-email" type="email" placeholder="you@company.com" required>
+                <span class="form-error-msg">Enter a valid email</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="gs-company">Company Name</label>
+                <input class="form-input" id="gs-company" type="text" placeholder="Meridian Financial Group" required>
+                <span class="form-error-msg">Required</span>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="gs-role">Your Role</label>
+                  <select class="form-select" id="gs-role">
+                    <option value="">Select role</option>
+                    <option>CTO / CIO</option>
+                    <option>Engineering Director</option>
+                    <option>Product Manager</option>
+                    <option>DevOps / Platform Engineer</option>
+                    <option>IT Manager</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="gs-size">Team Size</label>
+                  <select class="form-select" id="gs-size">
+                    <option value="">Select size</option>
+                    <option>1–10</option>
+                    <option>11–50</option>
+                    <option>51–200</option>
+                    <option>201–1000</option>
+                    <option>1000+</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-submit-row">
+                <button class="btn btn-brand btn-full" onclick="gsNextStep(2)">Continue to Needs</button>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="form-step-panel" id="gs-step-2">
+              <div class="form-card-title">Your Requirements</div>
+              <div class="form-card-sub">Help us understand what you need so your onboarding is precise.</div>
+              <div class="form-group">
+                <label class="form-label">Interested Products</label>
+                <div class="form-check-group">
+                  <label class="form-check"><input type="checkbox" name="products" value="nexaflow"><span class="form-check-box"></span><span class="form-check-label">NexaFlow — Workflow Automation</span></label>
+                  <label class="form-check"><input type="checkbox" name="products" value="coresync"><span class="form-check-box"></span><span class="form-check-label">CoreSync — Data Synchronization</span></label>
+                  <label class="form-check"><input type="checkbox" name="products" value="securevault"><span class="form-check-box"></span><span class="form-check-label">SecureVault — Identity Management</span></label>
+                  <label class="form-check"><input type="checkbox" name="products" value="pulsemetrics"><span class="form-check-box"></span><span class="form-check-label">PulseMetrics — Observability</span></label>
+                  <label class="form-check"><input type="checkbox" name="products" value="cloudorchestra"><span class="form-check-box"></span><span class="form-check-label">CloudOrchestra — Infrastructure</span></label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Preferred Plan</label>
+                <div class="form-radio-group">
+                  <div class="form-radio-pill"><input type="radio" name="plan" id="plan-starter" value="starter"><label class="form-radio-pill-label" for="plan-starter">Starter</label></div>
+                  <div class="form-radio-pill"><input type="radio" name="plan" id="plan-pro" value="pro" checked><label class="form-radio-pill-label" for="plan-pro">Professional</label></div>
+                  <div class="form-radio-pill"><input type="radio" name="plan" id="plan-ent" value="enterprise"><label class="form-radio-pill-label" for="plan-ent">Enterprise</label></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="gs-timeline">Desired Go-Live Timeline</label>
+                <select class="form-select" id="gs-timeline">
+                  <option value="">Select timeline</option>
+                  <option>Within 2 weeks</option>
+                  <option>1 month</option>
+                  <option>1–3 months</option>
+                  <option>3–6 months</option>
+                  <option>Exploring options</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="gs-context">Additional Context</label>
+                <textarea class="form-textarea" id="gs-context" placeholder="Describe your current infrastructure, key pain points, or specific requirements..."></textarea>
+              </div>
+              <div class="form-submit-row">
+                <button class="btn btn-brand btn-full" onclick="gsNextStep(3)">Review and Submit</button>
+                <button class="btn btn-outline btn-full" onclick="gsNextStep(1)">Back</button>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="form-step-panel" id="gs-step-3">
+              <div class="form-card-title">Review and Confirm</div>
+              <div class="form-card-sub">Check your details before submitting. Our team responds within one business day.</div>
+              <div id="gs-review-block" style="border:1px solid var(--border);padding:1rem;background:var(--bg-elevated);margin-bottom:1.25rem;display:flex;flex-direction:column;gap:.6rem">
+                <div style="display:flex;justify-content:space-between"><span class="t-label">Name</span><span id="review-name" style="font-size:.82rem;color:var(--text-primary)"></span></div>
+                <div style="display:flex;justify-content:space-between"><span class="t-label">Email</span><span id="review-email" style="font-size:.82rem;color:var(--text-primary)"></span></div>
+                <div style="display:flex;justify-content:space-between"><span class="t-label">Company</span><span id="review-company" style="font-size:.82rem;color:var(--text-primary)"></span></div>
+                <div style="display:flex;justify-content:space-between"><span class="t-label">Plan</span><span id="review-plan" style="font-size:.82rem;color:var(--brand-primary);font-weight:600"></span></div>
+              </div>
+              <div class="form-group">
+                <label class="form-check">
+                  <input type="checkbox" id="gs-consent" required>
+                  <span class="form-check-box"></span>
+                  <span class="form-check-label">I agree to NEXACORE's <a href="#" style="color:var(--brand-accent);text-decoration:underline">Privacy Policy</a> and <a href="#" style="color:var(--brand-accent);text-decoration:underline">Terms of Service</a>.</span>
+                </label>
+              </div>
+              <div class="form-group">
+                <label class="form-check">
+                  <input type="checkbox" id="gs-updates">
+                  <span class="form-check-box"></span>
+                  <span class="form-check-label">Send me product updates and engineering news. Unsubscribe any time.</span>
+                </label>
+              </div>
+              <div class="form-submit-row">
+                <button class="btn btn-primary btn-full" id="gs-submit-btn" onclick="gsSubmit()">Submit Application</button>
+                <button class="btn btn-outline btn-full" onclick="gsNextStep(2)">Back</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Success -->
+          <div class="form-success" id="gs-success">
+            <div class="form-success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+            <div class="form-success-title">Application Received</div>
+            <div class="form-success-text">Your onboarding engineer will reach out within one business day. Check your inbox for a confirmation email.</div>
+            <a href="index.html" class="btn btn-outline btn-sm">Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end panel get-started -->
+
+<!-- ============================================================
+     PANEL 2 — BOOK A DEMO
+     ============================================================ -->
+<div class="page-panel" id="panel-book-demo">
+
+  <!-- Hero -->
+  <section class="demo-hero" data-section-name="BOOK DEMO">
+    <div class="demo-hero-bg" aria-hidden="true"></div>
+    <div class="demo-hero-blob" aria-hidden="true"></div>
+    <div class="container" style="position:relative;z-index:1;padding-bottom:0">
+      <nav class="gs-hero-crumb anim-up" aria-label="Breadcrumb" style="transition-delay:.05s">
+        <a href="index.html">Home</a>
+        <span class="gs-hero-crumb-sep">/</span>
+        <span class="gs-hero-crumb-cur">Book a Demo</span>
+      </nav>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,4vw,4rem);align-items:end;padding-bottom:0">
+        <div>
+          <h1 class="t-display anim-up" style="transition-delay:.1s">
+            <span style="color:var(--text-primary);display:block">See It</span>
+            <span style="color:var(--brand-warm);display:block">Live.</span>
+          </h1>
+          <p class="t-body anim-up" style="max-width:460px;margin-top:1.25rem;transition-delay:.2s">
+            A 45-minute live walkthrough with a senior NEXACORE solutions architect — tailored to your industry, stack, and the specific problems you are trying to solve. No slides. No sales script.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem" class="anim-up" style="transition-delay:.3s">
+            <span class="gs-trust-badge"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>45 minutes</span>
+            <span class="gs-trust-badge"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>Senior architect</span>
+            <span class="gs-trust-badge"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"></rect><path d="M3 9h18M9 21V9"></path></svg>Live product</span>
+          </div>
+        </div>
+        <!-- Architect profile -->
+        <div class="architect-card anim-up" style="transition-delay:.2s">
+          <div class="arch-header">
+            <div class="arch-avatar">KM</div>
+            <div>
+              <div class="arch-name">Kavya Menon</div>
+              <div class="arch-role">Principal Solutions Architect</div>
+            </div>
+          </div>
+          <div class="arch-bio">Kavya has led over 180 enterprise demos and implementations across financial services, healthcare, and logistics. She will match your session to your stack — not a generic script.</div>
+          <div class="arch-specialties">
+            <span class="arch-specialty">Cloud Migration</span>
+            <span class="arch-specialty">Data Architecture</span>
+            <span class="arch-specialty">Zero-Trust Security</span>
+            <span class="arch-specialty">DevSecOps</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- What to expect strip -->
+      <div class="expect-list anim-up" style="margin-top:clamp(2rem,4vw,3rem);transition-delay:.3s">
+        <div class="expect-item">
+          <div class="expect-num">01</div>
+          <div><div class="expect-item-title">Architecture Discovery</div><div class="expect-item-text">We start by understanding your current setup — cloud providers, data sources, team structure, and primary pain points.</div></div>
+        </div>
+        <div class="expect-item">
+          <div class="expect-num">02</div>
+          <div><div class="expect-item-title">Live Product Walkthrough</div><div class="expect-item-text">A real environment, not a sandbox. We demonstrate the products most relevant to your requirements using actual data flows.</div></div>
+        </div>
+        <div class="expect-item">
+          <div class="expect-num">03</div>
+          <div><div class="expect-item-title">Integration Feasibility</div><div class="expect-item-text">We map your existing tools to NEXACORE APIs and identify any custom work required before you commit to anything.</div></div>
+        </div>
+        <div class="expect-item">
+          <div class="expect-num">04</div>
+          <div><div class="expect-item-title">Pricing Indication</div><div class="expect-item-text">No generic pricing sheets. You leave with a rough cost model based on your actual usage profile and product selection.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendar slot picker -->
+  <section class="slot-section section-pad" data-section-name="SCHEDULE">
+    <div class="container">
+      <div class="section-eyebrow anim-up"><div class="section-eyebrow-line"></div><span class="t-label">Choose Your Slot</span></div>
+      <h2 class="t-h2 anim-up" style="margin-bottom:2rem;transition-delay:.08s">Pick a Date<br><span style="color:var(--brand-primary)">and Time</span></h2>
+
+      <div class="slot-layout">
+        <!-- Left: calendar + time + form -->
+        <div style="display:flex;flex-direction:column;gap:1.5rem">
+
+          <!-- Calendar -->
+          <div class="calendar-widget anim-up">
+            <div class="cal-header">
+              <button class="cal-nav-btn" id="cal-prev" aria-label="Previous month"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+              <div class="cal-month-label" id="cal-month-label">March 2026</div>
+              <button class="cal-nav-btn" id="cal-next" aria-label="Next month"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+            </div>
+            <div class="cal-weekdays">
+              <div class="cal-weekday">Mo</div><div class="cal-weekday">Tu</div><div class="cal-weekday">We</div><div class="cal-weekday">Th</div><div class="cal-weekday">Fr</div><div class="cal-weekday">Sa</div><div class="cal-weekday">Su</div>
+            </div>
+            <div class="cal-grid" id="cal-grid" role="grid" aria-label="Calendar"></div>
+          </div>
+
+          <!-- Time slots -->
+          <div class="time-slots-section anim-up" style="transition-delay:.1s">
+            <div class="time-slots-header">
+              <div class="time-slots-date" id="time-slots-date">Select a date above</div>
+              <div class="time-slots-tz">UTC+05:45 (NPT)</div>
+            </div>
+            <div class="time-slots-grid" id="time-slots-grid" role="listbox" aria-label="Available times">
+              <div class="time-slot unavailable">09:00 AM</div>
+              <div class="time-slot">10:00 AM</div>
+              <div class="time-slot unavailable">11:00 AM</div>
+              <div class="time-slot">12:00 PM</div>
+              <div class="time-slot">01:00 PM</div>
+              <div class="time-slot unavailable">02:00 PM</div>
+              <div class="time-slot">03:00 PM</div>
+              <div class="time-slot">04:00 PM</div>
+              <div class="time-slot unavailable">05:00 PM</div>
+              <div class="time-slot">06:00 PM</div>
+            </div>
+          </div>
+
+          <!-- Demo details form -->
+          <div class="form-card anim-up" style="position:static;top:auto;transition-delay:.15s">
+            <div class="form-card-title">Session Details</div>
+            <div class="form-card-sub">Tell us about your setup so the architect can prepare a relevant walkthrough.</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="demo-fname">First Name</label>
+                <input class="form-input" id="demo-fname" type="text" placeholder="Your first name" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="demo-lname">Last Name</label>
+                <input class="form-input" id="demo-lname" type="text" placeholder="Your last name" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="demo-email">Work Email</label>
+              <input class="form-input" id="demo-email" type="email" placeholder="you@company.com" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="demo-company">Company</label>
+                <input class="form-input" id="demo-company" type="text" placeholder="Company name" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="demo-size">Company Size</label>
+                <select class="form-select" id="demo-size">
+                  <option value="">Select</option>
+                  <option>1–50</option>
+                  <option>51–200</option>
+                  <option>201–1000</option>
+                  <option>1000+</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Products to Focus On</label>
+              <div class="form-radio-group">
+                <div class="form-radio-pill"><input type="radio" name="demo-product" id="dp-flow" value="nexaflow"><label class="form-radio-pill-label" for="dp-flow">NexaFlow</label></div>
+                <div class="form-radio-pill"><input type="radio" name="demo-product" id="dp-sync" value="coresync"><label class="form-radio-pill-label" for="dp-sync">CoreSync</label></div>
+                <div class="form-radio-pill"><input type="radio" name="demo-product" id="dp-vault" value="securevault"><label class="form-radio-pill-label" for="dp-vault">SecureVault</label></div>
+                <div class="form-radio-pill"><input type="radio" name="demo-product" id="dp-pulse" value="pulsemetrics"><label class="form-radio-pill-label" for="dp-pulse">PulseMetrics</label></div>
+                <div class="form-radio-pill"><input type="radio" name="demo-product" id="dp-all" value="all" checked><label class="form-radio-pill-label" for="dp-all">Full Suite</label></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="demo-context">What should we focus on?</label>
+              <textarea class="form-textarea" id="demo-context" placeholder="Describe your current stack, key challenges, or specific use cases you want demonstrated..."></textarea>
+            </div>
+            <div class="form-submit-row">
+              <button class="btn btn-primary btn-full" id="demo-submit-btn" onclick="demoSubmit()">Confirm Booking</button>
+            </div>
+            <div class="form-success" id="demo-success">
+              <div class="form-success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+              <div class="form-success-title">Demo Confirmed</div>
+              <div class="form-success-text">A calendar invite and joining link have been sent to your email. Kavya will review your details before the session.</div>
+              <a href="index.html" class="btn btn-outline btn-sm">Back to Home</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: sticky summary + architect + trust -->
+        <div style="display:flex;flex-direction:column;gap:1.5rem">
+          <!-- Booking summary -->
+          <div class="form-card anim-up" style="position:sticky;top:calc(var(--nav-height) + 64px)">
+            <div class="t-label" style="margin-bottom:1rem">Booking Summary</div>
+            <div style="display:flex;flex-direction:column;gap:.65rem">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:.75rem;border:1px solid var(--border);background:var(--bg-elevated)">
+                <span class="t-label">Date</span>
+                <span id="summary-date" style="font-size:.82rem;color:var(--text-primary);text-align:right">Not selected</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:.75rem;border:1px solid var(--border);background:var(--bg-elevated)">
+                <span class="t-label">Time</span>
+                <span id="summary-time" style="font-size:.82rem;color:var(--text-primary)">Not selected</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:.75rem;border:1px solid var(--border);background:var(--bg-elevated)">
+                <span class="t-label">Duration</span>
+                <span style="font-size:.82rem;color:var(--text-primary)">45 minutes</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:.75rem;border:1px solid var(--border);background:var(--bg-elevated)">
+                <span class="t-label">Format</span>
+                <span style="font-size:.82rem;color:var(--text-primary)">Video call</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:.75rem;border:1px solid var(--border);background:var(--bg-elevated)">
+                <span class="t-label">Cost</span>
+                <span style="font-size:.82rem;color:#22c55e;font-weight:600">Free</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end panel book-demo -->
+
+<!-- ============================================================
+     PANEL 3 — CONTACT US
+     ============================================================ -->
+<div class="page-panel" id="panel-contact">
+
+  <!-- Hero -->
+  <section class="demo-hero" data-section-name="CONTACT">
+    <div class="demo-hero-bg" aria-hidden="true"></div>
+    <div class="container" style="position:relative;z-index:1">
+      <nav class="gs-hero-crumb anim-up" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="gs-hero-crumb-sep">/</span>
+        <span class="gs-hero-crumb-cur">Contact Us</span>
+      </nav>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,4vw,4rem);align-items:center">
+        <div>
+          <h1 class="t-display anim-up" style="transition-delay:.1s">
+            <span style="color:var(--text-primary);display:block">Let's</span>
+            <span style="color:var(--brand-primary);display:block">Talk.</span>
+          </h1>
+          <p class="t-body anim-up" style="max-width:460px;margin-top:1.25rem;transition-delay:.2s">
+            Whether you have a pre-sales question, a support issue, or a partnership enquiry — every message goes directly to a human who knows the platform.
+          </p>
+        </div>
+        <!-- Quick contact form -->
+        <div class="form-card anim-up" style="position:static;transition-delay:.2s">
+          <div class="form-card-title">Send a Message</div>
+          <div class="form-card-sub">We respond to every enquiry within 4 business hours.</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="ct-name">Full Name</label>
+              <input class="form-input" id="ct-name" type="text" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ct-email">Email</label>
+              <input class="form-input" id="ct-email" type="email" placeholder="you@company.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ct-subject">Subject</label>
+            <select class="form-select" id="ct-subject">
+              <option value="">Select topic</option>
+              <option>Pre-sales Enquiry</option>
+              <option>Technical Support</option>
+              <option>Partnership</option>
+              <option>Press / Media</option>
+              <option>Careers</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ct-message">Message</label>
+            <textarea class="form-textarea" id="ct-message" style="min-height:120px" placeholder="Describe your enquiry in as much detail as helps..." required></textarea>
+          </div>
+          <div class="form-submit-row">
+            <button class="btn btn-brand btn-full" id="ct-submit" onclick="ctSubmit()">Send Message</button>
+          </div>
+          <div class="form-success" id="ct-success">
+            <div class="form-success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+            <div class="form-success-title">Message Sent</div>
+            <div class="form-success-text">Our team will respond within 4 business hours. You will receive a copy at your email address.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact details + map -->
+  <section id="contact-details" class="section-pad" data-section-name="OFFICES">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Left: contact cards + offices -->
+        <div>
+          <div class="section-eyebrow anim-up"><div class="section-eyebrow-line"></div><span class="t-label">Get in Touch</span></div>
+          <h2 class="t-h2 anim-up" style="margin-bottom:2rem;transition-delay:.08s">Direct<br><span style="color:var(--brand-primary)">Contact Lines</span></h2>
+
+          <div class="contact-details-grid anim-up" style="transition-delay:.12s">
+            <div class="contact-detail-card">
+              <div class="contact-detail-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div>
+              <div class="contact-detail-label">General Enquiries</div>
+              <div class="contact-detail-value">hello@nexacore.io</div>
+              <div class="contact-detail-sub">We respond within 4 business hours</div>
+            </div>
+            <div class="contact-detail-card">
+              <div class="contact-detail-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.49 2 2 0 0 1 3.57 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
+              <div class="contact-detail-label">Sales</div>
+              <div class="contact-detail-value">+1 (512) 400-7700</div>
+              <div class="contact-detail-sub">Mon–Fri, 08:00–18:00 CST</div>
+            </div>
+            <div class="contact-detail-card">
+              <div class="contact-detail-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+              <div class="contact-detail-label">Technical Support</div>
+              <div class="contact-detail-value">support@nexacore.io</div>
+              <div class="contact-detail-sub">24/7 for Professional and Enterprise</div>
+            </div>
+            <div class="contact-detail-card">
+              <div class="contact-detail-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+              <div class="contact-detail-label">Partnerships</div>
+              <div class="contact-detail-value">partners@nexacore.io</div>
+              <div class="contact-detail-sub">Technology alliances and resellers</div>
+            </div>
+          </div>
+
+          <!-- Office list -->
+          <div class="offices-list anim-up" style="transition-delay:.18s">
+            <div class="office-item">
+              <div class="office-flag">US</div>
+              <div>
+                <div class="office-city">Austin, Texas</div>
+                <div class="office-address">200 Congress Avenue, Suite 14F<br>Austin, TX 78701, United States</div>
+                <div class="office-type">Global HQ</div>
+              </div>
+            </div>
+            <div class="office-item">
+              <div class="office-flag">UK</div>
+              <div>
+                <div class="office-city">London, England</div>
+                <div class="office-address">1 Canada Square, Level 22<br>Canary Wharf, London E14 5AB</div>
+                <div class="office-type">EMEA HQ</div>
+              </div>
+            </div>
+            <div class="office-item">
+              <div class="office-flag">SG</div>
+              <div>
+                <div class="office-city">Singapore</div>
+                <div class="office-address">One Raffles Quay, North Tower<br>Level 35, Singapore 048583</div>
+                <div class="office-type">APAC HQ</div>
+              </div>
+            </div>
+            <div class="office-item">
+              <div class="office-flag">AU</div>
+              <div>
+                <div class="office-city">Sydney, Australia</div>
+                <div class="office-address">Level 25, Tower One, Barangaroo<br>International Towers, Sydney NSW 2000</div>
+                <div class="office-type">Regional Office</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: map -->
+        <div class="anim-up" style="transition-delay:.15s">
+          <div class="map-block">
+            <div class="map-overlay">
+              <div class="map-overlay-label">Global HQ</div>
+              <div class="map-overlay-name">Austin, Texas</div>
+            </div>
+            <iframe
+              class="map-embed"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3445.913844857527!2d-97.74287202396168!3d30.268280174880936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8644b50ab3a1bf8f%3A0x5b14e03d2c7ae284!2s200%20Congress%20Ave%2C%20Austin%2C%20TX%2078701!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="NEXACORE Austin HQ location map"
+              aria-label="Map showing NEXACORE headquarters at 200 Congress Avenue, Austin Texas">
+            </iframe>
+          </div>
+
+          <!-- SLA response times -->
+          <div style="border:1px solid var(--border);background:var(--bg-surface);margin-top:1.5rem">
+            <div style="padding:.85rem 1.25rem;border-bottom:1px solid var(--border);background:var(--bg-elevated);font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)">Response Time Commitments</div>
+            <div style="display:flex;flex-direction:column;gap:0">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid var(--border)">
+                <div>
+                  <div style="font-size:.85rem;font-weight:500;color:var(--text-primary)">Critical Incidents</div>
+                  <div style="font-size:.75rem;color:var(--text-muted)">System down or data at risk</div>
+                </div>
+                <div class="t-mono" style="font-size:.9rem;font-weight:700;color:#ef4444">15 min</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid var(--border)">
+                <div>
+                  <div style="font-size:.85rem;font-weight:500;color:var(--text-primary)">High Priority</div>
+                  <div style="font-size:.75rem;color:var(--text-muted)">Service degraded, business impact</div>
+                </div>
+                <div class="t-mono" style="font-size:.9rem;font-weight:700;color:var(--brand-warm)">2 hours</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid var(--border)">
+                <div>
+                  <div style="font-size:.85rem;font-weight:500;color:var(--text-primary)">General Support</div>
+                  <div style="font-size:.75rem;color:var(--text-muted)">Questions and configuration help</div>
+                </div>
+                <div class="t-mono" style="font-size:.9rem;font-weight:700;color:var(--brand-primary)">4 hours</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem">
+                <div>
+                  <div style="font-size:.85rem;font-weight:500;color:var(--text-primary)">Sales Enquiries</div>
+                  <div style="font-size:.75rem;color:var(--text-muted)">Pre-sales and demos</div>
+                </div>
+                <div class="t-mono" style="font-size:.9rem;font-weight:700;color:var(--brand-primary)">1 business day</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end panel contact -->
+
+</main>
+
+<!-- FOOTER -->
+<footer id="footer" role="contentinfo">
+  <div class="container--full">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <div class="footer-logo"><div class="footer-logo-mark" aria-hidden="true"></div><span class="footer-logo-name">NEXACORE</span></div>
+        <p class="footer-tagline">Enterprise technology infrastructure for organizations that cannot afford to slow down.</p>
+        <div><div class="t-label" style="margin-bottom:.75rem">Stay Informed</div><form class="footer-newsletter" onsubmit="return false"><input type="email" placeholder="your@company.com" aria-label="Email"><button type="submit">Subscribe</button></form></div>
+        <div class="footer-social">
+          <a href="#" class="social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+          <a href="#" class="social-icon" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+          <a href="#" class="social-icon" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+        </div>
+      </div>
+      <div><div class="footer-col-title">Products</div><ul class="footer-links" role="list"><li><a href="index.html#products" class="footer-link">NexaFlow</a></li><li><a href="index.html#products" class="footer-link">CoreSync</a></li><li><a href="index.html#products" class="footer-link">SecureVault</a></li><li><a href="index.html#products" class="footer-link">PulseMetrics</a></li><li><a href="index.html#products" class="footer-link">CloudOrchestra</a></li></ul></div>
+      <div><div class="footer-col-title">Services</div><ul class="footer-links" role="list"><li><a href="index.html#services" class="footer-link">Cloud Migration</a></li><li><a href="index.html#services" class="footer-link">DevSecOps</a></li><li><a href="index.html#services" class="footer-link">Cybersecurity</a></li><li><a href="#" class="footer-link" style="color:var(--brand-warm)">Free Consultation</a></li></ul></div>
+      <div><div class="footer-col-title">Company</div><ul class="footer-links" role="list"><li><a href="about.html" class="footer-link">About Us</a></li><li><a href="about.html#team" class="footer-link">Team</a></li><li><a href="about.html#values" class="footer-link">Values</a></li><li><a href="#" class="footer-link">Careers</a></li></ul></div>
+      <div><div class="footer-col-title">Resources</div><ul class="footer-links" role="list"><li><a href="#" class="footer-link">Documentation</a></li><li><a href="#" class="footer-link">Trust Center</a></li><li><a href="#" class="footer-link">Case Studies</a></li><li><a href="#" class="footer-link">Blog</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copyright"><span class="t-mono" style="font-size:.75rem">&#169; 2024 NEXACORE, Inc. All rights reserved.</span></div>
+      <nav class="footer-legal" aria-label="Legal links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Cookie Policy</a><a href="#">Sitemap</a><a href="#">Accessibility</a></nav>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+(function(){
+'use strict';
+
+// ---- THEME ----
+const html = document.documentElement;
+const themeToggle = document.getElementById('theme-toggle');
+const iconSun  = document.getElementById('icon-sun');
+const iconMoon = document.getElementById('icon-moon');
+function applyTheme(t){
+  html.setAttribute('data-theme',t);
+  iconSun.style.display  = t==='dark'  ?'block':'none';
+  iconMoon.style.display = t==='light' ?'block':'none';
+  localStorage.setItem('nexacore-theme',t);
+}
+applyTheme(localStorage.getItem('nexacore-theme')||'dark');
+themeToggle.addEventListener('click',function(){ applyTheme(html.getAttribute('data-theme')==='dark'?'light':'dark'); });
+
+// ---- SCROLL ----
+const scrollFill   = document.getElementById('scroll-progress-fill');
+const scrollTopBtn = document.getElementById('scroll-top');
+function updateScroll(){
+  const s=window.scrollY, d=document.documentElement.scrollHeight-window.innerHeight;
+  if(scrollFill) scrollFill.style.height=(d>0?(s/d)*100:0)+'%';
+  if(scrollTopBtn) scrollTopBtn.classList.toggle('visible',s>400);
+}
+scrollTopBtn&&scrollTopBtn.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+window.addEventListener('scroll',updateScroll,{passive:true});
+updateScroll();
+
+// ---- SECTION OBSERVER ----
+const sectionLbl = document.getElementById('section-label-vert');
+const dots = document.querySelectorAll('.section-dot');
+const dotMap = {};
+dots.forEach(function(d){ dotMap[d.dataset.section]=d; });
+function updateDots(id,name){
+  dots.forEach(function(d){ d.classList.remove('active'); });
+  if(dotMap[id]) dotMap[id].classList.add('active');
+  if(sectionLbl){ sectionLbl.classList.remove('visible'); setTimeout(function(){ sectionLbl.textContent=name||''; sectionLbl.classList.add('visible'); },100); }
+}
+const secObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting) updateDots(e.target.id,e.target.dataset.sectionName); });
+},{threshold:0.3});
+document.querySelectorAll('section[data-section-name]').forEach(function(s){ secObs.observe(s); });
+dots.forEach(function(dot){ dot.addEventListener('click',function(){ const t=document.getElementById(dot.dataset.section); if(t) t.scrollIntoView({behavior:'smooth'}); }); });
+
+// ---- ANIMATE ON SCROLL ----
+const animObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); animObs.unobserve(e.target); } });
+},{threshold:0.08});
+document.querySelectorAll('.anim-up').forEach(function(el){ animObs.observe(el); });
+setTimeout(function(){ document.querySelectorAll('.gs-hero .anim-up, .demo-hero .anim-up').forEach(function(el){ el.classList.add('in'); }); },80);
+
+// ---- PAGE TABS ----
+window.switchTab = function(tab){
+  document.querySelectorAll('.page-tab').forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  document.querySelectorAll('.page-panel').forEach(function(p){ p.classList.remove('active'); });
+  const btn = document.querySelector('[data-tab="'+tab+'"]');
+  const panel = document.getElementById('panel-'+tab);
+  if(btn){ btn.classList.add('active'); btn.setAttribute('aria-selected','true'); }
+  if(panel){ panel.classList.add('active'); }
+  window.scrollTo({top:0,behavior:'smooth'});
+  // re-trigger animations for newly visible panel
+  setTimeout(function(){
+    if(panel) panel.querySelectorAll('.anim-up:not(.in)').forEach(function(el){ el.classList.add('in'); });
+  },200);
+};
+document.querySelectorAll('.page-tab').forEach(function(btn){
+  btn.addEventListener('click',function(){ switchTab(btn.dataset.tab); });
+});
+
+// handle URL hash on load
+const tabFromHash = { '#get-started':'get-started', '#book-demo':'book-demo', '#contact':'contact' };
+if(tabFromHash[window.location.hash]) switchTab(tabFromHash[window.location.hash]);
+
+// ---- GET STARTED MULTI-STEP FORM ----
+var gsCurrentStep = 1;
+window.gsNextStep = function(n){
+  // Validate before going forward
+  if(n > gsCurrentStep){
+    if(gsCurrentStep===1){
+      const fname = document.getElementById('gs-fname').value.trim();
+      const email = document.getElementById('gs-email').value.trim();
+      const company = document.getElementById('gs-company').value.trim();
+      let valid=true;
+      ['gs-fname','gs-lname','gs-email','gs-company'].forEach(function(id){
+        const el=document.getElementById(id);
+        const pg=el.closest('.form-group');
+        if(!el.value.trim()){ pg.classList.add('has-error'); el.classList.add('error'); valid=false; }
+        else { pg.classList.remove('has-error'); el.classList.remove('error'); }
+      });
+      if(!valid) return;
+      if(!/\S+@\S+\.\S+/.test(email)){
+        const el=document.getElementById('gs-email');
+        el.closest('.form-group').classList.add('has-error');
+        el.classList.add('error');
+        return;
+      }
+    }
+    if(n===3){
+      // Populate review
+      document.getElementById('review-name').textContent = document.getElementById('gs-fname').value+' '+document.getElementById('gs-lname').value;
+      document.getElementById('review-email').textContent = document.getElementById('gs-email').value;
+      document.getElementById('review-company').textContent = document.getElementById('gs-company').value;
+      const planEl = document.querySelector('input[name="plan"]:checked');
+      document.getElementById('review-plan').textContent = planEl ? planEl.value.charAt(0).toUpperCase()+planEl.value.slice(1) : 'Professional';
+    }
+  }
+  document.getElementById('gs-step-'+gsCurrentStep).classList.remove('active');
+  gsCurrentStep = n;
+  document.getElementById('gs-step-'+n).classList.add('active');
+  // Update stepper
+  document.querySelectorAll('#gs-stepper .form-stepper-step').forEach(function(s,i){
+    s.classList.remove('active','done');
+    if(i+1 < n) s.classList.add('done');
+    else if(i+1 === n) s.classList.add('active');
+  });
+};
+
+window.gsSubmit = function(){
+  const consent = document.getElementById('gs-consent');
+  if(!consent.checked){ consent.closest('.form-group').style.outline='1px solid #ef4444'; return; }
+  const btn = document.getElementById('gs-submit-btn');
+  btn.textContent='Submitting...';
+  btn.disabled=true;
+  setTimeout(function(){
+    document.getElementById('gs-form-body').style.display='none';
+    document.getElementById('gs-stepper').style.display='none';
+    document.getElementById('gs-success').classList.add('visible');
+  },1200);
+};
+
+// ---- DEMO SUBMIT ----
+window.demoSubmit = function(){
+  const btn = document.getElementById('demo-submit-btn');
+  btn.textContent='Confirming...';
+  btn.disabled=true;
+  setTimeout(function(){
+    btn.style.display='none';
+    document.getElementById('demo-success').classList.add('visible');
+  },1000);
+};
+
+// ---- CONTACT SUBMIT ----
+window.ctSubmit = function(){
+  const btn = document.getElementById('ct-submit');
+  btn.textContent='Sending...';
+  btn.disabled=true;
+  setTimeout(function(){
+    btn.style.display='none';
+    document.getElementById('ct-success').classList.add('visible');
+  },900);
+};
+
+// ---- CALENDAR ----
+var calYear=2026, calMonth=2; // 0-indexed: 2 = March
+var selectedDate=null, selectedTime=null;
+
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const TODAY=new Date();
+
+// Days with available slots (relative day numbers for demo)
+const HAS_SLOTS=[3,5,6,10,11,12,13,17,18,19,20,24,25,26];
+
+function buildCalendar(){
+  const label=document.getElementById('cal-month-label');
+  const grid=document.getElementById('cal-grid');
+  if(!label||!grid) return;
+  label.textContent=MONTHS[calMonth]+' '+calYear;
+  grid.innerHTML='';
+
+  const firstDay=new Date(calYear,calMonth,1).getDay(); // Sun=0
+  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  // Convert Sunday-first to Monday-first
+  const startOffset=(firstDay===0?6:firstDay-1);
+
+  for(var i=0;i<startOffset;i++){
+    var empty=document.createElement('div');
+    empty.className='cal-day empty';
+    empty.setAttribute('aria-hidden','true');
+    grid.appendChild(empty);
+  }
+  for(var d=1;d<=daysInMonth;d++){
+    var dayEl=document.createElement('div');
+    dayEl.className='cal-day';
+    dayEl.textContent=d;
+    dayEl.setAttribute('role','gridcell');
+    var isPast=(calYear<TODAY.getFullYear())||(calYear===TODAY.getFullYear()&&calMonth<TODAY.getMonth())||(calYear===TODAY.getFullYear()&&calMonth===TODAY.getMonth()&&d<TODAY.getDate());
+    var isWeekend=new Date(calYear,calMonth,d).getDay();
+    if(isPast||isWeekend===0||isWeekend===6){ dayEl.classList.add('past'); }
+    else{
+      if(HAS_SLOTS.indexOf(d)>-1) dayEl.classList.add('has-slots');
+      if(calYear===TODAY.getFullYear()&&calMonth===TODAY.getMonth()&&d===TODAY.getDate()) dayEl.classList.add('today');
+      if(selectedDate&&selectedDate.d===d&&selectedDate.m===calMonth&&selectedDate.y===calYear) dayEl.classList.add('selected');
+      (function(day){ dayEl.addEventListener('click',function(){ selectDate(day); }); })(d);
+    }
+    grid.appendChild(dayEl);
+  }
+}
+
+function selectDate(d){
+  selectedDate={d:d,m:calMonth,y:calYear};
+  buildCalendar();
+  var dateStr=MONTHS[calMonth]+' '+d+', '+calYear;
+  document.getElementById('time-slots-date').textContent=dateStr;
+  document.getElementById('summary-date').textContent=dateStr;
+  // Reset time
+  selectedTime=null;
+  document.getElementById('summary-time').textContent='Not selected';
+  document.querySelectorAll('.time-slot:not(.unavailable)').forEach(function(s){ s.classList.remove('selected'); });
+}
+
+document.getElementById('cal-prev')&&document.getElementById('cal-prev').addEventListener('click',function(){
+  calMonth--; if(calMonth<0){ calMonth=11; calYear--; } buildCalendar();
+});
+document.getElementById('cal-next')&&document.getElementById('cal-next').addEventListener('click',function(){
+  calMonth++; if(calMonth>11){ calMonth=0; calYear++; } buildCalendar();
+});
+
+document.querySelectorAll('.time-slot:not(.unavailable)').forEach(function(slot){
+  slot.addEventListener('click',function(){
+    document.querySelectorAll('.time-slot').forEach(function(s){ s.classList.remove('selected'); });
+    slot.classList.add('selected');
+    selectedTime=slot.textContent.trim();
+    document.getElementById('summary-time').textContent=selectedTime;
+  });
+});
+
+buildCalendar();
+
+// ---- MOBILE NAV ----
+const hamburger=document.getElementById('hamburger');
+const mobileNav=document.getElementById('mobile-nav');
+hamburger&&hamburger.addEventListener('click',function(){
+  var isOpen=hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open',isOpen);
+  hamburger.setAttribute('aria-expanded',String(isOpen));
+  document.body.style.overflow=isOpen?'hidden':'';
+});
+document.querySelectorAll('.mobile-nav-link[data-toggle]').forEach(function(link){
+  link.addEventListener('click',function(){
+    var sub=document.getElementById(link.dataset.toggle);
+    if(!sub) return;
+    var isOpen=sub.classList.toggle('open');
+    link.classList.toggle('open',isOpen);
+  });
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&mobileNav&&mobileNav.classList.contains('open')){
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    hamburger.setAttribute('aria-expanded','false');
+    document.body.style.overflow='';
+  }
+});
+
+})();
+</script>
+</body>
+</html>

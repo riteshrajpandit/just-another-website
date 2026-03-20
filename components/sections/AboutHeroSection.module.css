@@ -1,0 +1,247 @@
+/* About Hero Section styles */
+
+.aboutHero {
+  min-height: 60vh;
+  padding-top: var(--nav-height);
+  background: var(--bg-base);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.aboutHeroBg {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.5;
+}
+
+.aboutHeroAccent {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  background: linear-gradient(135deg, transparent 0%, rgba(27, 118, 187, 0.04) 100%);
+  border-left: 1px solid var(--border);
+}
+
+.aboutHeroVert {
+  position: absolute;
+  right: calc(var(--left-rail) * 0.5);
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: var(--border);
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+  opacity: 0.4;
+}
+
+.aboutHeroInner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.aboutHeroGrid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+}
+
+.aboutCrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.aboutCrumb a {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--transition);
+}
+
+.aboutCrumb a:hover {
+  color: var(--brand-primary);
+}
+
+.aboutCrumbSep {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.aboutCrumbCurrent {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand-primary);
+}
+
+.aboutHeroHeadline {
+  margin-bottom: 1.5rem;
+}
+
+.aboutHeroHeadline .line1 {
+  color: var(--text-primary);
+  display: block;
+}
+
+.aboutHeroHeadline .line2 {
+  color: var(--brand-primary);
+  display: block;
+}
+
+.aboutHeroSub {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: var(--text-secondary);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
+.aboutHeroBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.aboutBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.aboutBadge:hover {
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+.aboutBadgeDot {
+  width: 5px;
+  height: 5px;
+  background: var(--brand-primary);
+  flex-shrink: 0;
+}
+
+.aboutHeroVisual {
+  position: relative;
+  height: 360px;
+}
+
+.ahvBlock {
+  position: absolute;
+  border: 1px solid var(--border);
+}
+
+.ahvBlockLg {
+  width: 200px;
+  height: 200px;
+  right: 60px;
+  top: 40px;
+  border-color: var(--brand-primary);
+  opacity: 0.25;
+  animation: ahvPulse 6s ease-in-out infinite;
+}
+
+.ahvBlockMd {
+  width: 120px;
+  height: 120px;
+  right: 20px;
+  top: 100px;
+  background: var(--brand-primary);
+  opacity: 0.08;
+  animation: ahvPulse 6s 1s ease-in-out infinite;
+}
+
+.ahvBlockSm {
+  width: 60px;
+  height: 60px;
+  right: 160px;
+  bottom: 80px;
+  background: var(--brand-accent);
+  opacity: 0.2;
+  animation: ahvPulse 4s 0.5s ease-in-out infinite;
+}
+
+.ahvBlockXs {
+  width: 28px;
+  height: 28px;
+  right: 40px;
+  bottom: 60px;
+  background: var(--brand-warm);
+  opacity: 0.6;
+}
+
+.ahvLineH {
+  position: absolute;
+  height: 1px;
+  background: var(--border);
+  right: 0;
+  left: 40px;
+  top: 200px;
+}
+
+.ahvLineV {
+  position: absolute;
+  width: 1px;
+  background: var(--border);
+  top: 40px;
+  bottom: 40px;
+  right: 260px;
+}
+
+.ahvLabel {
+  position: absolute;
+  left: 40px;
+  bottom: 40px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  writing-mode: vertical-rl;
+}
+
+@keyframes ahvPulse {
+  0%, 100% {
+    opacity: 0.08;
+  }
+  50% {
+    opacity: 0.22;
+  }
+}
+
+/* Responsive */
+@media (max-width: 1279px) {
+  .aboutHeroGrid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 1023px) {
+  .aboutHeroVisual { display: none; }
+}
+
+@media (max-width: 767px) {
+  .aboutHeroBadges { gap: 0.35rem; }
+}

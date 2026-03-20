@@ -1,6 +1,6 @@
 /**
- * @file Home Page
- * @description Main landing page with all sections
+ * @file About Page
+ * @description Company information, team, and values page
  */
 
 'use client';
@@ -8,17 +8,15 @@
 import { useState, useCallback } from 'react';
 import { Header, Footer, LoadingScreen, ScrollRail } from '@/components/layout';
 import {
-  HeroSection,
-  StatsSection,
-  ProductsSection,
-  ServicesSection,
-  BrandsSection,
-  EarlyAdoptersSection,
-  TestimonialsSection,
+  AboutHeroSection,
+  OverviewSection,
+  TeamStatsSection,
+  ValuesSection,
+  TeamSection,
   CTASection,
 } from '@/components/sections';
 
-export default function HomePage() {
+export default function AboutPage() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const handleLoadingComplete = useCallback(() => {
@@ -31,13 +29,11 @@ export default function HomePage() {
       <ScrollRail />
       <Header />
       <main id="main-content">
-        <HeroSection isLoaded={isLoaded} />
-        <StatsSection />
-        <ProductsSection />
-        <ServicesSection />
-        <BrandsSection />
-        <EarlyAdoptersSection />
-        <TestimonialsSection />
+        <AboutHeroSection />
+        <OverviewSection />
+        <TeamStatsSection />
+        <ValuesSection />
+        <TeamSection />
         <CTASection />
       </main>
       <Footer />
