@@ -260,14 +260,18 @@
   stroke-width: 2;
 }
 
-.megaItemText .name {
+.megaItemText {
+  /* Item text wrapper */
+}
+
+.name {
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--text-primary);
   display: block;
 }
 
-.megaItemText .desc {
+.desc {
   font-size: 0.75rem;
   color: var(--text-muted);
   display: block;
@@ -327,14 +331,16 @@
 }
 
 .megaStat { text-align: center; }
-.megaStat .num {
+
+.num {
   font-family: var(--font-mono);
   font-weight: 700;
   font-size: 1.1rem;
   color: var(--brand-primary);
   display: block;
 }
-.megaStat .lbl {
+
+.lbl {
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;

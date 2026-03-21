@@ -1,0 +1,67 @@
+/* Logo styles */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logoMark {
+  background: var(--brand-primary);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.logoMark::before,
+.logoMark::after {
+  content: '';
+  position: absolute;
+  background: #ffffff;
+}
+
+.logoMark::before {
+  width: 60%;
+  height: 2px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logoMark::after {
+  width: 2px;
+  height: 60%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logoName {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+}
+
+/* Default variant (navbar) */
+.logoDefault .logoMark {
+  width: 32px;
+  height: 32px;
+}
+
+.logoDefault .logoName {
+  font-size: 1.1rem;
+}
+
+.logoDefault .logoName span {
+  color: var(--brand-primary);
+}
+
+/* Footer variant */
+.logoFooter .logoMark {
+  width: 36px;
+  height: 36px;
+}
+
+.logoFooter .logoName {
+  font-size: 1.15rem;
+}

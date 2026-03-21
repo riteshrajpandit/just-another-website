@@ -4,6 +4,7 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui';
+import styles from './Header.module.css';
 
 const company = [
   { name: 'Overview', desc: 'Our mission and founding story', href: '/about#overview' },
@@ -22,33 +23,33 @@ const stats = [
 
 export function AboutMegaMenu() {
   return (
-    <div className="mega-menu mega-menu--narrow" role="region" aria-label="About menu">
-      <div className="mega-inner mega-col-about">
+    <div className={`${styles.megaMenu} ${styles.megaMenuNarrow}`} role="region" aria-label="About menu">
+      <div className={`${styles.megaInner} ${styles.megaColAbout}`}>
         <div>
-          <div className="mega-section-label">Company</div>
-          <ul className="mega-list" role="list">
+          <div className={styles.megaSectionLabel}>Company</div>
+          <ul className={styles.megaList} role="list">
             {company.map(({ name, desc, href }) => (
               <li key={name}>
-                <Link href={href} className="mega-list-item" tabIndex={0}>
-                  <div className="mega-item-text">
-                    <span className="name">{name}</span>
-                    <span className="desc">{desc}</span>
+                <Link href={href} className={styles.megaListItem} tabIndex={0}>
+                  <div className={styles.megaItemText}>
+                    <span className={styles.name}>{name}</span>
+                    <span className={styles.desc}>{desc}</span>
                   </div>
                 </Link>
               </li>
             ))}
           </ul>
-          <div className="mega-stat-row">
+          <div className={styles.megaStatRow}>
             {stats.map(({ value, label }) => (
-              <div key={label} className="mega-stat">
-                <span className="num">{value}</span>
-                <span className="lbl">{label}</span>
+              <div key={label} className={styles.megaStat}>
+                <span className={styles.num}>{value}</span>
+                <span className={styles.lbl}>{label}</span>
               </div>
             ))}
           </div>
         </div>
         <div>
-          <div className="mega-section-label">Team</div>
+          <div className={styles.megaSectionLabel}>Team</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', marginBottom: '1rem' }}>
             {teamInitials.map((initials, idx) => (
               <div
@@ -74,13 +75,13 @@ export function AboutMegaMenu() {
           </Button>
         </div>
         <div>
-          <div className="mega-section-label">Careers</div>
-          <div className="mega-highlight" style={{ padding: '1.25rem', height: 'fit-content', border: '1px solid var(--border)' }}>
-            <div className="careers-badge">We Are Hiring</div>
-            <div className="mega-highlight-title" style={{ marginTop: '0.75rem' }}>
+          <div className={styles.megaSectionLabel}>Careers</div>
+          <div className={styles.megaHighlight} style={{ padding: '1.25rem', height: 'fit-content', border: '1px solid var(--border)' }}>
+            <div className={styles.careersBadge}>We Are Hiring</div>
+            <div className={styles.megaHighlightTitle} style={{ marginTop: '0.75rem' }}>
               18 Open Positions
             </div>
-            <div className="mega-highlight-desc">
+            <div className={styles.megaHighlightDesc}>
               Join a team building infrastructure that powers thousands of businesses worldwide.
             </div>
             <Button href="#" variant="brand" size="sm" style={{ marginTop: '0.75rem' }}>

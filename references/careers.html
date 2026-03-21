@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Careers — NEXACORE</title>
+<meta name="description" content="Build the infrastructure that powers thousands of enterprises. Join NEXACORE — where engineers, architects, and operators solve problems that matter.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS — consistent with full site system
+   ============================================================ */
+:root {
+  --brand-primary:   #1b76bb;
+  --brand-secondary: #0d4a78;
+  --brand-accent:    #00d4ff;
+  --brand-warm:      #f5a623;
+  --nav-height:      64px;
+  --left-rail:       72px;
+  --max-w:           1440px;
+  --transition:      200ms ease;
+  --transition-slow: 400ms ease;
+}
+[data-theme="light"] {
+  --bg-base:        #f5f4f0;
+  --bg-surface:     #ffffff;
+  --bg-elevated:    #eceae4;
+  --bg-dark-band:   #e0ded8;
+  --text-primary:   #0e0e0e;
+  --text-secondary: #4a4a4a;
+  --text-muted:     #8a8a8a;
+  --border:         #d0cec8;
+  --border-strong:  #0e0e0e;
+  --shadow-offset:  rgba(0,0,0,0.15);
+}
+[data-theme="dark"] {
+  --bg-base:        #0a0a0a;
+  --bg-surface:     #111111;
+  --bg-elevated:    #1a1a1a;
+  --bg-dark-band:   #050505;
+  --text-primary:   #f0ede8;
+  --text-secondary: #a8a5a0;
+  --text-muted:     #555550;
+  --border:         #2a2a2a;
+  --border-strong:  #f0ede8;
+  --shadow-offset:  rgba(0,0,0,0.6);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'DM Sans',sans-serif;font-weight:400;background-color:var(--bg-base);color:var(--text-primary);line-height:1.6;overflow-x:hidden;transition:background-color .3s ease,color .3s ease}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+ul,ol{list-style:none}
+img{max-width:100%;display:block;object-fit:cover}
+::selection{background:var(--brand-primary);color:#fff}
+:focus-visible{outline:2px solid var(--brand-accent);outline-offset:2px}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.t-display{font-family:'Syne',sans-serif;font-size:clamp(3rem,7vw,6.5rem);font-weight:800;line-height:1.0;letter-spacing:-.02em}
+.t-h2{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.02em}
+.t-h3{font-family:'Syne',sans-serif;font-size:clamp(1.25rem,2vw,1.75rem);font-weight:700;line-height:1.2}
+.t-h4{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;line-height:1.3}
+.t-body{font-size:clamp(.95rem,1.2vw,1.1rem);font-weight:400;line-height:1.7;color:var(--text-secondary)}
+.t-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+.t-mono{font-family:'JetBrains Mono',monospace}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 clamp(1rem,3vw,2rem) 0 calc(var(--left-rail) + clamp(1rem,3vw,2rem))}
+.container--full{max-width:var(--max-w);margin:0 auto;padding:0 clamp(1rem,3vw,2rem)}
+.section-pad{padding:clamp(4rem,8vw,7rem) 0}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;border-radius:0;transition:transform var(--transition),box-shadow var(--transition),background var(--transition),color var(--transition);cursor:pointer;white-space:nowrap}
+.btn-primary{background:var(--brand-warm);color:#0e0e0e;border:1px solid var(--brand-warm)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:3px 3px 0 var(--brand-secondary)}
+.btn-outline{background:transparent;color:var(--text-primary);border:1px solid var(--border-strong)}
+.btn-outline:hover{transform:translateY(-2px);box-shadow:3px 3px 0 var(--brand-primary);border-color:var(--brand-primary);color:var(--brand-primary)}
+.btn-brand{background:var(--brand-primary);color:#fff;border:1px solid var(--brand-primary)}
+.btn-brand:hover{transform:translateY(-2px);box-shadow:3px 3px 0 var(--brand-secondary)}
+.btn-white{background:#fff;color:#0e0e0e;border:1px solid #fff}
+.btn-white:hover{transform:translateY(-2px);box-shadow:3px 3px 0 rgba(255,255,255,.3)}
+.btn-white-outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5)}
+.btn-white-outline:hover{border-color:#fff;transform:translateY(-2px)}
+.btn-sm{padding:.5rem 1rem;font-size:.75rem}
+.btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
+
+/* ============================================================
+   SCROLL RAIL
+   ============================================================ */
+#scroll-rail{position:fixed;left:0;top:0;width:var(--left-rail);height:100vh;z-index:100;display:flex;flex-direction:column;align-items:center;padding-top:calc(var(--nav-height) + 2rem);pointer-events:none}
+#scroll-progress-track{position:absolute;left:16px;top:0;width:2px;height:100%;background:var(--border)}
+#scroll-progress-fill{width:100%;height:0%;background:var(--brand-primary);transition:height .1s linear}
+.section-dots{display:flex;flex-direction:column;gap:.6rem;align-items:center;pointer-events:all;margin-top:80px}
+.section-dot{width:6px;height:6px;border:1px solid var(--text-muted);background:transparent;cursor:pointer;transition:all .3s ease;flex-shrink:0}
+.section-dot.active{background:var(--brand-primary);border-color:var(--brand-primary)}
+.section-dot:hover{border-color:var(--brand-accent)}
+.section-label-vert{writing-mode:vertical-rl;text-orientation:mixed;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-top:.75rem;opacity:0;transition:opacity .3s ease,color .3s ease;white-space:nowrap}
+.section-label-vert.visible{opacity:1;color:var(--brand-primary)}
+#scroll-top{position:fixed;bottom:2rem;right:2rem;width:48px;height:48px;background:var(--bg-surface);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:200;opacity:0;transform:translateY(20px);transition:opacity .3s ease,transform .3s ease,box-shadow var(--transition);pointer-events:none}
+#scroll-top.visible{opacity:1;transform:translateY(0);pointer-events:all}
+#scroll-top:hover{box-shadow:3px 3px 0 var(--brand-primary)}
+#scroll-top svg{width:18px;height:18px;stroke:var(--text-primary);fill:none;stroke-width:2}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+#navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:var(--bg-surface);border-bottom:1px solid var(--border);z-index:500;display:flex;align-items:center;transition:background .3s ease,border-color .3s ease}
+[data-theme="dark"] #navbar{background:rgba(17,17,17,.92);backdrop-filter:blur(12px)}
+[data-theme="light"] #navbar{background:rgba(255,255,255,.92);backdrop-filter:blur(12px)}
+.nav-inner{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 clamp(1rem,3vw,2rem);display:flex;align-items:center;justify-content:space-between;gap:2rem}
+.nav-logo{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.nav-logo-mark{width:32px;height:32px;background:var(--brand-primary);position:relative;flex-shrink:0}
+.nav-logo-mark::before,.nav-logo-mark::after{content:'';position:absolute;background:#fff}
+.nav-logo-mark::before{width:60%;height:2px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.nav-logo-mark::after{width:2px;height:60%;top:50%;left:50%;transform:translate(-50%,-50%)}
+.nav-logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.1em;color:var(--text-primary)}
+.nav-logo-name span{color:var(--brand-primary)}
+.nav-links{display:flex;align-items:center;gap:0;flex:1;justify-content:center}
+.nav-item{position:relative}
+.nav-link{display:flex;align-items:center;gap:.35rem;padding:0 1rem;height:var(--nav-height);font-size:.78rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);border-left:3px solid transparent;transition:color var(--transition),border-color var(--transition);white-space:nowrap}
+.nav-link:hover{color:var(--text-primary);border-left-color:var(--brand-accent)}
+.nav-link.active{color:var(--brand-primary);border-left-color:var(--brand-primary)}
+.nav-link svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;transition:transform var(--transition);flex-shrink:0}
+.nav-actions{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.theme-toggle{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);background:transparent;cursor:pointer;transition:border-color var(--transition),box-shadow var(--transition)}
+.theme-toggle:hover{border-color:var(--brand-primary);box-shadow:2px 2px 0 var(--brand-primary)}
+.theme-toggle svg{width:16px;height:16px;stroke:var(--text-secondary);fill:none;stroke-width:2}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:1px solid var(--border);background:transparent}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text-primary);transition:transform .3s ease,opacity .3s ease}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+#mobile-nav{position:fixed;inset:0;top:var(--nav-height);background:var(--bg-surface);z-index:490;overflow-y:auto;padding:1.5rem;transform:translateX(100%);transition:transform .3s ease}
+#mobile-nav.open{transform:translateX(0)}
+.mobile-nav-item{border-bottom:1px solid var(--border)}
+.mobile-nav-link{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;font-size:.9rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--text-primary);cursor:pointer}
+.mobile-sub-item{padding:.6rem 0 .6rem 1rem;font-size:.85rem;color:var(--text-secondary);border-left:2px solid var(--border);margin-bottom:.25rem;cursor:pointer;transition:color var(--transition),border-color var(--transition)}
+.mobile-sub-item:hover{color:var(--brand-primary);border-left-color:var(--brand-primary)}
+
+/* ============================================================
+   SECTION COMMON
+   ============================================================ */
+.section-header{margin-bottom:clamp(2.5rem,5vw,4rem)}
+.section-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.section-eyebrow-line{width:24px;height:2px;background:var(--brand-primary)}
+.anim-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+.anim-up.in{opacity:1;transform:translateY(0)}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+#careers-hero{
+  min-height:100vh;padding-top:var(--nav-height);
+  background:var(--bg-base);
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;
+}
+.hero-bg-grid{position:absolute;inset:0;background-image:radial-gradient(circle,var(--border) 1px,transparent 1px);background-size:32px 32px;opacity:.5;pointer-events:none}
+.hero-blob{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(27,118,187,.1),transparent 70%);top:-100px;right:-100px;pointer-events:none}
+
+/* Large background word */
+.hero-bg-word{
+  position:absolute;right:-2rem;top:50%;
+  transform:translateY(-50%);
+  font-family:'Syne',sans-serif;font-size:clamp(8rem,18vw,16rem);
+  font-weight:800;letter-spacing:.05em;
+  color:var(--border);opacity:.25;
+  pointer-events:none;user-select:none;white-space:nowrap;
+  line-height:1;
+}
+.hero-inner{position:relative;z-index:1;width:100%}
+.hero-grid{display:grid;grid-template-columns:7fr 5fr;gap:clamp(2rem,4vw,4rem);align-items:center}
+.hero-crumb{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
+.hero-crumb a,.hero-crumb span{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);transition:color var(--transition)}
+.hero-crumb a:hover{color:var(--brand-primary)}
+.hero-crumb .cur{color:var(--brand-primary)}
+.hero-crumb-sep{color:var(--text-muted)}
+.hero-headline{margin-bottom:1.5rem}
+.hero-headline .line1{color:var(--text-primary);display:block}
+.hero-headline .line2{color:var(--brand-primary);display:block}
+.hero-sub{font-size:clamp(1rem,1.5vw,1.15rem);color:var(--text-secondary);max-width:560px;line-height:1.7;margin-bottom:2rem}
+.hero-badges{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem}
+.hero-badge{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .85rem;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);background:var(--bg-elevated);transition:border-color var(--transition),color var(--transition)}
+.hero-badge:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.hero-badge-dot{width:5px;height:5px;background:var(--brand-primary);flex-shrink:0}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap}
+
+/* Right: live openings ticker */
+.hero-visual-panel{
+  background:var(--bg-surface);
+  border:1px solid var(--border);
+  border-top:3px solid var(--brand-primary);
+  overflow:hidden;
+}
+.hvp-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.25rem;
+  border-bottom:1px solid var(--border);
+  background:var(--bg-elevated);
+}
+.hvp-title{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+.hvp-live{display:flex;align-items:center;gap:.45rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#22c55e}
+.hvp-live-dot{width:6px;height:6px;background:#22c55e;animation:blink-dot 2s ease-in-out infinite}
+@keyframes blink-dot{0%,100%{opacity:1}50%{opacity:.3}}
+.hvp-role{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.85rem 1.25rem;
+  border-bottom:1px solid var(--border);
+  transition:background var(--transition);
+  cursor:pointer;
+}
+.hvp-role:last-child{border-bottom:none}
+.hvp-role:hover{background:var(--bg-elevated)}
+.hvp-role-left{}
+.hvp-role-title{font-size:.88rem;font-weight:500;color:var(--text-primary)}
+.hvp-role-dept{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-top:.2rem}
+.hvp-role-tag{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.08em;padding:.18rem .5rem;border:1px solid var(--border);color:var(--text-muted);text-transform:uppercase;flex-shrink:0}
+.hvp-role-tag.new{border-color:rgba(34,197,94,.4);color:#22c55e;background:rgba(34,197,94,.06)}
+.scroll-cue-hero{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;z-index:2}
+.scroll-cue-label{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)}
+.scroll-cue-arrow{width:1px;height:40px;background:var(--border);position:relative;overflow:hidden}
+.scroll-cue-arrow::after{content:'';position:absolute;top:0;left:0;right:0;height:50%;background:var(--brand-primary);animation:scroll-drop 1.5s ease-in-out infinite}
+@keyframes scroll-drop{0%{top:-50%}100%{top:100%}}
+
+/* ============================================================
+   MISSION & GOALS — visual split section
+   ============================================================ */
+#mission{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+
+.mission-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;
+}
+.mission-left{
+  padding:clamp(3rem,6vw,5rem) clamp(2rem,4vw,4rem) clamp(3rem,6vw,5rem) 0;
+  border-right:1px solid var(--border);
+}
+.mission-right{
+  padding:clamp(3rem,6vw,5rem) 0 clamp(3rem,6vw,5rem) clamp(2rem,4vw,4rem);
+}
+.mission-year{
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(4rem,8vw,7rem);
+  font-weight:700;color:var(--brand-primary);
+  opacity:.1;line-height:1;margin-bottom:-1rem;
+  display:block;user-select:none;
+}
+.mission-statement{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(1.4rem,2.5vw,2rem);
+  font-weight:700;line-height:1.3;
+  color:var(--text-primary);
+  margin-bottom:1.5rem;
+}
+.mission-statement em{color:var(--brand-primary);font-style:normal}
+
+/* Goals horizontal visual */
+.goals-track{
+  display:flex;flex-direction:column;gap:0;
+  border:1px solid var(--border);
+}
+.goal-item{
+  display:flex;align-items:flex-start;gap:1.25rem;
+  padding:1.25rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;
+  transition:background var(--transition);
+  cursor:default;
+}
+.goal-item:last-child{border-bottom:none}
+.goal-item:hover{background:var(--bg-surface)}
+.goal-item::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--brand-primary);transform:scaleY(0);transform-origin:top;
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.goal-item:hover::before{transform:scaleY(1)}
+.goal-num{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  font-weight:700;color:var(--brand-primary);flex-shrink:0;
+  margin-top:.15rem;width:24px;
+}
+.goal-title{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:var(--text-primary);margin-bottom:.3rem}
+.goal-text{font-size:.82rem;color:var(--text-secondary);line-height:1.6}
+
+/* ============================================================
+   NUMBERS BAND
+   ============================================================ */
+#numbers-band{
+  background:var(--bg-dark-band);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:3.5rem 0;
+}
+.numbers-grid{display:grid;grid-template-columns:repeat(5,1fr)}
+.number-item{padding:1rem 1.5rem;border-right:1px solid var(--border);text-align:center}
+.number-item:last-child{border-right:none}
+.number-item::before{content:'';display:block;width:100%;height:2px;background:var(--brand-primary);transform:scaleX(0);transform-origin:left;transition:transform .4s ease;margin-bottom:.75rem}
+.number-item:hover::before{transform:scaleX(1)}
+.number-val{font-family:'JetBrains Mono',monospace;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:var(--text-primary);line-height:1;display:block}
+.number-val .accent{color:var(--brand-primary)}
+.number-lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);margin-top:.45rem;display:block}
+
+/* ============================================================
+   HIRING PROCESS
+   ============================================================ */
+#hiring-process{background:var(--bg-base)}
+
+/* Horizontal process steps — connected by line */
+.process-track{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:0;
+}
+/* connector line */
+.process-track::before{
+  content:'';position:absolute;
+  top:36px;left:calc(10% + 36px);right:calc(10% + 36px);
+  height:1px;background:var(--border);z-index:0;
+}
+.process-step{
+  display:flex;flex-direction:column;align-items:center;
+  gap:1rem;padding:0 1rem;
+  position:relative;z-index:1;
+  text-align:center;
+}
+.process-node{
+  width:72px;height:72px;
+  background:var(--bg-surface);
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  transition:border-color var(--transition),background var(--transition),transform var(--transition),box-shadow var(--transition);
+  position:relative;
+}
+.process-step:hover .process-node{
+  border-color:var(--brand-primary);
+  background:var(--bg-elevated);
+  transform:translate(-3px,-3px);
+  box-shadow:4px 4px 0 var(--brand-primary);
+}
+.process-node svg{width:26px;height:26px;stroke:var(--text-muted);fill:none;stroke-width:1.5;transition:stroke var(--transition)}
+.process-step:hover .process-node svg{stroke:var(--brand-primary)}
+.process-step-num{
+  position:absolute;top:-10px;right:-10px;
+  width:22px;height:22px;
+  background:var(--brand-primary);
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:700;
+  color:#fff;display:flex;align-items:center;justify-content:center;
+}
+.process-step-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--text-primary)}
+.process-step-desc{font-size:.78rem;color:var(--text-secondary);line-height:1.5;max-width:160px;margin:0 auto}
+.process-step-time{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:.2rem .55rem;
+  border:1px solid var(--border);
+  color:var(--text-muted);
+  margin-top:.25rem;
+}
+
+/* ============================================================
+   BENEFITS
+   ============================================================ */
+#benefits{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+
+.benefits-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+}
+.benefit-card{
+  background:var(--bg-surface);
+  padding:2rem 1.75rem;
+  display:flex;flex-direction:column;gap:1rem;
+  border:2px solid transparent;
+  transition:transform var(--transition),box-shadow var(--transition),border-color var(--transition),background var(--transition);
+  cursor:default;position:relative;overflow:hidden;
+}
+.benefit-card:hover{
+  transform:translate(-3px,-3px);
+  box-shadow:4px 4px 0 var(--brand-primary);
+  border-color:var(--brand-primary);
+  background:var(--bg-elevated);z-index:1;
+}
+.benefit-bg-num{
+  position:absolute;right:-.25rem;bottom:-1.5rem;
+  font-family:'Syne',sans-serif;font-size:clamp(5rem,9vw,7rem);
+  font-weight:800;color:var(--brand-primary);opacity:.04;
+  line-height:1;user-select:none;pointer-events:none;
+  transition:opacity .3s ease;
+}
+.benefit-card:hover .benefit-bg-num{opacity:.08}
+.benefit-icon{
+  width:48px;height:48px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--transition),border-color var(--transition);
+}
+.benefit-card:hover .benefit-icon{background:var(--brand-primary);border-color:var(--brand-primary)}
+.benefit-icon svg{width:22px;height:22px;stroke:var(--brand-primary);fill:none;stroke-width:1.5;transition:stroke var(--transition)}
+.benefit-card:hover .benefit-icon svg{stroke:#fff}
+.benefit-num{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--brand-primary);letter-spacing:.12em}
+.benefit-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text-primary);line-height:1.2}
+.benefit-desc{font-size:.85rem;color:var(--text-secondary);line-height:1.7;flex:1}
+
+/* ============================================================
+   TEAM CULTURE STRIP
+   ============================================================ */
+#culture{background:var(--bg-base)}
+
+.culture-mosaic{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  grid-template-rows:200px 200px;
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+  margin-top:2rem;
+}
+.culture-tile{
+  background:var(--bg-elevated);
+  display:flex;flex-direction:column;
+  justify-content:flex-end;
+  padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:background var(--transition);
+}
+.culture-tile--wide{grid-column:span 2}
+.culture-tile--tall{grid-row:span 2}
+.culture-tile-bg{
+  position:absolute;inset:0;
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+}
+.culture-tile:hover .culture-tile-bg{transform:scale(1.04)}
+/* colour-coded tile backgrounds */
+.culture-tile--a .culture-tile-bg{background:linear-gradient(145deg,#0d2a45,#1b76bb44)}
+.culture-tile--b .culture-tile-bg{background:linear-gradient(145deg,#0a2a0a,#1b6b3a44)}
+.culture-tile--c .culture-tile-bg{background:linear-gradient(145deg,#2a0a1a,#8a1b5a44)}
+.culture-tile--d .culture-tile-bg{background:linear-gradient(145deg,#1a1a0a,#7a7a1b44)}
+.culture-tile--e .culture-tile-bg{background:linear-gradient(145deg,#1a0a2a,#5a1b8a44)}
+.culture-tile-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 60%);
+}
+.culture-tile-label{position:relative;z-index:1}
+.culture-tile-label .t-label{color:rgba(255,255,255,.6);margin-bottom:.35rem}
+.culture-tile-label .title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#fff;line-height:1.2}
+.culture-tile-label .sub{font-size:.78rem;color:rgba(255,255,255,.65);margin-top:.3rem;line-height:1.5}
+/* Geo shapes inside tiles */
+.culture-tile-geo{position:absolute;border:1px solid rgba(255,255,255,.1);pointer-events:none}
+
+/* ============================================================
+   JOB LISTINGS
+   ============================================================ */
+#openings{background:var(--bg-base)}
+
+/* Filter bar */
+.jobs-filters{
+  display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem;
+  align-items:center;
+}
+.jobs-filter-btn{
+  padding:.5rem 1.1rem;
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-muted);
+  border:1px solid var(--border);background:transparent;
+  cursor:pointer;
+  transition:color var(--transition),background var(--transition),border-color var(--transition);
+  white-space:nowrap;
+}
+.jobs-filter-btn:hover{color:var(--text-primary);background:var(--bg-elevated)}
+.jobs-filter-btn.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
+.jobs-search{
+  display:flex;align-items:center;gap:.5rem;
+  background:var(--bg-elevated);border:1px solid var(--border);
+  padding:.5rem 1rem;margin-left:auto;
+  transition:border-color var(--transition);
+}
+.jobs-search:focus-within{border-color:var(--brand-primary)}
+.jobs-search svg{width:13px;height:13px;stroke:var(--text-muted);fill:none;stroke-width:2}
+.jobs-search input{background:none;border:none;outline:none;font-size:.82rem;color:var(--text-primary);width:180px}
+.jobs-search input::placeholder{color:var(--text-muted)}
+
+/* Job grid */
+.jobs-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+}
+.job-card{
+  background:var(--bg-surface);
+  padding:1.75rem;
+  display:flex;flex-direction:column;
+  gap:1rem;
+  border:2px solid transparent;
+  transition:transform var(--transition),box-shadow var(--transition),border-color var(--transition),background var(--transition);
+  cursor:pointer;
+  position:relative;
+}
+.job-card:hover{
+  transform:translate(-3px,-3px);
+  box-shadow:4px 4px 0 var(--brand-primary);
+  border-color:var(--brand-primary);
+  background:var(--bg-elevated);z-index:1;
+}
+/* Active left bar */
+.job-card::after{
+  content:'';position:absolute;top:0;left:0;width:3px;height:100%;
+  background:var(--brand-primary);transform:scaleY(0);transform-origin:top;
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+.job-card:hover::after{transform:scaleY(1)}
+.job-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.job-dept-icon{
+  width:44px;height:44px;background:var(--bg-elevated);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:background var(--transition),border-color var(--transition);
+}
+.job-card:hover .job-dept-icon{background:var(--brand-primary);border-color:var(--brand-primary)}
+.job-dept-icon svg{width:20px;height:20px;stroke:var(--brand-primary);fill:none;stroke-width:1.8;transition:stroke var(--transition)}
+.job-card:hover .job-dept-icon svg{stroke:#fff}
+.job-new-badge{
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:.18rem .55rem;background:rgba(34,197,94,.08);
+  border:1px solid rgba(34,197,94,.3);color:#22c55e;
+  flex-shrink:0;
+}
+.job-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text-primary);line-height:1.25}
+.job-dept{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-primary)}
+.job-meta{display:flex;flex-wrap:wrap;gap:.5rem}
+.job-meta-tag{
+  display:inline-flex;align-items:center;gap:.3rem;
+  padding:.2rem .55rem;border:1px solid var(--border);
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);
+  transition:border-color var(--transition),color var(--transition);
+}
+.job-card:hover .job-meta-tag{border-color:rgba(27,118,187,.3);color:var(--brand-primary)}
+.job-meta-tag svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2}
+.job-desc{font-size:.83rem;color:var(--text-secondary);line-height:1.6;flex:1}
+.job-footer{display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid var(--border)}
+.job-applicants{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.08em;color:var(--text-muted)}
+.job-apply-btn{
+  display:flex;align-items:center;gap:.4rem;
+  font-size:.75rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--brand-primary);
+  transition:gap var(--transition);
+}
+.job-card:hover .job-apply-btn{gap:.75rem}
+
+/* No results state */
+.jobs-empty{
+  grid-column:1/-1;
+  padding:3rem;text-align:center;
+  font-size:.9rem;color:var(--text-muted);
+}
+
+/* ============================================================
+   OPEN APPLICATION / CV DROP
+   ============================================================ */
+#open-application{
+  background:var(--bg-elevated);
+  border-top:1px solid var(--border);
+}
+.open-app-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(2rem,4vw,4rem);align-items:start;
+}
+/* Drop zone */
+.cv-drop-zone{
+  border:2px dashed var(--border);
+  background:var(--bg-surface);
+  padding:2.5rem;
+  text-align:center;
+  transition:border-color var(--transition),background var(--transition);
+  cursor:pointer;
+  position:relative;
+}
+.cv-drop-zone.drag-over{border-color:var(--brand-primary);background:rgba(27,118,187,.05)}
+.cv-drop-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.cv-drop-icon{width:52px;height:52px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
+.cv-drop-icon svg{width:24px;height:24px;stroke:var(--brand-primary);fill:none;stroke-width:1.5}
+.cv-drop-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:.4rem}
+.cv-drop-sub{font-size:.8rem;color:var(--text-muted);line-height:1.5}
+.cv-drop-formats{display:flex;gap:.4rem;justify-content:center;margin-top:1rem;flex-wrap:wrap}
+.cv-format-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;padding:.18rem .5rem;border:1px solid var(--border);color:var(--text-muted);text-transform:uppercase}
+.cv-file-preview{
+  display:none;align-items:center;gap:.75rem;
+  margin-top:1rem;padding:.75rem 1rem;
+  background:rgba(27,118,187,.08);border:1px solid rgba(27,118,187,.25);
+}
+.cv-file-preview.visible{display:flex}
+.cv-file-icon{width:32px;height:32px;background:var(--brand-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cv-file-icon svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2}
+.cv-file-name{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--brand-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cv-file-size{font-size:.7rem;color:var(--text-muted)}
+.cv-file-remove{margin-left:auto;cursor:pointer;color:var(--text-muted);transition:color var(--transition);flex-shrink:0}
+.cv-file-remove:hover{color:#ef4444}
+.cv-file-remove svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* ============================================================
+   FORM FIELDS — consistent with contact.html
+   ============================================================ */
+.form-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.85rem}
+.form-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+.input-wrap{position:relative}
+.form-input,.form-select,.form-textarea{
+  width:100%;padding:.72rem 1rem .72rem 2.75rem;
+  background:var(--bg-elevated);border:1px solid var(--border);border-bottom:2px solid var(--border);
+  color:var(--text-primary);font-family:'DM Sans',sans-serif;font-size:.88rem;
+  border-radius:0;outline:none;
+  transition:border-color var(--transition),background var(--transition),box-shadow var(--transition);
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{
+  border-color:var(--brand-primary);border-bottom-color:var(--brand-primary);
+  background:var(--bg-surface);box-shadow:0 0 0 3px rgba(27,118,187,.1);
+}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--text-muted)}
+.form-input.no-icon,.form-select.no-icon{padding-left:1rem}
+.form-select.no-icon{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23555550' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.25rem}
+.form-textarea{padding:.72rem 1rem;min-height:90px;resize:vertical}
+.input-icon{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);pointer-events:none}
+.input-icon svg{width:15px;height:15px;stroke:var(--text-muted);fill:none;stroke-width:2;transition:stroke var(--transition)}
+.input-wrap:focus-within .input-icon svg{stroke:var(--brand-primary)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.form-check{display:flex;align-items:flex-start;gap:.6rem;cursor:pointer}
+.form-check input{position:absolute;opacity:0;width:0;height:0}
+.form-check-box{width:15px;height:15px;border:1px solid var(--border);background:var(--bg-elevated);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.15rem;transition:border-color var(--transition),background var(--transition)}
+.form-check input:checked + .form-check-box{background:var(--brand-primary);border-color:var(--brand-primary)}
+.form-check input:checked + .form-check-box::after{content:'';display:block;width:7px;height:4px;border-left:1.5px solid #fff;border-bottom:1.5px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.form-check-label{font-size:.82rem;color:var(--text-secondary);line-height:1.5}
+.form-check-label a{color:var(--brand-accent);text-decoration:underline;text-underline-offset:2px}
+.form-error{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#ef4444;display:none}
+.form-group.has-error .form-error{display:block}
+.form-group.has-error .form-input,.form-group.has-error .form-select{border-color:#ef4444;border-bottom-color:#ef4444}
+
+/* Form success */
+.form-success{display:none;flex-direction:column;align-items:center;gap:1rem;padding:2rem;text-align:center}
+.form-success.visible{display:flex}
+.success-icon-box{width:56px;height:56px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);display:flex;align-items:center;justify-content:center}
+.success-icon-box svg{width:26px;height:26px;stroke:#22c55e;fill:none;stroke-width:2}
+.success-corner{position:absolute;top:-4px;right:-4px;width:12px;height:12px;background:var(--brand-warm)}
+.success-title{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;color:var(--text-primary)}
+.success-sub{font-size:.85rem;color:var(--text-secondary);line-height:1.6}
+
+/* ============================================================
+   JOB APPLY DRAWER / MODAL
+   ============================================================ */
+.job-drawer-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.7);
+  z-index:800;display:none;align-items:flex-end;
+  backdrop-filter:blur(4px);
+}
+.job-drawer-overlay.open{display:flex}
+.job-drawer{
+  width:100%;max-width:640px;
+  margin:0 auto;
+  background:var(--bg-surface);
+  border:1px solid var(--border);
+  border-top:3px solid var(--brand-primary);
+  max-height:92vh;overflow-y:auto;
+  animation:drawer-up .3s cubic-bezier(.4,0,.2,1);
+}
+@keyframes drawer-up{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.drawer-header{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  padding:1.5rem;border-bottom:1px solid var(--border);
+  position:sticky;top:0;background:var(--bg-surface);z-index:1;
+}
+.drawer-close{width:36px;height:36px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color var(--transition)}
+.drawer-close:hover{border-color:#ef4444}
+.drawer-close svg{width:16px;height:16px;stroke:var(--text-muted);fill:none;stroke-width:2}
+.drawer-body{padding:1.5rem}
+.drawer-job-context{
+  padding:1rem 1.25rem;
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  border-left:3px solid var(--brand-primary);
+  margin-bottom:1.5rem;
+}
+.drawer-job-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text-primary)}
+.drawer-job-meta{display:flex;gap:.75rem;margin-top:.4rem;flex-wrap:wrap}
+.drawer-job-meta span{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
+
+/* ============================================================
+   CTA BAND
+   ============================================================ */
+#careers-cta{
+  background:var(--brand-primary);
+  clip-path:polygon(0 6%,100% 0%,100% 100%,0% 100%);
+  padding:clamp(5rem,10vw,8rem) 0 clamp(4rem,7vw,6rem);
+  position:relative;overflow:hidden;
+}
+.cta-bg{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.05) 1px,transparent 1px);background-size:24px 24px}
+.cta-inner{position:relative;z-index:1;text-align:center}
+.cta-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:1.25rem}
+.cta-headline{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,4rem);font-weight:800;color:#fff;line-height:1.1;margin-bottom:1.25rem}
+.cta-sub{font-size:clamp(1rem,1.5vw,1.15rem);color:rgba(255,255,255,.75);max-width:500px;margin:0 auto 2.5rem;line-height:1.7}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+#footer{background:var(--bg-dark-band);border-top:3px solid var(--brand-primary)}
+.footer-main{display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:clamp(1.5rem,3vw,3rem);padding:clamp(3rem,6vw,5rem) 0 3rem}
+.footer-brand{display:flex;flex-direction:column;gap:1.25rem}
+.footer-logo{display:flex;align-items:center;gap:.75rem}
+.footer-logo-mark{width:36px;height:36px;background:var(--brand-primary);position:relative;flex-shrink:0}
+.footer-logo-mark::before,.footer-logo-mark::after{content:'';position:absolute;background:#fff}
+.footer-logo-mark::before{width:60%;height:2px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.footer-logo-mark::after{width:2px;height:60%;top:50%;left:50%;transform:translate(-50%,-50%)}
+.footer-logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:.1em;color:var(--text-primary)}
+.footer-tagline{font-size:.85rem;color:var(--text-muted);line-height:1.6;max-width:240px}
+.footer-col-title{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-primary);margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
+.footer-links{display:flex;flex-direction:column;gap:.6rem}
+.footer-link{font-size:.82rem;color:var(--text-muted);transition:color var(--transition)}
+.footer-link:hover{color:var(--brand-accent)}
+.footer-bottom{padding:1.25rem 0;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.footer-copyright{font-size:.78rem;color:var(--text-muted)}
+.footer-legal{display:flex;gap:1.5rem;flex-wrap:wrap}
+.footer-legal a{font-size:.78rem;color:var(--text-muted);transition:color var(--transition)}
+.footer-legal a:hover{color:var(--brand-accent)}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1279px){
+  .container{padding-left:clamp(1rem,3vw,2rem)}
+  #scroll-rail{display:none}
+  .numbers-grid{grid-template-columns:repeat(3,1fr)}
+  .number-item:nth-child(3){border-right:none}
+  .number-item:nth-child(4),.number-item:nth-child(5){border-top:1px solid var(--border)}
+}
+@media(max-width:1023px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-visual-panel{display:none}
+  .mission-grid{grid-template-columns:1fr}
+  .mission-left{border-right:none;border-bottom:1px solid var(--border);padding-bottom:2rem}
+  .mission-right{padding-top:2rem}
+  .process-track{grid-template-columns:1fr 1fr;gap:2rem}
+  .process-track::before{display:none}
+  .benefits-grid{grid-template-columns:repeat(2,1fr)}
+  .culture-mosaic{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .culture-tile--wide{grid-column:span 2}
+  .culture-tile--tall{grid-row:span 1}
+  .jobs-grid{grid-template-columns:repeat(2,1fr)}
+  .open-app-grid{grid-template-columns:1fr}
+  .footer-main{grid-template-columns:repeat(2,1fr)}
+  .footer-brand{grid-column:1/-1}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+}
+@media(max-width:767px){
+  .process-track{grid-template-columns:1fr}
+  .benefits-grid{grid-template-columns:1fr}
+  .culture-mosaic{grid-template-columns:1fr}
+  .culture-tile--wide,.culture-tile--tall{grid-column:span 1;grid-row:span 1}
+  .jobs-grid{grid-template-columns:1fr}
+  .numbers-grid{grid-template-columns:repeat(2,1fr)}
+  .number-item:nth-child(2){border-right:none}
+  .number-item:nth-child(4){border-right:none}
+  .number-item:nth-child(5){grid-column:1/-1}
+  .footer-main{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .nav-actions .btn{display:none}
+  .hero-badge:nth-child(n+4){display:none}
+  .hero-bg-word{display:none}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+  .cta-btns{flex-direction:column;align-items:center}
+  .jobs-search{display:none}
+}
+@media(max-width:479px){
+  .footer-main{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<!-- SCROLL RAIL -->
+<aside id="scroll-rail" aria-hidden="true">
+  <div id="scroll-progress-track"><div id="scroll-progress-fill"></div></div>
+  <nav class="section-dots">
+    <div class="section-dot active" data-section="careers-hero"     title="Top"></div>
+    <div class="section-dot"        data-section="mission"          title="Mission"></div>
+    <div class="section-dot"        data-section="hiring-process"   title="Process"></div>
+    <div class="section-dot"        data-section="benefits"         title="Benefits"></div>
+    <div class="section-dot"        data-section="culture"          title="Culture"></div>
+    <div class="section-dot"        data-section="openings"         title="Openings"></div>
+    <div class="section-dot"        data-section="open-application" title="Apply"></div>
+  </nav>
+  <div class="section-label-vert" id="section-label-vert">CAREERS</div>
+</aside>
+
+<button id="scroll-top" aria-label="Scroll to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<!-- ============================================================ NAVBAR -->
+<header>
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="NEXACORE Home">
+        <div class="nav-logo-mark" aria-hidden="true"></div>
+        <span class="nav-logo-name">NEXA<span>CORE</span></span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="index.html#products" class="nav-link">Products</a></li>
+        <li class="nav-item"><a href="index.html#services" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+        <li class="nav-item"><a href="careers.html" class="nav-link active" aria-current="page">Careers</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <svg id="icon-sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <a href="#openings" class="btn btn-primary btn-sm">View Openings</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div id="mobile-nav" role="navigation" aria-label="Mobile navigation">
+    <ul role="list">
+      <li class="mobile-nav-item"><div class="mobile-nav-link"><a href="index.html" style="color:inherit">Home</a></div></li>
+      <li class="mobile-nav-item"><div class="mobile-nav-link"><a href="about.html" style="color:inherit">About Us</a></div></li>
+      <li class="mobile-nav-item"><div class="mobile-nav-link"><a href="contact.html" style="color:inherit">Contact</a></div></li>
+    </ul>
+    <div style="margin-top:2rem;display:flex;flex-direction:column;gap:.75rem">
+      <a href="#openings" class="btn btn-primary" style="justify-content:center;text-align:center">View Open Roles</a>
+      <a href="#open-application" class="btn btn-outline" style="justify-content:center;text-align:center">Drop Your CV</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================================================ HERO -->
+<section id="careers-hero" data-section-name="CAREERS">
+  <div class="hero-bg-grid" aria-hidden="true"></div>
+  <div class="hero-blob"    aria-hidden="true"></div>
+  <div class="hero-bg-word" aria-hidden="true">BUILD</div>
+
+  <div class="container hero-inner">
+    <div class="hero-grid">
+      <div>
+        <nav class="hero-crumb anim-up" aria-label="Breadcrumb" style="transition-delay:.05s">
+          <a href="index.html">Home</a>
+          <span class="hero-crumb-sep">/</span>
+          <span class="cur">Careers</span>
+        </nav>
+
+        <h1 class="t-display hero-headline anim-up" style="transition-delay:.12s">
+          <span class="line1">Work on What</span>
+          <span class="line2">Actually Matters.</span>
+        </h1>
+
+        <p class="hero-sub anim-up" style="transition-delay:.22s">
+          NEXACORE runs the infrastructure that keeps enterprises operational. We hire people who find that responsibility clarifying — not intimidating. If you want to build systems that thousands of organisations depend on, this is where you do it.
+        </p>
+
+        <div class="hero-badges anim-up" style="transition-delay:.3s">
+          <span class="hero-badge"><span class="hero-badge-dot"></span>18 Open Roles</span>
+          <span class="hero-badge"><span class="hero-badge-dot"></span>Full Remote Options</span>
+          <span class="hero-badge"><span class="hero-badge-dot"></span>Competitive Equity</span>
+          <span class="hero-badge"><span class="hero-badge-dot"></span>4 Global Offices</span>
+          <span class="hero-badge"><span class="hero-badge-dot"></span>No-Interview-Day Offer Policy</span>
+        </div>
+
+        <div class="hero-ctas anim-up" style="transition-delay:.38s">
+          <a href="#openings" class="btn btn-primary">See All Openings</a>
+          <a href="#open-application" class="btn btn-outline">Drop Your CV</a>
+        </div>
+      </div>
+
+      <!-- Live openings panel -->
+      <div class="hero-visual-panel anim-up" style="transition-delay:.25s">
+        <div class="hvp-header">
+          <span class="hvp-title">Open Positions</span>
+          <span class="hvp-live"><span class="hvp-live-dot"></span>Live</span>
+        </div>
+        <div class="hvp-role" onclick="document.getElementById('openings').scrollIntoView({behavior:'smooth'})">
+          <div class="hvp-role-left">
+            <div class="hvp-role-title">Senior Cloud Engineer</div>
+            <div class="hvp-role-dept">Engineering — Remote</div>
+          </div>
+          <span class="hvp-role-tag new">New</span>
+        </div>
+        <div class="hvp-role" onclick="document.getElementById('openings').scrollIntoView({behavior:'smooth'})">
+          <div class="hvp-role-left">
+            <div class="hvp-role-title">Product Manager — NexaFlow</div>
+            <div class="hvp-role-dept">Product — Remote</div>
+          </div>
+          <span class="hvp-role-tag">Full-time</span>
+        </div>
+        <div class="hvp-role" onclick="document.getElementById('openings').scrollIntoView({behavior:'smooth'})">
+          <div class="hvp-role-left">
+            <div class="hvp-role-title">Security Architect</div>
+            <div class="hvp-role-dept">Engineering — Austin, TX</div>
+          </div>
+          <span class="hvp-role-tag">Full-time</span>
+        </div>
+        <div class="hvp-role" onclick="document.getElementById('openings').scrollIntoView({behavior:'smooth'})">
+          <div class="hvp-role-left">
+            <div class="hvp-role-title">Enterprise Sales Lead — EMEA</div>
+            <div class="hvp-role-dept">Go-to-Market — London, UK</div>
+          </div>
+          <span class="hvp-role-tag new">New</span>
+        </div>
+        <div class="hvp-role" onclick="document.getElementById('openings').scrollIntoView({behavior:'smooth'})">
+          <div class="hvp-role-left">
+            <div class="hvp-role-title">Solutions Architect Intern</div>
+            <div class="hvp-role-dept">Operations — Austin, TX</div>
+          </div>
+          <span class="hvp-role-tag" style="border-color:rgba(245,166,35,.4);color:var(--brand-warm);background:rgba(245,166,35,.06)">Internship</span>
+        </div>
+        <div style="padding:.85rem 1.25rem;border-top:1px solid var(--border)">
+          <a href="#openings" class="btn btn-brand btn-sm" style="width:100%;justify-content:center">View All 18 Roles <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cue-hero" aria-hidden="true">
+    <span class="scroll-cue-label">Scroll</span>
+    <div class="scroll-cue-arrow"></div>
+  </div>
+</section>
+
+<!-- ============================================================ NUMBERS -->
+<section id="numbers-band" data-section-name="BY NUMBERS">
+  <div class="container--full">
+    <div class="numbers-grid">
+      <div class="number-item anim-up">
+        <span class="number-val"><span class="counter" data-target="287">0</span><span class="accent">+</span></span>
+        <span class="number-lbl">Team Members</span>
+      </div>
+      <div class="number-item anim-up" style="transition-delay:.07s">
+        <span class="number-val"><span class="counter" data-target="42">0</span><span class="accent">+</span></span>
+        <span class="number-lbl">Nationalities</span>
+      </div>
+      <div class="number-item anim-up" style="transition-delay:.14s">
+        <span class="number-val"><span class="counter" data-target="94">0</span><span class="accent">%</span></span>
+        <span class="number-lbl">Retention Rate</span>
+      </div>
+      <div class="number-item anim-up" style="transition-delay:.21s">
+        <span class="number-val"><span class="counter" data-target="18">0</span></span>
+        <span class="number-lbl">Open Positions</span>
+      </div>
+      <div class="number-item anim-up" style="transition-delay:.28s">
+        <span class="number-val"><span class="counter" data-target="4">0</span></span>
+        <span class="number-lbl">Global Offices</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ MISSION -->
+<section id="mission" class="section-pad" data-section-name="MISSION">
+  <div class="container">
+    <div class="mission-grid">
+      <div class="mission-left anim-up">
+        <span class="mission-year" aria-hidden="true">12</span>
+        <div class="section-eyebrow"><div class="section-eyebrow-line"></div><span class="t-label">Why We Exist</span></div>
+        <div class="mission-statement">
+          We build infrastructure so that <em>thousands of organisations</em> never have to think about infrastructure.
+        </div>
+        <p class="t-body" style="margin-bottom:1.75rem">
+          Twelve years ago, our founders were running platform engineering at companies that kept hitting the same wall: enterprise software that was either impossibly complex or dangerously fragile. They decided to build the alternative.
+        </p>
+        <p class="t-body" style="margin-bottom:2rem">
+          Today, NEXACORE's products process over 18 million API calls a day. The people who build them are given clear problems, ownership over solutions, and the expectation that they will raise issues the moment they find them.
+        </p>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+          <a href="about.html" class="btn btn-outline">About the Company</a>
+          <a href="about.html#values" class="btn btn-ghost btn-sm" style="align-self:center">Our Values</a>
+        </div>
+      </div>
+
+      <div class="mission-right anim-up" style="transition-delay:.12s">
+        <div class="section-eyebrow"><div class="section-eyebrow-line"></div><span class="t-label">What We Are Working Towards</span></div>
+        <h2 class="t-h3" style="margin-bottom:1.5rem;color:var(--text-primary)">Goals for 2025–2027</h2>
+        <div class="goals-track">
+          <div class="goal-item">
+            <div class="goal-num">01</div>
+            <div>
+              <div class="goal-title">500 Enterprise Clients</div>
+              <div class="goal-text">Grow from 340 to 500 enterprise accounts by deepening our presence in financial services, healthcare, and government verticals.</div>
+            </div>
+          </div>
+          <div class="goal-item">
+            <div class="goal-num">02</div>
+            <div>
+              <div class="goal-title">AI-Native Product Suite</div>
+              <div class="goal-text">Embed AI decision layers across all six products — from NexaFlow orchestration to PulseMetrics anomaly prediction — making automation accessible to non-engineers.</div>
+            </div>
+          </div>
+          <div class="goal-item">
+            <div class="goal-num">03</div>
+            <div>
+              <div class="goal-title">Zero-Downtime Platform Guarantee</div>
+              <div class="goal-text">Engineer our infrastructure to achieve 99.99% uptime across all regions, backed by automated failover and real-time incident response under 15 minutes.</div>
+            </div>
+          </div>
+          <div class="goal-item">
+            <div class="goal-num">04</div>
+            <div>
+              <div class="goal-title">Carbon-Neutral Operations</div>
+              <div class="goal-text">Achieve full carbon neutrality across all data centre operations and corporate offices by end of 2026 through renewable energy partnerships and offset programmes.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ HIRING PROCESS -->
+<section id="hiring-process" class="section-pad" data-section-name="PROCESS" style="background:var(--bg-base);border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="section-header anim-up">
+      <div class="section-eyebrow"><div class="section-eyebrow-line"></div><span class="t-label">How We Hire</span></div>
+      <h2 class="t-h2">A Process Built on<br><span style="color:var(--brand-primary)">Respect for Your Time</span></h2>
+      <p class="t-body" style="max-width:560px;margin-top:1rem">
+        We move deliberately. Every step has a clear purpose and a hard deadline on our end. We do not ghost candidates. If you are not the right fit, you hear it from us directly — with honest feedback.
+      </p>
+    </div>
+
+    <div class="process-track anim-up" style="transition-delay:.1s">
+      <div class="process-step">
+        <div class="process-node" role="img" aria-label="Application step">
+          <span class="process-step-num">01</span>
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </div>
+        <div class="process-step-title">Application</div>
+        <div class="process-step-desc">Submit your CV and a short note on why this specific role. No cover letter essays.</div>
+        <div class="process-step-time">24h response</div>
+      </div>
+      <div class="process-step">
+        <div class="process-node" role="img" aria-label="Screening step">
+          <span class="process-step-num">02</span>
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </div>
+        <div class="process-step-title">Intro Call</div>
+        <div class="process-step-desc">30-minute conversation with a hiring manager. We share context; you share yours.</div>
+        <div class="process-step-time">30 minutes</div>
+      </div>
+      <div class="process-step">
+        <div class="process-node" role="img" aria-label="Technical assessment step">
+          <span class="process-step-num">03</span>
+          <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        </div>
+        <div class="process-step-title">Technical Review</div>
+        <div class="process-step-desc">A take-home or live exercise relevant to the actual work — never abstract puzzles.</div>
+        <div class="process-step-time">3–5 days</div>
+      </div>
+      <div class="process-step">
+        <div class="process-node" role="img" aria-label="Interview step">
+          <span class="process-step-num">04</span>
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </div>
+        <div class="process-step-title">Team Interview</div>
+        <div class="process-step-desc">Meet two or three of your future colleagues. Structured, but conversational.</div>
+        <div class="process-step-time">90 minutes</div>
+      </div>
+      <div class="process-step">
+        <div class="process-node" role="img" aria-label="Offer step">
+          <span class="process-step-num">05</span>
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="process-step-title">Offer</div>
+        <div class="process-step-desc">Transparent offer letter with full compensation breakdown within 48 hours of final interview.</div>
+        <div class="process-step-time">48h decision</div>
+      </div>
+    </div>
+
+    <!-- Total timeline indicator -->
+    <div class="anim-up" style="margin-top:3rem;transition-delay:.2s;border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding:1.25rem 1.5rem;background:var(--bg-surface)">
+      <div>
+        <div class="t-label" style="margin-bottom:.3rem">Total Timeline</div>
+        <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text-primary)">2 to 3 weeks — start to offer</div>
+      </div>
+      <div style="display:flex;gap:2rem;flex-wrap:wrap">
+        <div style="text-align:center"><span class="t-mono" style="font-size:1.2rem;font-weight:700;color:var(--brand-primary);display:block">100%</span><span class="t-label">Candidate feedback</span></div>
+        <div style="text-align:center"><span class="t-mono" style="font-size:1.2rem;font-weight:700;color:var(--brand-primary);display:block">48h</span><span class="t-label">Response to apply</span></div>
+        <div style="text-align:center"><span class="t-mono" style="font-size:1.2rem;font-weight:700;color:var(--brand-primary);display:block">0</span><span class="t-label">Ghost-ings</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ BENEFITS -->
+<section id="benefits" class="section-pad" data-section-name="BENEFITS">
+  <div class="container">
+    <div class="section-header anim-up">
+      <div class="section-eyebrow"><div class="section-eyebrow-line"></div><span class="t-label">What You Get</span></div>
+      <h2 class="t-h2">Built for People Who<br><span style="color:var(--brand-primary)">Do Serious Work</span></h2>
+      <p class="t-body" style="max-width:520px;margin-top:1rem">These are the things that actually matter to engineers and operators who want to do their best work and maintain a life outside of it.</p>
+    </div>
+
+    <div class="benefits-grid">
+      <div class="benefit-card anim-up">
+        <div class="benefit-bg-num">01</div>
+        <div class="benefit-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 4v6l4 2"></path></svg></div>
+        <span class="benefit-num">01 — Time</span>
+        <div class="benefit-title">Async-First, No Meeting Days</div>
+        <div class="benefit-desc">Tuesdays and Thursdays are meeting-free by default across the whole organisation. Deep work is protected, not squeezed into calendar gaps. Flexible hours for all roles outside of core operational windows.</div>
+      </div>
+      <div class="benefit-card anim-up" style="transition-delay:.07s">
+        <div class="benefit-bg-num">02</div>
+        <div class="benefit-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+        <span class="benefit-num">02 — Compensation</span>
+        <div class="benefit-title">Top-Quartile Pay and Equity</div>
+        <div class="benefit-desc">Salaries are benchmarked at the 75th percentile of the market and reviewed annually. Equity refreshes are standard. We do not make lowball offers and negotiate up — we start at what the role is worth.</div>
+      </div>
+      <div class="benefit-card anim-up" style="transition-delay:.14s">
+        <div class="benefit-bg-num">03</div>
+        <div class="benefit-icon"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg></div>
+        <span class="benefit-num">03 — Growth</span>
+        <div class="benefit-title">Learning Budget With No Approval Gates</div>
+        <div class="benefit-desc">Every employee receives $3,000 annually for courses, conferences, books, or certifications. No approval process, no justification form — spend it on anything that makes you better at your work.</div>
+      </div>
+      <div class="benefit-card anim-up" style="transition-delay:.21s">
+        <div class="benefit-bg-num">04</div>
+        <div class="benefit-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
+        <span class="benefit-num">04 — Remote</span>
+        <div class="benefit-title">Home Office Stipend and Coworking Access</div>
+        <div class="benefit-desc">$1,500 home office setup allowance on day one. If you prefer a coworking space, we cover up to $400/month at any WeWork or equivalent location worldwide. The right environment is yours to define.</div>
+      </div>
+      <div class="benefit-card anim-up" style="transition-delay:.28s">
+        <div class="benefit-bg-num">05</div>
+        <div class="benefit-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></div>
+        <span class="benefit-num">05 — Health</span>
+        <div class="benefit-title">Comprehensive Medical, Dental, Vision</div>
+        <div class="benefit-desc">Full medical, dental, and vision coverage with 100% employer-paid premium for employees and 80% for dependents. Mental health coverage and therapy sessions are included with no separate referral needed.</div>
+      </div>
+      <div class="benefit-card anim-up" style="transition-delay:.35s">
+        <div class="benefit-bg-num">06</div>
+        <div class="benefit-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="0"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
+        <span class="benefit-num">06 — Time Off</span>
+        <div class="benefit-title">Unlimited PTO With a 15-Day Minimum</div>
+        <div class="benefit-desc">Unlimited paid time off with a required minimum of 15 days annually tracked by managers. Parental leave is 16 weeks fully paid regardless of gender. Additional sabbaticals at five-year tenure milestones.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ CULTURE MOSAIC -->
+<section id="culture" class="section-pad" data-section-name="CULTURE" style="background:var(--bg-base)">
+  <div class="container">
+    <div class="section-header anim-up">
+      <div class="section-eyebrow"><div class="section-eyebrow-line"></div><span class="t-label">Life at NEXACORE</span></div>
+      <h2 class="t-h2">The Culture Is the<br><span style="color:var(--brand-primary)">Product, Too.</span></h2>
+      <p class="t-body" style="max-width:520px;margin-top:1rem">We do not have a culture slide deck. We have working practices that reflect what we actually value — transparency, craft, and the kind of boredom that comes from processes that run exactly as expected.</p>
+    </div>
+
+    <div class="culture-mosaic anim-up" style="transition-delay:.1s">
+      <!-- Tile A — wide, row 1 -->
+      <div class="culture-tile culture-tile--wide culture-tile--a">
+        <div class="culture-tile-bg"></div>
+        <div class="culture-tile-geo" style="width:80px;height:80px;top:20px;right:100px;border-color:rgba(255,255,255,.1)"></div>
+        <div class="culture-tile-geo" style="width:40px;height:40px;top:35px;right:75px;background:rgba(27,118,187,.15)"></div>
+        <div class="culture-tile-overlay"></div>
+        <div class="culture-tile-label">
+          <div class="t-label">Engineering Culture</div>
+          <div class="title">We Write Postmortems Before Someone Asks For Them</div>
+          <div class="sub">Incidents are learning opportunities. Every major issue results in a public internal postmortem within 72 hours, with root cause, timeline, and prevention steps.</div>
+        </div>
+      </div>
+
+      <!-- Tile B — single, row 1 -->
+      <div class="culture-tile culture-tile--b">
+        <div class="culture-tile-bg"></div>
+        <div class="culture-tile-overlay"></div>
+        <div class="culture-tile-label">
+          <div class="t-label">Transparency</div>
+          <div class="title">Monthly All-Hands. Company P&amp;L Shared Internally.</div>
+        </div>
+      </div>
+
+      <!-- Tile C — single, row 2 -->
+      <div class="culture-tile culture-tile--c">
+        <div class="culture-tile-bg"></div>
+        <div class="culture-tile-overlay"></div>
+        <div class="culture-tile-label">
+          <div class="t-label">Ownership</div>
+          <div class="title">Engineers Ship to Production. No Separate Deployment Team.</div>
+        </div>
+      </div>
+
+      <!-- Tile D — wide, row 2 -->
+      <div class="culture-tile culture-tile--wide culture-tile--d">
+        <div class="culture-tile-bg"></div>
+        <div class="culture-tile-geo" style="width:100px;height:100px;bottom:-20px;right:-20px;border-color:rgba(255,255,255,.08)"></div>
+        <div class="culture-tile-overlay"></div>
+        <div class="culture-tile-label">
+          <div class="t-label">Distributed Team</div>
+          <div class="title">42 Nationalities. One Weekly Standup. Asynchronous Everything Else.</div>
+          <div class="sub">Time zones are respected through documentation standards and async tooling. No one attends a meeting that could have been a Loom.</div>
+        </div>
+      </div>
+
+      <!-- Tile E — single, row 2 (if 3-col) -->
+      <div class="culture-tile culture-tile--e" style="display:none" aria-hidden="true">
+        <div class="culture-tile-bg"></div>
+        <div class="culture-tile-overlay"></div>
+        <div class="culture-tile-label">
+          <div class="t-label">Feedback</div>
+          <div class="title">Quarterly 360 Reviews. Public Recognition.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Culture quotes strip -->
+    <div class="anim-up" style="margin-top:1px;border:1px solid var(--border);background:var(--bg-surface);border-top:none;display:grid;grid-template-columns:repeat(3,1fr);gap:0;transition-delay:.2s">
+      <div style="padding:1.5rem;border-right:1px solid var(--border)">
+        <div style="font-family:'Syne',sans-serif;font-size:.95rem;font-style:italic;color:var(--text-primary);line-height:1.5;margin-bottom:.75rem">"The postmortem culture here changed how I think about failure. We treat it as data, not as blame."</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)">Sofia Larsen — Principal Engineer</div>
+      </div>
+      <div style="padding:1.5rem;border-right:1px solid var(--border)">
+        <div style="font-family:'Syne',sans-serif;font-size:.95rem;font-style:italic;color:var(--text-primary);line-height:1.5;margin-bottom:.75rem">"I shipped my first production change in my second week. The team trusts you to own your work from day one."</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)">Rahul Patel — Solutions Architect</div>
+      </div>
+      <div style="padding:1.5rem">
+        <div style="font-family:'Syne',sans-serif;font-size:.95rem;font-style:italic;color:var(--text-primary);line-height:1.5;margin-bottom:.75rem">"Three years in and I still have not attended a meeting that did not need to happen. That is genuinely rare."</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)">James Oduya — UX Lead</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ JOB LISTINGS -->
+<section id="openings" class="section-pad" data-section-name="OPENINGS" style="background:var(--bg-elevated);border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="section-header anim-up">
+      <div class="section-eyebrow"><div class="section-eyebrow-line"></div><span class="t-label">Open Positions</span></div>
+      <h2 class="t-h2">18 Roles.<br><span style="color:var(--brand-primary)">Find Yours.</span></h2>
+    </div>
+
+    <!-- Filters -->
+    <div class="jobs-filters anim-up" role="group" aria-label="Filter by department">
+      <button class="jobs-filter-btn active" data-dept="all" onclick="filterJobs('all',this)">All (18)</button>
+      <button class="jobs-filter-btn" data-dept="Engineering" onclick="filterJobs('Engineering',this)">Engineering (8)</button>
+      <button class="jobs-filter-btn" data-dept="Product" onclick="filterJobs('Product',this)">Product (3)</button>
+      <button class="jobs-filter-btn" data-dept="Operations" onclick="filterJobs('Operations',this)">Operations (3)</button>
+      <button class="jobs-filter-btn" data-dept="Go-to-Market" onclick="filterJobs('Go-to-Market',this)">Go-to-Market (4)</button>
+      <div class="jobs-search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" placeholder="Search roles..." id="job-search-input" aria-label="Search jobs" oninput="searchJobs(this.value)">
+      </div>
+    </div>
+
+    <!-- Jobs grid -->
+    <div class="jobs-grid" id="jobs-grid" role="list"></div>
+  </div>
+</section>
+
+<!-- ============================================================ OPEN APPLICATION / CV DROP -->
+<section id="open-application" class="section-pad" data-section-name="APPLY" style="background:var(--bg-base)">
+  <div class="container">
+    <div class="section-header anim-up">
+      <div class="section-eyebrow"><div class="section-eyebrow-line"></div><span class="t-label">Always Open</span></div>
+      <h2 class="t-h2">Do Not See the Right Role?<br><span style="color:var(--brand-primary)">Drop Your CV Anyway.</span></h2>
+      <p class="t-body" style="max-width:560px;margin-top:1rem">We maintain a talent pool and reach out directly when a relevant role opens. Submitting here also enters you into our referral network — hiring managers review speculative applications monthly.</p>
+    </div>
+
+    <div class="open-app-grid anim-up" style="transition-delay:.1s">
+      <!-- Left: info -->
+      <div>
+        <div style="border:1px solid var(--border);background:var(--bg-surface);margin-bottom:1.5rem">
+          <div style="padding:.85rem 1.25rem;border-bottom:1px solid var(--border);background:var(--bg-elevated);font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)">What Happens Next</div>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <div style="display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border)">
+              <div style="width:28px;height:28px;background:var(--brand-primary);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;color:#fff;flex-shrink:0">01</div>
+              <div><div style="font-size:.85rem;font-weight:500;color:var(--text-primary);margin-bottom:.2rem">Confirmation Sent</div><div style="font-size:.78rem;color:var(--text-secondary)">You receive an acknowledgement with your reference ID within one hour.</div></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border)">
+              <div style="width:28px;height:28px;background:var(--brand-primary);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;color:#fff;flex-shrink:0">02</div>
+              <div><div style="font-size:.85rem;font-weight:500;color:var(--text-primary);margin-bottom:.2rem">Monthly Talent Review</div><div style="font-size:.78rem;color:var(--text-secondary)">Every first Monday, hiring managers review speculative applications against upcoming role projections.</div></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.25rem">
+              <div style="width:28px;height:28px;background:var(--brand-primary);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;color:#fff;flex-shrink:0">03</div>
+              <div><div style="font-size:.85rem;font-weight:500;color:var(--text-primary);margin-bottom:.2rem">We Reach Out</div><div style="font-size:.78rem;color:var(--text-secondary)">If there is a match, a hiring manager contacts you directly with a specific role and timeline. Your profile stays active for 12 months.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Areas of interest -->
+        <div style="border:1px solid var(--border);background:var(--bg-surface)">
+          <div style="padding:.85rem 1.25rem;border-bottom:1px solid var(--border);background:var(--bg-elevated);font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)">We Are Always Interested In</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
+            <div style="padding:1rem;background:var(--bg-surface);font-size:.82rem;color:var(--text-secondary)">Distributed systems engineers</div>
+            <div style="padding:1rem;background:var(--bg-surface);font-size:.82rem;color:var(--text-secondary)">Security architects</div>
+            <div style="padding:1rem;background:var(--bg-surface);font-size:.82rem;color:var(--text-secondary)">Product managers with B2B SaaS background</div>
+            <div style="padding:1rem;background:var(--bg-surface);font-size:.82rem;color:var(--text-secondary)">Data engineers</div>
+            <div style="padding:1rem;background:var(--bg-surface);font-size:.82rem;color:var(--text-secondary)">Enterprise sales professionals</div>
+            <div style="padding:1rem;background:var(--bg-surface);font-size:.82rem;color:var(--text-secondary)">DevOps and platform engineers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div>
+        <div style="background:var(--bg-surface);border:1px solid var(--border);border-top:3px solid var(--brand-primary)">
+          <div style="padding:1.5rem;border-bottom:1px solid var(--border)">
+            <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text-primary);margin-bottom:.25rem">Speculative Application</div>
+            <div style="font-size:.82rem;color:var(--text-secondary)">Or apply directly to a specific role above</div>
+          </div>
+
+          <div id="cv-form-wrap" style="padding:1.5rem">
+            <div class="form-row">
+              <div class="form-group" id="fg-fname">
+                <label class="form-label" for="app-fname">First Name</label>
+                <div class="input-wrap">
+                  <input class="form-input" id="app-fname" type="text" placeholder="First name" required>
+                  <span class="input-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                </div>
+                <span class="form-error">Required</span>
+              </div>
+              <div class="form-group" id="fg-lname">
+                <label class="form-label" for="app-lname">Last Name</label>
+                <div class="input-wrap">
+                  <input class="form-input" id="app-lname" type="text" placeholder="Last name" required>
+                  <span class="input-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                </div>
+                <span class="form-error">Required</span>
+              </div>
+            </div>
+
+            <div class="form-group" id="fg-email">
+              <label class="form-label" for="app-email">Email Address</label>
+              <div class="input-wrap">
+                <input class="form-input" id="app-email" type="email" placeholder="you@company.com" required>
+                <span class="input-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></span>
+              </div>
+              <span class="form-error">Enter a valid email</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="app-phone">Phone (optional)</label>
+                <div class="input-wrap">
+                  <input class="form-input" id="app-phone" type="tel" placeholder="+1 (555) 000-0000">
+                  <span class="input-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.49 2 2 0 0 1 3.57 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="app-linkedin">LinkedIn (optional)</label>
+                <div class="input-wrap">
+                  <input class="form-input" id="app-linkedin" type="url" placeholder="linkedin.com/in/yourname">
+                  <span class="input-icon"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="app-area">Area of Interest</label>
+              <select class="form-select no-icon" id="app-area">
+                <option value="">Select department</option>
+                <option>Engineering — Cloud & Infrastructure</option>
+                <option>Engineering — Security</option>
+                <option>Engineering — Data</option>
+                <option>Engineering — DevOps / Platform</option>
+                <option>Product Management</option>
+                <option>Product Design / UX</option>
+                <option>Operations & Architecture</option>
+                <option>Sales — Enterprise</option>
+                <option>Marketing</option>
+                <option>Customer Success</option>
+                <option>Finance & Legal</option>
+                <option>People & Talent</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="app-note">Why NEXACORE?</label>
+              <textarea class="form-textarea" id="app-note" placeholder="Two or three sentences. What draws you to NEXACORE specifically, and what kind of work do you want to do here?" style="min-height:80px"></textarea>
+            </div>
+
+            <!-- CV Upload -->
+            <div class="form-group">
+              <label class="form-label">CV / Resume</label>
+              <div class="cv-drop-zone" id="cv-drop-zone" role="button" aria-label="Upload CV">
+                <input type="file" id="cv-file-input" accept=".pdf,.doc,.docx,.txt" aria-label="Choose file">
+                <div class="cv-drop-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg></div>
+                <div class="cv-drop-title">Drag and drop your CV here</div>
+                <div class="cv-drop-sub">or click to browse your files</div>
+                <div class="cv-drop-formats">
+                  <span class="cv-format-tag">PDF</span>
+                  <span class="cv-format-tag">DOC</span>
+                  <span class="cv-format-tag">DOCX</span>
+                  <span class="cv-format-tag">max 10MB</span>
+                </div>
+              </div>
+              <div class="cv-file-preview" id="cv-file-preview">
+                <div class="cv-file-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></div>
+                <div><div class="cv-file-name" id="cv-file-name">file.pdf</div><div class="cv-file-size" id="cv-file-size">0 KB</div></div>
+                <button class="cv-file-remove" id="cv-file-remove" aria-label="Remove file"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-check">
+                <input type="checkbox" id="app-consent" required>
+                <span class="form-check-box"></span>
+                <span class="form-check-label">I agree to NEXACORE's <a href="#">Privacy Policy</a> and consent to my data being retained for 12 months for recruitment purposes.</span>
+              </label>
+            </div>
+
+            <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:.5rem" id="cv-submit-btn" onclick="submitCVForm()">
+              Submit Application
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </div>
+
+          <!-- Success -->
+          <div class="form-success" id="cv-success">
+            <div style="position:relative">
+              <div class="success-icon-box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+              <div class="success-corner" aria-hidden="true"></div>
+            </div>
+            <div class="success-title">Application Received</div>
+            <div class="success-sub">Your reference ID is <strong style="color:var(--brand-primary);font-family:'JetBrains Mono',monospace" id="ref-id">NXC-2026-0001</strong>. Check your email for confirmation. We review speculative applications on the first Monday of each month.</div>
+            <a href="#openings" class="btn btn-outline btn-sm">Browse Open Roles</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ CTA -->
+<section id="careers-cta" data-section-name="JOIN US">
+  <div class="cta-bg" aria-hidden="true"></div>
+  <div class="container--full">
+    <div class="cta-inner anim-up">
+      <div class="cta-label">The team is growing</div>
+      <h2 class="cta-headline">Ready to Do the<br>Best Work of Your Career?</h2>
+      <p class="cta-sub">Join 287 people building infrastructure that powers enterprises that cannot afford to stop.</p>
+      <div class="cta-btns">
+        <a href="#openings" class="btn btn-white">See All Openings</a>
+        <a href="#open-application" class="btn btn-white-outline">Drop Your CV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================ FOOTER -->
+<footer id="footer" role="contentinfo">
+  <div class="container--full">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <div class="footer-logo"><div class="footer-logo-mark" aria-hidden="true"></div><span class="footer-logo-name">NEXACORE</span></div>
+        <p class="footer-tagline">Enterprise technology infrastructure for organisations that cannot afford to slow down.</p>
+      </div>
+      <div><div class="footer-col-title">Products</div><ul class="footer-links" role="list"><li><a href="index.html#products" class="footer-link">NexaFlow</a></li><li><a href="index.html#products" class="footer-link">CoreSync</a></li><li><a href="index.html#products" class="footer-link">SecureVault</a></li><li><a href="index.html#products" class="footer-link">PulseMetrics</a></li><li><a href="index.html#products" class="footer-link">CloudOrchestra</a></li></ul></div>
+      <div><div class="footer-col-title">Company</div><ul class="footer-links" role="list"><li><a href="about.html" class="footer-link">About Us</a></li><li><a href="about.html#team" class="footer-link">Team</a></li><li><a href="careers.html" class="footer-link" style="color:var(--brand-primary)">Careers</a></li><li><a href="contact.html" class="footer-link">Contact</a></li></ul></div>
+      <div><div class="footer-col-title">Resources</div><ul class="footer-links" role="list"><li><a href="#" class="footer-link">Documentation</a></li><li><a href="#" class="footer-link">Trust Center</a></li><li><a href="#" class="footer-link">Case Studies</a></li><li><a href="#" class="footer-link">Blog</a></li></ul></div>
+      <div><div class="footer-col-title">Legal</div><ul class="footer-links" role="list"><li><a href="#" class="footer-link">Privacy Policy</a></li><li><a href="#" class="footer-link">Terms of Service</a></li><li><a href="#" class="footer-link">Cookie Policy</a></li><li><a href="#" class="footer-link">Accessibility</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copyright"><span class="t-mono" style="font-size:.75rem">&#169; 2024 NEXACORE, Inc. All rights reserved.</span></div>
+      <nav class="footer-legal" aria-label="Legal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Sitemap</a></nav>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================ JOB APPLY DRAWER -->
+<div class="job-drawer-overlay" id="job-drawer-overlay" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+  <div class="job-drawer" id="job-drawer">
+    <div class="drawer-header">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.35rem">Apply for Role</div>
+        <div id="drawer-title" style="font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:var(--text-primary)">Role Title</div>
+      </div>
+      <button class="drawer-close" onclick="closeDrawer()" aria-label="Close application form">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="drawer-body">
+      <div class="drawer-job-context" id="drawer-job-context">
+        <div class="drawer-job-title" id="drawer-job-title">Role Title</div>
+        <div class="drawer-job-meta" id="drawer-job-meta"></div>
+      </div>
+
+      <div id="drawer-form-wrap">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label" for="dr-fname">First Name</label><div class="input-wrap"><input class="form-input" id="dr-fname" type="text" placeholder="First name" required><span class="input-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span></div></div>
+          <div class="form-group"><label class="form-label" for="dr-lname">Last Name</label><div class="input-wrap"><input class="form-input" id="dr-lname" type="text" placeholder="Last name" required><span class="input-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span></div></div>
+        </div>
+        <div class="form-group"><label class="form-label" for="dr-email">Email</label><div class="input-wrap"><input class="form-input" id="dr-email" type="email" placeholder="you@company.com" required><span class="input-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></span></div></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label" for="dr-phone">Phone</label><div class="input-wrap"><input class="form-input" id="dr-phone" type="tel" placeholder="+1 (555) 000-0000"><span class="input-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.49 2 2 0 0 1 3.57 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span></div></div>
+          <div class="form-group"><label class="form-label" for="dr-linkedin">LinkedIn</label><div class="input-wrap"><input class="form-input" id="dr-linkedin" type="url" placeholder="linkedin.com/in/yourname"><span class="input-icon"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></span></div></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="dr-note">Why this role?</label>
+          <textarea class="form-textarea" id="dr-note" placeholder="Two to three sentences on why you are the right fit for this specific role..." style="min-height:80px"></textarea>
+        </div>
+        <!-- CV upload in drawer -->
+        <div class="form-group">
+          <label class="form-label">CV / Resume</label>
+          <div class="cv-drop-zone" style="padding:1.5rem" id="dr-drop-zone">
+            <input type="file" accept=".pdf,.doc,.docx" aria-label="Upload CV" id="dr-file-input">
+            <div class="cv-drop-icon" style="width:40px;height:40px;margin-bottom:.75rem"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg></div>
+            <div class="cv-drop-title" style="font-size:.88rem">Drag CV here or click to upload</div>
+            <div class="cv-drop-sub">PDF, DOC, DOCX — max 10MB</div>
+          </div>
+          <div class="cv-file-preview" id="dr-file-preview">
+            <div class="cv-file-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></div>
+            <div><div class="cv-file-name" id="dr-file-name">file.pdf</div></div>
+            <button class="cv-file-remove" onclick="removeDrFile()" aria-label="Remove file"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-check"><input type="checkbox" id="dr-consent" required><span class="form-check-box"></span><span class="form-check-label">I agree to NEXACORE's <a href="#">Privacy Policy</a>.</span></label>
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" id="dr-submit" onclick="submitDrawerForm()">
+          Submit Application <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+
+      <div class="form-success" id="drawer-success">
+        <div style="position:relative"><div class="success-icon-box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div><div class="success-corner" aria-hidden="true"></div></div>
+        <div class="success-title">Application Sent</div>
+        <div class="success-sub">You will hear from us within 48 hours. Check your inbox for a confirmation with your reference ID.</div>
+        <button class="btn btn-outline btn-sm" onclick="closeDrawer()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ JAVASCRIPT -->
+<script>
+(function(){
+'use strict';
+
+/* ---- DATA ---- */
+const JOBS = [
+  {id:1,title:'Senior Cloud Engineer',dept:'Engineering',sub:'Cloud & Infrastructure',location:'Remote',type:'Full-time',salary:'$140K–$175K',applicants:24,desc:'Design and operate multi-cloud infrastructure across AWS, Azure, and GCP. You will work on the systems that keep 340+ enterprise clients running at scale.',skills:['Kubernetes','Terraform','AWS','GCP','Azure'],isNew:true},
+  {id:2,title:'Product Manager — NexaFlow',dept:'Product',sub:'Workflow Automation',location:'Remote',type:'Full-time',salary:'$130K–$160K',applicants:31,desc:'Own the roadmap for NexaFlow, our fastest-growing product. Work directly with enterprise clients and engineering to define what gets built.',skills:['B2B SaaS','Roadmapping','Enterprise','API Products'],isNew:false},
+  {id:3,title:'Security Architect',dept:'Engineering',sub:'Security',location:'Austin, TX',type:'Full-time',salary:'$150K–$185K',applicants:18,desc:'Architect zero-trust security models across our product suite and client deployments. You will own SecureVault from a technical depth perspective.',skills:['Zero-Trust','IAM','SOC2','SIEM','Pen Testing'],isNew:true},
+  {id:4,title:'DevSecOps Engineer',dept:'Engineering',sub:'Platform',location:'Remote',type:'Full-time',salary:'$120K–$150K',applicants:14,desc:'Build and maintain CI/CD pipelines with integrated security gates. Automate compliance checking and deployment workflows across the engineering organisation.',skills:['CI/CD','GitHub Actions','Docker','Security Gates','SLAs'],isNew:false},
+  {id:5,title:'Enterprise Sales Lead — EMEA',dept:'Go-to-Market',sub:'Sales',location:'London, UK',type:'Full-time',salary:'£90K–£120K + Commission',applicants:22,desc:'Own and grow our EMEA enterprise pipeline. You will work with strategic accounts in financial services, healthcare, and public sector across Europe and the Middle East.',skills:['Enterprise Sales','SaaS','MEDDIC','Salesforce','Quota Carrying'],isNew:true},
+  {id:6,title:'Solutions Architect Intern',dept:'Operations',sub:'Architecture',location:'Austin, TX',type:'Internship',salary:'$40–$50/hr',applicants:47,desc:'Work alongside senior solutions architects on live client engagements. You will contribute to architecture documents, demo environments, and integration design.',skills:['Cloud Architecture','Documentation','Python','APIs'],isNew:false},
+  {id:7,title:'Data Engineer',dept:'Engineering',sub:'Data Platform',location:'Remote',type:'Full-time',salary:'$125K–$155K',applicants:19,desc:'Build and maintain the data infrastructure that powers CoreSync and PulseMetrics. Design ETL pipelines, warehouse schemas, and streaming data systems at enterprise scale.',skills:['dbt','Spark','Kafka','Snowflake','Python'],isNew:false},
+  {id:8,title:'UX / Product Designer',dept:'Product',sub:'Design',location:'Remote',type:'Full-time',salary:'$110K–$140K',applicants:38,desc:'Own the design system and product UX across the NEXACORE platform. You will work closely with engineering and product to define interaction patterns for complex enterprise workflows.',skills:['Figma','Design Systems','Enterprise UX','Accessibility'],isNew:true},
+  {id:9,title:'Head of Customer Success',dept:'Operations',sub:'Customer Success',location:'Austin, TX',type:'Full-time',salary:'$140K–$170K',applicants:15,desc:'Lead the customer success function across our 340+ enterprise clients. Build the playbooks, hire the team, and own NRR and expansion as core metrics.',skills:['Customer Success','NRR','Enterprise','Gainsight','Leadership'],isNew:false},
+  {id:10,title:'Marketing Lead — Content & SEO',dept:'Go-to-Market',sub:'Marketing',location:'Remote',type:'Full-time',salary:'$95K–$120K',applicants:29,desc:'Own the content strategy and SEO programme for NEXACORE. Technical B2B content experience is essential — you will be writing for engineers, architects, and CTOs.',skills:['Content Strategy','SEO','B2B Tech','Demand Gen','Analytics'],isNew:false},
+  {id:11,title:'Software Engineer — CoreSync',dept:'Engineering',sub:'Integration Platform',location:'Remote',type:'Full-time',salary:'$130K–$165K',applicants:22,desc:'Build the core data synchronisation engine that runs at sub-100ms across distributed environments. You will work on one of the most performance-critical systems we ship.',skills:['Go','Distributed Systems','Message Queues','Latency','PostgreSQL'],isNew:false},
+  {id:12,title:'Enterprise Sales Lead — APAC',dept:'Go-to-Market',sub:'Sales',location:'Singapore',type:'Full-time',salary:'SGD $140K–$180K + Commission',applicants:17,desc:'Launch and grow our APAC enterprise footprint from our Singapore office. Financial services and logistics are our primary verticals in the region.',skills:['Enterprise Sales','APAC','SaaS','Mandarin (preferred)'],isNew:true},
+  {id:13,title:'Platform Reliability Engineer',dept:'Engineering',sub:'Infrastructure',location:'Remote',type:'Full-time',salary:'$135K–$165K',applicants:11,desc:'Own availability, performance, and incident response for the NEXACORE platform. You will build the systems that let us hold our 99.97% uptime SLA.',skills:['SRE','On-Call','Observability','Incident Response','Kubernetes'],isNew:false},
+  {id:14,title:'Talent Acquisition Specialist',dept:'Operations',sub:'People & Talent',location:'Austin, TX',type:'Full-time',salary:'$80K–$100K',applicants:33,desc:'Own end-to-end hiring for engineering and product roles. We are growing fast and need someone who can run a disciplined, high-quality process at pace.',skills:['Technical Recruiting','ATS','Employer Branding','Sourcing'],isNew:false},
+];
+
+/* ---- THEME ---- */
+const html = document.documentElement;
+const themeBtn = document.getElementById('theme-toggle');
+const iconSun = document.getElementById('icon-sun');
+const iconMoon = document.getElementById('icon-moon');
+function applyTheme(t){
+  html.setAttribute('data-theme',t);
+  iconSun.style.display = t==='dark' ? 'block':'none';
+  iconMoon.style.display = t==='light' ? 'block':'none';
+  localStorage.setItem('nexacore-theme',t);
+}
+applyTheme(localStorage.getItem('nexacore-theme')||'dark');
+themeBtn.addEventListener('click',()=>applyTheme(html.getAttribute('data-theme')==='dark'?'light':'dark'));
+
+/* ---- SCROLL ---- */
+const scrollFill = document.getElementById('scroll-progress-fill');
+const scrollTop = document.getElementById('scroll-top');
+function updateScroll(){
+  const s = window.scrollY, d = document.documentElement.scrollHeight - window.innerHeight;
+  if(scrollFill) scrollFill.style.height = (d>0?(s/d)*100:0)+'%';
+  if(scrollTop) scrollTop.classList.toggle('visible', s>400);
+}
+scrollTop && scrollTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+window.addEventListener('scroll',updateScroll,{passive:true});
+updateScroll();
+
+/* ---- SECTION OBSERVER ---- */
+const dots = document.querySelectorAll('.section-dot');
+const sectionLbl = document.getElementById('section-label-vert');
+const dotMap = {};
+dots.forEach(d=>{ dotMap[d.dataset.section]=d; });
+const secObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    dots.forEach(d=>d.classList.remove('active'));
+    const d = dotMap[e.target.id];
+    if(d) d.classList.add('active');
+    if(sectionLbl){
+      sectionLbl.classList.remove('visible');
+      setTimeout(()=>{ sectionLbl.textContent=e.target.dataset.sectionName||''; sectionLbl.classList.add('visible'); },100);
+    }
+  });
+},{threshold:0.28});
+document.querySelectorAll('section[data-section-name]').forEach(s=>secObs.observe(s));
+dots.forEach(d=>d.addEventListener('click',()=>{ const t=document.getElementById(d.dataset.section); if(t)t.scrollIntoView({behavior:'smooth'}); }));
+
+/* ---- ANIMATE ON SCROLL ---- */
+const animObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in');animObs.unobserve(e.target);} });
+},{threshold:0.08});
+document.querySelectorAll('.anim-up').forEach(el=>animObs.observe(el));
+setTimeout(()=>{ document.querySelectorAll('#careers-hero .anim-up').forEach(el=>el.classList.add('in')); },80);
+
+/* ---- COUNTER ---- */
+const counterObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseInt(el.dataset.target,10);
+    const dur = 1600;
+    let cur = 0;
+    const step = dur/target;
+    const timer = setInterval(()=>{ cur++; el.textContent=cur; if(cur>=target){el.textContent=target;clearInterval(timer);} },step);
+    counterObs.unobserve(el);
+  });
+},{threshold:0.5});
+document.querySelectorAll('.counter').forEach(c=>counterObs.observe(c));
+
+/* ---- JOBS RENDER ---- */
+function getDeptIcon(dept){
+  const icons = {
+    'Engineering':'<polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>',
+    'Product':'<rect x="3" y="3" width="18" height="18"></rect><path d="M3 9h18M9 21V9"></path>',
+    'Operations':'<circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"></path>',
+    'Go-to-Market':'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>'
+  };
+  return icons[dept] || icons['Engineering'];
+}
+
+function renderJobCard(job){
+  return `
+    <div class="job-card" data-dept="${job.dept}" data-id="${job.id}" onclick="openDrawer(${job.id})" role="listitem" tabindex="0" aria-label="Apply for ${job.title}">
+      <div class="job-card-header">
+        <div class="job-dept-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8">${getDeptIcon(job.dept)}</svg>
+        </div>
+        ${job.isNew ? '<span class="job-new-badge">New</span>' : ''}
+      </div>
+      <div>
+        <div class="job-dept">${job.dept} — ${job.sub}</div>
+        <div class="job-title">${job.title}</div>
+      </div>
+      <div class="job-meta">
+        <span class="job-meta-tag"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>${job.location}</span>
+        <span class="job-meta-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>${job.type}</span>
+        <span class="job-meta-tag"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>${job.salary}</span>
+      </div>
+      <div class="job-desc">${job.desc}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:.35rem">
+        ${job.skills.map(s=>`<span style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.08em;padding:.18rem .5rem;border:1px solid var(--border);color:var(--text-muted);text-transform:uppercase">${s}</span>`).join('')}
+      </div>
+      <div class="job-footer">
+        <span class="job-applicants">${job.applicants} applicant${job.applicants!==1?'s':''}</span>
+        <span class="job-apply-btn">Apply Now <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+      </div>
+    </div>`;
+}
+
+function renderJobs(jobs){
+  const grid = document.getElementById('jobs-grid');
+  if(!grid) return;
+  if(!jobs.length){
+    grid.innerHTML = '<div class="jobs-empty">No roles match your search. <a href="#open-application" style="color:var(--brand-accent);text-decoration:underline">Drop your CV</a> and we will reach out when one opens.</div>';
+    return;
+  }
+  grid.innerHTML = jobs.map(renderJobCard).join('');
+  // keyboard support
+  grid.querySelectorAll('.job-card').forEach(card=>{
+    card.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();openDrawer(parseInt(card.dataset.id));} });
+  });
+}
+
+renderJobs(JOBS);
+
+/* ---- FILTER ---- */
+let activeFilter = 'all';
+let searchQuery = '';
+
+function applyFilters(){
+  let filtered = JOBS;
+  if(activeFilter !== 'all') filtered = filtered.filter(j=>j.dept===activeFilter);
+  if(searchQuery) filtered = filtered.filter(j=>
+    j.title.toLowerCase().includes(searchQuery) ||
+    j.dept.toLowerCase().includes(searchQuery) ||
+    j.sub.toLowerCase().includes(searchQuery) ||
+    j.skills.join(' ').toLowerCase().includes(searchQuery)
+  );
+  renderJobs(filtered);
+}
+
+window.filterJobs = function(dept, btn){
+  activeFilter = dept;
+  document.querySelectorAll('.jobs-filter-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  applyFilters();
+};
+
+window.searchJobs = function(val){
+  searchQuery = val.toLowerCase().trim();
+  applyFilters();
+};
+
+/* ---- DRAWER ---- */
+const overlay = document.getElementById('job-drawer-overlay');
+
+window.openDrawer = function(id){
+  const job = JOBS.find(j=>j.id===id);
+  if(!job) return;
+  document.getElementById('drawer-title').textContent = job.title;
+  document.getElementById('drawer-job-title').textContent = job.title;
+  document.getElementById('drawer-job-meta').innerHTML = `
+    <span>${job.dept}</span>
+    <span>${job.location}</span>
+    <span>${job.type}</span>
+    <span>${job.salary}</span>`;
+  // Reset form
+  document.getElementById('drawer-form-wrap').style.display = '';
+  document.getElementById('drawer-success').classList.remove('visible');
+  document.getElementById('dr-submit').disabled = false;
+  document.getElementById('dr-submit').textContent = 'Submit Application';
+  ['dr-fname','dr-lname','dr-email','dr-note'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+  document.getElementById('dr-file-preview').classList.remove('visible');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Focus trap
+  setTimeout(()=>document.getElementById('dr-fname')?.focus(), 200);
+};
+
+window.closeDrawer = function(){
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+};
+
+overlay.addEventListener('click',e=>{ if(e.target===overlay) closeDrawer(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeDrawer(); });
+
+/* ---- DRAWER FILE ---- */
+const drFileInput = document.getElementById('dr-file-input');
+drFileInput && drFileInput.addEventListener('change',function(){
+  if(!this.files.length) return;
+  const f = this.files[0];
+  document.getElementById('dr-file-name').textContent = f.name;
+  document.getElementById('dr-file-preview').classList.add('visible');
+});
+window.removeDrFile = function(){
+  document.getElementById('dr-file-preview').classList.remove('visible');
+  drFileInput.value = '';
+};
+
+/* ---- DRAWER SUBMIT ---- */
+window.submitDrawerForm = function(){
+  const fname = document.getElementById('dr-fname').value.trim();
+  const email = document.getElementById('dr-email').value.trim();
+  const consent = document.getElementById('dr-consent').checked;
+  if(!fname || !/\S+@\S+\.\S+/.test(email) || !consent) {
+    // minimal inline shake
+    const btn = document.getElementById('dr-submit');
+    btn.style.animation = 'none';
+    btn.offsetHeight;
+    btn.style.background = '#ef4444';
+    setTimeout(()=>{ btn.style.background = ''; btn.style.animation = ''; },800);
+    return;
+  }
+  const btn = document.getElementById('dr-submit');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+  setTimeout(()=>{
+    document.getElementById('drawer-form-wrap').style.display = 'none';
+    document.getElementById('drawer-success').classList.add('visible');
+  }, 1100);
+};
+
+/* ---- CV UPLOAD (speculative form) ---- */
+const cvInput = document.getElementById('cv-file-input');
+const cvPreview = document.getElementById('cv-file-preview');
+const cvDropZone = document.getElementById('cv-drop-zone');
+
+cvInput && cvInput.addEventListener('change',function(){
+  if(!this.files.length) return;
+  showFilePreview(this.files[0]);
+});
+
+function showFilePreview(file){
+  document.getElementById('cv-file-name').textContent = file.name;
+  const kb = (file.size/1024).toFixed(0);
+  document.getElementById('cv-file-size').textContent = kb > 1024 ? (kb/1024).toFixed(1)+' MB' : kb+' KB';
+  cvPreview.classList.add('visible');
+}
+
+document.getElementById('cv-file-remove') && document.getElementById('cv-file-remove').addEventListener('click',()=>{
+  cvPreview.classList.remove('visible');
+  cvInput.value = '';
+});
+
+// Drag and drop
+cvDropZone && cvDropZone.addEventListener('dragover',e=>{ e.preventDefault(); cvDropZone.classList.add('drag-over'); });
+cvDropZone && cvDropZone.addEventListener('dragleave',()=>cvDropZone.classList.remove('drag-over'));
+cvDropZone && cvDropZone.addEventListener('drop',e=>{
+  e.preventDefault();
+  cvDropZone.classList.remove('drag-over');
+  if(e.dataTransfer.files.length) showFilePreview(e.dataTransfer.files[0]);
+});
+
+/* ---- SPECULATIVE FORM SUBMIT ---- */
+window.submitCVForm = function(){
+  const groups = [
+    {id:'app-fname', fg:'fg-fname', check:v=>v.trim().length>0},
+    {id:'app-lname', fg:'fg-lname', check:v=>v.trim().length>0},
+    {id:'app-email', fg:'fg-email', check:v=>/\S+@\S+\.\S+/.test(v)},
+  ];
+  let ok = true;
+  groups.forEach(g=>{
+    const el = document.getElementById(g.id);
+    const fg = document.getElementById(g.fg);
+    if(!el||!fg) return;
+    fg.classList.remove('has-error');
+    if(!g.check(el.value)){ fg.classList.add('has-error'); ok=false; }
+  });
+  if(!document.getElementById('app-consent').checked){ ok=false; }
+  if(!ok) return;
+  const btn = document.getElementById('cv-submit-btn');
+  btn.textContent = 'Submitting...';
+  btn.disabled = true;
+  setTimeout(()=>{
+    // Generate reference ID
+    const ref = 'NXC-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000);
+    document.getElementById('ref-id').textContent = ref;
+    document.getElementById('cv-form-wrap').style.display = 'none';
+    document.getElementById('cv-success').classList.add('visible');
+  }, 1200);
+};
+
+/* ---- MOBILE NAV ---- */
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
+hamburger && hamburger.addEventListener('click',()=>{
+  const isOpen = hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open', isOpen);
+  hamburger.setAttribute('aria-expanded', String(isOpen));
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape' && mobileNav?.classList.contains('open')){
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    hamburger.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+  }
+});
+
+})();
+</script>
+</body>
+</html>

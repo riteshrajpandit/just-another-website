@@ -5,21 +5,22 @@
 
 'use client';
 
-import Link from 'next/link';
 import { useAnimateOnScroll } from '@/hooks';
+import { Button } from '@/components/ui';
 import { overviewData, overviewBlocks } from '@/data/about';
+import styles from './OverviewSection.module.css';
 
 export function OverviewSection() {
   const { ref: stickyRef, className: stickyClass } = useAnimateOnScroll();
   const { ref: blocksRef, className: blocksClass } = useAnimateOnScroll();
 
   return (
-    <section id="overview" className="section-pad" data-section-name="OVERVIEW">
+    <section id="overview" className={`${styles.overview} section-pad`} data-section-name="OVERVIEW">
       <div className="container">
-        <div className="overview-grid">
+        <div className={styles.overviewGrid}>
           {/* Sticky left */}
-          <div ref={stickyRef} className={`overview-sticky ${stickyClass}`}>
-            <span className="overview-year-mark">{overviewData.yearMark}</span>
+          <div ref={stickyRef} className={`${styles.overviewSticky} ${stickyClass}`}>
+            <span className={styles.overviewYearMark}>{overviewData.yearMark}</span>
             <div className="section-eyebrow">
               <div className="section-eyebrow-line" />
               <span className="t-label">{overviewData.eyebrow}</span>
@@ -34,24 +35,24 @@ export function OverviewSection() {
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {overviewData.ctas.map((cta, index) => (
-                <Link
+                <Button
                   key={index}
                   href={cta.href}
-                  className={index === 0 ? 'btn btn-brand' : 'btn btn-outline'}
+                  variant={index === 0 ? 'brand' : 'outline'}
                 >
                   {cta.label}
-                </Link>
+                </Button>
               ))}
             </div>
           </div>
 
           {/* Right blocks */}
-          <div ref={blocksRef} className={`overview-blocks ${blocksClass}`} style={{ transitionDelay: '0.15s' }}>
+          <div ref={blocksRef} className={`${styles.overviewBlocks} ${blocksClass}`} style={{ transitionDelay: '0.15s' }}>
             {overviewBlocks.map((block) => (
-              <div key={block.id} className="overview-block">
-                <span className="overview-block-num">{block.number}</span>
-                <div className="overview-block-title">{block.title}</div>
-                <p className="overview-block-text">{block.text}</p>
+              <div key={block.id} className={styles.overviewBlock}>
+                <span className={styles.overviewBlockNum}>{block.number}</span>
+                <div className={styles.overviewBlockTitle}>{block.title}</div>
+                <p className={styles.overviewBlockText}>{block.text}</p>
               </div>
             ))}
           </div>

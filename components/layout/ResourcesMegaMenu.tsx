@@ -3,6 +3,7 @@
  */
 
 import { Button, File, Activity, Info, MessageSquare } from '@/components/ui';
+import styles from './Header.module.css';
 
 const knowledge = [
   { name: 'FAQs', desc: 'Common questions answered' },
@@ -25,51 +26,51 @@ const tools = [
 
 export function ResourcesMegaMenu() {
   return (
-    <div className="mega-menu mega-menu--wide" role="region" aria-label="Resources menu">
-      <div className="mega-inner" style={{ gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem 1rem' }}>
+    <div className={`${styles.megaMenu} ${styles.megaMenuWide}`} role="region" aria-label="Resources menu">
+      <div className={styles.megaInner} style={{ gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem 1rem' }}>
         <div>
-          <div className="mega-section-label">Knowledge Base</div>
-          <ul className="mega-list" role="list">
+          <div className={styles.megaSectionLabel}>Knowledge Base</div>
+          <ul className={styles.megaList} role="list">
             {knowledge.map(({ name, desc }) => (
-              <li key={name} className="mega-list-item" tabIndex={0}>
-                <div className="mega-item-text">
-                  <span className="name">{name}</span>
-                  <span className="desc">{desc}</span>
+              <li key={name} className={styles.megaListItem} tabIndex={0}>
+                <div className={styles.megaItemText}>
+                  <span className={styles.name}>{name}</span>
+                  <span className={styles.desc}>{desc}</span>
                 </div>
               </li>
             ))}
           </ul>
         </div>
         <div>
-          <div className="mega-section-label">Learning</div>
-          <ul className="mega-list" role="list">
+          <div className={styles.megaSectionLabel}>Learning</div>
+          <ul className={styles.megaList} role="list">
             {learning.map(({ name, desc }) => (
-              <li key={name} className="mega-list-item" tabIndex={0}>
-                <div className="mega-item-text">
-                  <span className="name">{name}</span>
-                  <span className="desc">{desc}</span>
+              <li key={name} className={styles.megaListItem} tabIndex={0}>
+                <div className={styles.megaItemText}>
+                  <span className={styles.name}>{name}</span>
+                  <span className={styles.desc}>{desc}</span>
                 </div>
               </li>
             ))}
           </ul>
         </div>
         <div
-          className="mega-highlight"
+          className={styles.megaHighlight}
           style={{ background: 'rgba(13,74,120,0.1)', borderLeft: '2px solid var(--brand-primary)' }}
         >
-          <div className="mega-highlight-badge">Security</div>
-          <div className="mega-highlight-title">Trust Center</div>
-          <div className="mega-highlight-desc">
+          <div className={styles.megaHighlightBadge}>Security</div>
+          <div className={styles.megaHighlightTitle}>Trust Center</div>
+          <div className={styles.megaHighlightDesc}>
             SOC 2 Type II certified. View our security posture, compliance reports, and data handling policies.
           </div>
           <Button href="#" variant="outline" size="sm">
             View Trust Center
           </Button>
         </div>
-        <div className="mega-tools-row" style={{ gridColumn: '1/-1' }}>
+        <div className={styles.megaToolsRow} style={{ gridColumn: '1/-1' }}>
           <span className="t-label">Quick Tools:</span>
           {tools.map(({ name, Icon }) => (
-            <a key={name} href="#" className="mega-tool-link">
+            <a key={name} href="#" className={styles.megaToolLink}>
               <Icon size={14} />
               {name}
             </a>

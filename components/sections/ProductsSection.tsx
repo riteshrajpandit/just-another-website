@@ -8,6 +8,7 @@
 import { useAnimateOnScroll } from '@/hooks';
 import { Workflow, Box, Shield, Activity, Cloud, Monitor } from '@/components/ui';
 import { products } from '@/data/site';
+import styles from './ProductsSection.module.css';
 
 const iconMap = {
   workflow: Workflow,
@@ -23,7 +24,7 @@ export function ProductsSection() {
   const { ref: gridRef, className: gridClass } = useAnimateOnScroll();
 
   return (
-    <section id="products" className="section-pad" data-section-name="PRODUCTS">
+    <section id="products" className={`${styles.products} section-pad`} data-section-name="PRODUCTS">
       <div className="container">
         <div ref={headerRef} className={`section-header ${headerClass}`}>
           <div className="section-eyebrow">
@@ -39,22 +40,22 @@ export function ProductsSection() {
             or connect them into a unified digital operations layer.
           </p>
         </div>
-        <div ref={gridRef} className={`products-grid ${gridClass}`}>
+        <div ref={gridRef} className={`${styles.productsGrid} ${gridClass}`}>
           {products.map((product, idx) => {
             const IconComponent = iconMap[product.icon as keyof typeof iconMap] || Box;
             return (
               <div
                 key={product.id}
-                className="product-card"
+                className={styles.productCard}
                 style={{ transitionDelay: `${idx * 0.05}s` }}
               >
-                <div className="product-icon">
+                <div className={styles.productIcon}>
                   <IconComponent size={22} />
                 </div>
-                <div className="product-tag">{product.tag}</div>
-                <div className="product-name">{product.name}</div>
-                <div className="product-desc">{product.description}</div>
-                <div className="product-link">
+                <div className={styles.productTag}>{product.tag}</div>
+                <div className={styles.productName}>{product.name}</div>
+                <div className={styles.productDesc}>{product.description}</div>
+                <div className={styles.productLink}>
                   Learn More <span>&#8594;</span>
                 </div>
               </div>

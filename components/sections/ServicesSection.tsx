@@ -7,13 +7,14 @@
 
 import { useAnimateOnScroll } from '@/hooks';
 import { services } from '@/data/site';
+import styles from './ServicesSection.module.css';
 
 export function ServicesSection() {
   const { ref: headerRef, className: headerClass } = useAnimateOnScroll();
   const { ref: gridRef, className: gridClass } = useAnimateOnScroll();
 
   return (
-    <section id="services" className="section-pad" data-section-name="SERVICES">
+    <section id="services" className={`${styles.services} section-pad`} data-section-name="SERVICES">
       <div className="container">
         <div ref={headerRef} className={`section-header ${headerClass}`}>
           <div className="section-eyebrow">
@@ -29,17 +30,17 @@ export function ServicesSection() {
             brings deep domain knowledge to every engagement.
           </p>
         </div>
-        <div ref={gridRef} className={`services-grid ${gridClass}`}>
+        <div ref={gridRef} className={`${styles.servicesGrid} ${gridClass}`}>
           {services.map((service, idx) => (
             <div
               key={service.id}
-              className="service-card"
+              className={styles.serviceCard}
               style={{ transitionDelay: `${idx * 0.07}s` }}
             >
-              <div className="service-num">{service.number}</div>
-              <div className="service-name">{service.name}</div>
-              <div className="service-desc">{service.description}</div>
-              <div className="service-arrow">
+              <div className={styles.serviceNum}>{service.number}</div>
+              <div className={styles.serviceName}>{service.name}</div>
+              <div className={styles.serviceDesc}>{service.description}</div>
+              <div className={styles.serviceArrow}>
                 Read More <span>&#8594;</span>
               </div>
             </div>

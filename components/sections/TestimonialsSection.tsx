@@ -10,6 +10,7 @@ import { useAnimateOnScroll } from '@/hooks';
 import { ChevronLeft, ChevronRight } from '@/components/ui';
 import { testimonials } from '@/data/site';
 import { ANIMATION } from '@/lib/constants';
+import styles from './TestimonialsSection.module.css';
 
 export function TestimonialsSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -88,7 +89,7 @@ export function TestimonialsSection() {
   );
 
   return (
-    <section id="testimonials" className="section-pad" data-section-name="TESTIMONIALS">
+    <section id="testimonials" className={`${styles.testimonials} section-pad`} data-section-name="TESTIMONIALS">
       <div className="container">
         <div ref={headerRef} className={`section-header ${headerClass}`}>
           <div className="section-eyebrow">
@@ -101,53 +102,53 @@ export function TestimonialsSection() {
           </h2>
         </div>
       </div>
-      <div ref={containerRef} className={`testimonial-container ${containerClass}`}>
+      <div ref={containerRef} className={`${styles.testimonialContainer} ${containerClass}`}>
         <div
-          className="testimonial-slider"
+          className={styles.testimonialSlider}
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
           {testimonials.map((testimonial) => (
-            <div key={testimonial.id} className="testimonial-slide">
+            <div key={testimonial.id} className={styles.testimonialSlide}>
               <div className="container">
-                <span className="testimonial-quote-mark" aria-hidden="true">
+                <span className={styles.testimonialQuoteMark} aria-hidden="true">
                   &quot;
                 </span>
-                <p className="testimonial-text">{testimonial.text}</p>
-                <div className="testimonial-author">
-                  <div className="testimonial-avatar" aria-hidden="true">
+                <p className={styles.testimonialText}>{testimonial.text}</p>
+                <div className={styles.testimonialAuthor}>
+                  <div className={styles.testimonialAvatar} aria-hidden="true">
                     {testimonial.authorInitials}
                   </div>
                   <div>
-                    <div className="testimonial-author-name">{testimonial.authorName}</div>
-                    <div className="testimonial-author-role">{testimonial.authorRole}</div>
+                    <div className={styles.testimonialAuthorName}>{testimonial.authorName}</div>
+                    <div className={styles.testimonialAuthorRole}>{testimonial.authorRole}</div>
                   </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        <div className="testimonial-controls">
-          <div className="testimonial-dots">
+        <div className={styles.testimonialControls}>
+          <div className={styles.testimonialDots}>
             {testimonials.map((_, idx) => (
               <div
                 key={idx}
-                className={`t-dot ${idx === currentSlide ? 'active' : ''}`}
+                className={`${styles.tDot} ${idx === currentSlide ? styles.tDotActive : ''}`}
                 onClick={() => handleDotClick(idx)}
               />
             ))}
           </div>
-          <div className="testimonial-nav">
+          <div className={styles.testimonialNav}>
             <button
-              className="testimonial-btn"
+              className={styles.testimonialBtn}
               onClick={handlePrev}
               aria-label="Previous testimonial"
             >
               <ChevronLeft size={18} />
             </button>
             <button
-              className="testimonial-btn"
+              className={styles.testimonialBtn}
               onClick={handleNext}
               aria-label="Next testimonial"
             >

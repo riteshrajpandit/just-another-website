@@ -4,9 +4,10 @@
  */
 
 import { type ReactNode, type ButtonHTMLAttributes, type AnchorHTMLAttributes } from 'react';
+import styles from './Button.module.css';
 
 type ButtonVariant = 'primary' | 'outline' | 'ghost' | 'brand' | 'white' | 'white-outline';
-type ButtonSize = 'default' | 'sm';
+type ButtonSize = 'default' | 'sm' | 'full';
 
 interface ButtonBaseProps {
   variant?: ButtonVariant;
@@ -27,12 +28,30 @@ type ButtonAsLink = ButtonBaseProps &
 
 type ButtonProps = ButtonAsButton | ButtonAsLink;
 
-function getButtonClasses(variant: ButtonVariant, size: ButtonSize, className?: string): string {
-  const baseClass = 'btn';
-  const variantClass = `btn-${variant}`;
-  const sizeClass = size === 'sm' ? 'btn-sm' : '';
+const variantMap: Record<ButtonVariant, string> = {
+  primary: styles.btnPrimary,
+  outline: styles.btnOutline,
+  ghost: styles.btnGhost,
+  brand: styles.btnBrand,
+  white: styles.btnWhite,
+  'white-outline': styles.btnWhiteOutline,
+};
 
-  return [baseClass, variantClass, sizeClass, className].filter(Boolean).join(' ');
+const sizeMap: Record<ButtonSize, string> = {
+  default: '',
+  sm: styles.btnSm,
+  full: styles.btnFull,
+};
+
+function getButtonClasses(variant: ButtonVariant, size: ButtonSize, className?: string): string {
+  const classes = [
+    styles.btn,
+    variantMap[variant],
+    sizeMap[size],
+    className,
+  ].filter(Boolean).join(' ');
+
+  return classes;
 }
 
 export function Button(props: ButtonProps) {

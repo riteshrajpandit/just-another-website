@@ -7,12 +7,13 @@
 
 import { useAnimateOnScroll } from '@/hooks';
 import { values } from '@/data/about';
+import styles from './ValuesSection.module.css';
 
 export function ValuesSection() {
   const { ref: headerRef, className: headerClass } = useAnimateOnScroll();
 
   return (
-    <section id="values" className="section-pad" data-section-name="VALUES">
+    <section id="values" className={`${styles.values} section-pad`} data-section-name="VALUES">
       <div className="container">
         <div ref={headerRef} className={`section-header ${headerClass}`}>
           <div className="section-eyebrow">
@@ -30,25 +31,25 @@ export function ValuesSection() {
           </p>
         </div>
 
-        <div className="values-grid">
+        <div className={styles.valuesGrid}>
           {values.map((value, idx) => (
             <div
               key={value.id}
-              className="value-card anim-up in"
+              className={`${styles.valueCard} anim-up in`}
               style={{ transitionDelay: `${idx * 0.07}s` }}
             >
-              <div className="value-bg-num">{(idx + 1).toString().padStart(2, '0')}</div>
-              <div className="value-icon">
+              <div className={styles.valueBgNum}>{(idx + 1).toString().padStart(2, '0')}</div>
+              <div className={styles.valueIcon}>
                 <svg viewBox="0 0 24 24">
                   <path d={value.iconPath} />
                 </svg>
               </div>
-              <span className="value-num">{value.number}</span>
+              <span className={styles.valueNum}>{value.number}</span>
               <div
-                className="value-title"
+                className={styles.valueTitle}
                 dangerouslySetInnerHTML={{ __html: value.title.replace(/\n/g, '<br>') }}
               />
-              <p className="value-desc">{value.description}</p>
+              <p className={styles.valueDesc}>{value.description}</p>
             </div>
           ))}
         </div>

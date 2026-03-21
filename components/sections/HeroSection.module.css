@@ -55,16 +55,20 @@
   background: var(--brand-primary);
 }
 
+.heroContent {
+  /* Hero content wrapper */
+}
+
 .heroHeadline {
   margin-bottom: 1.5rem;
 }
 
-.heroHeadline .line1 {
+.line1 {
   color: var(--text-primary);
   display: block;
 }
 
-.heroHeadline .line2 {
+.line2 {
   color: var(--brand-primary);
   display: block;
 }
@@ -91,7 +95,11 @@
   border-top: 1px solid var(--border);
 }
 
-.heroMetaItem .num {
+.heroMetaItem {
+  /* Meta item wrapper */
+}
+
+.num {
   font-family: var(--font-mono);
   font-weight: 700;
   font-size: 1.3rem;
@@ -99,7 +107,7 @@
   display: block;
 }
 
-.heroMetaItem .lbl {
+.lbl {
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;

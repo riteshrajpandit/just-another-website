@@ -3,9 +3,12 @@
  * @description Site footer with navigation, newsletter, and legal links
  */
 
+'use client';
+
 import Link from 'next/link';
 import { Logo, LinkedIn, Twitter, GitHub, YouTube } from '@/components/ui';
 import { footerColumns, socialLinks, legalLinks, companyInfo } from '@/data/site';
+import styles from './Footer.module.css';
 
 const socialIconMap = {
   linkedin: LinkedIn,
@@ -16,17 +19,17 @@ const socialIconMap = {
 
 export function Footer() {
   return (
-    <footer id="footer" role="contentinfo">
+    <footer className={styles.footer} role="contentinfo">
       <div className="container--full">
-        <div className="footer-main">
-          <div className="footer-brand">
+        <div className={styles.footerMain}>
+          <div className={styles.footerBrand}>
             <Logo variant="footer" />
-            <p className="footer-tagline">{companyInfo.tagline}</p>
+            <p className={styles.footerTagline}>{companyInfo.tagline}</p>
             <div>
               <div className="t-label" style={{ marginBottom: '0.75rem' }}>
                 Stay Informed
               </div>
-              <form className="footer-newsletter" onSubmit={(e) => e.preventDefault()}>
+              <form className={styles.footerNewsletter} onSubmit={(e) => e.preventDefault()}>
                 <input
                   type="email"
                   placeholder="your@company.com"
@@ -37,14 +40,14 @@ export function Footer() {
                 </button>
               </form>
             </div>
-            <div className="footer-social">
+            <div className={styles.footerSocial}>
               {socialLinks.map((link) => {
                 const IconComponent = socialIconMap[link.icon as keyof typeof socialIconMap];
                 return (
                   <a
                     key={link.id}
                     href={link.href}
-                    className="social-icon"
+                    className={styles.socialIcon}
                     aria-label={link.label}
                   >
                     {IconComponent && <IconComponent size={16} />}
@@ -56,13 +59,13 @@ export function Footer() {
 
           {footerColumns.map((column) => (
             <div key={column.title}>
-              <div className="footer-col-title">{column.title}</div>
-              <ul className="footer-links" role="list">
+              <div className={styles.footerColTitle}>{column.title}</div>
+              <ul className={styles.footerLinks} role="list">
                 {column.links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="footer-link"
+                      className={styles.footerLink}
                       style={link.highlight ? { color: 'var(--brand-primary)' } : undefined}
                     >
                       {link.label}
@@ -88,13 +91,13 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="footer-bottom">
-          <div className="footer-copyright">
+        <div className={styles.footerBottom}>
+          <div className={styles.footerCopyright}>
             <span className="t-mono" style={{ fontSize: '0.75rem' }}>
               &copy; {companyInfo.copyright}
             </span>
           </div>
-          <nav className="footer-legal" aria-label="Legal links">
+          <nav className={styles.footerLegal} aria-label="Legal links">
             {legalLinks.map((link) => (
               <Link key={link.label} href={link.href}>
                 {link.label}

@@ -83,6 +83,63 @@ export function useActiveSection(sectionIds: readonly string[]) {
   return activeSection;
 }
 
+export interface DynamicSection {
+  id: string;
+  name: string;
+}
+
+export function useDynamicSections() {
+  const [sections, setSections] = useState<DynamicSection[]>([]);
+  const [activeSection, setActiveSection] = useState<string>('');
+
+  useEffect(() => {
+    // Find all sections with data-section-name attribute
+    const sectionElements = document.querySelectorAll<HTMLElement>('[data-section-name]');
+    const foundSections: DynamicSection[] = [];
+
+    sectionElements.forEach((el) => {
+      const id = el.id;
+      const name = el.getAttribute('data-section-name') || '';
+      if (id && name) {
+        foundSections.push({ id, name });
+      }
+    });
+
+    setSections(foundSections);
+
+    // Set initial active section
+    if (foundSections.length > 0) {
+      setActiveSection(foundSections[0].id);
+    }
+
+    // Set up intersection observers
+    const observers: IntersectionObserver[] = [];
+
+    foundSections.forEach(({ id }) => {
+      const element = document.getElementById(id);
+      if (!element) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(id);
+          }
+        },
+        { threshold: 0.35 }
+      );
+
+      observer.observe(element);
+      observers.push(observer);
+    });
+
+    return () => {
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, []);
+
+  return { sections, activeSection };
+}
+
 export function useCountUp(target: number, isInView: boolean) {
   const [count, setCount] = useState(0);
   const hasAnimated = useRef(false);

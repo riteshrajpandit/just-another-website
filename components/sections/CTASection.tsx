@@ -8,17 +8,18 @@
 import { useAnimateOnScroll } from '@/hooks';
 import { Button } from '@/components/ui';
 import { ctaData } from '@/data/site';
+import styles from './CTASection.module.css';
 
 export function CTASection() {
   const { ref, className } = useAnimateOnScroll();
 
   return (
-    <section id="cta" data-section-name="START">
-      <div className="cta-bg-pattern" aria-hidden="true" />
+    <section id="cta" className={styles.cta} data-section-name="START">
+      <div className={styles.ctaBgPattern} aria-hidden="true" />
       <div className="container--full">
-        <div ref={ref} className={`cta-inner ${className}`}>
-          <div className="cta-label">{ctaData.label}</div>
-          <h2 className="cta-headline">
+        <div ref={ref} className={`${styles.ctaInner} ${className}`}>
+          <div className={styles.ctaLabel}>{ctaData.label}</div>
+          <h2 className={styles.ctaHeadline}>
             {ctaData.headline.split('\n').map((line, idx) => (
               <span key={idx}>
                 {line}
@@ -26,8 +27,8 @@ export function CTASection() {
               </span>
             ))}
           </h2>
-          <p className="cta-sub">{ctaData.description}</p>
-          <div className="cta-btns">
+          <p className={styles.ctaSub}>{ctaData.description}</p>
+          <div className={styles.ctaBtns}>
             <Button href={ctaData.primaryCta.href} variant="white">
               {ctaData.primaryCta.label}
             </Button>

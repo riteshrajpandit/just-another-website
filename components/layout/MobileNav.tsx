@@ -6,6 +6,7 @@
 
 import { useState, useCallback } from 'react';
 import { Button, ChevronDown } from '@/components/ui';
+import styles from './Header.module.css';
 
 interface MobileNavItem {
   readonly id: string;
@@ -37,18 +38,17 @@ export function MobileNav({ isOpen, items, onClose }: MobileNavProps) {
 
   return (
     <div
-      id="mobile-nav"
-      className={isOpen ? 'open' : ''}
+      className={`${styles.mobileNav} ${isOpen ? styles.mobileNavOpen : ''}`}
       role="navigation"
       aria-label="Mobile navigation"
     >
       <ul role="list">
         {items.map((item) => (
-          <li key={item.id} className="mobile-nav-item">
+          <li key={item.id} className={styles.mobileNavItem}>
             {item.submenu ? (
               <>
                 <div
-                  className={`mobile-nav-link ${openMenus.has(item.id) ? 'open' : ''}`}
+                  className={`${styles.mobileNavLink} ${openMenus.has(item.id) ? styles.mobileNavLinkOpen : ''}`}
                   onClick={() => toggleSubmenu(item.id)}
                 >
                   {item.label}
@@ -56,17 +56,17 @@ export function MobileNav({ isOpen, items, onClose }: MobileNavProps) {
                 </div>
                 <div
                   id={`mob-${item.id}`}
-                  className={`mobile-submenu ${openMenus.has(item.id) ? 'open' : ''}`}
+                  className={`${styles.mobileSubmenu} ${openMenus.has(item.id) ? styles.mobileSubmenuOpen : ''}`}
                 >
                   {item.submenu.map((subItem) => (
-                    <div key={subItem} className="mobile-sub-item">
+                    <div key={subItem} className={styles.mobileSubItem}>
                       {subItem}
                     </div>
                   ))}
                 </div>
               </>
             ) : (
-              <a href={item.href} className="mobile-nav-link" onClick={onClose}>
+              <a href={item.href} className={styles.mobileNavLink} onClick={onClose}>
                 {item.label}
               </a>
             )}

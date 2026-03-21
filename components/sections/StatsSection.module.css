@@ -29,7 +29,13 @@
   line-height: 1;
 }
 
-.statNum .accent { color: var(--brand-primary); }
+.counter {
+  /* Counter number */
+}
+
+.accent {
+  color: var(--brand-primary);
+}
 
 .statLabel {
   font-size: 0.72rem;

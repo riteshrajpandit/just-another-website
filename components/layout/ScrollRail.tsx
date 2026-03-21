@@ -5,46 +5,42 @@
 
 'use client';
 
-import { useScrollProgress, useActiveSection } from '@/hooks';
-import { sections } from '@/data/site';
+import { useScrollProgress, useDynamicSections } from '@/hooks';
 import { ChevronUp } from '@/components/ui';
-
-const sectionIds = sections.map((s) => s.id);
+import styles from './ScrollRail.module.css';
 
 export function ScrollRail() {
-  const { progress, showScrollTop, scrollToTop, scrollToSection } = useScrollProgress();
-  const activeSection = useActiveSection(sectionIds);
+  const { progressRef, showScrollTop, scrollToTop, scrollToSection } = useScrollProgress();
+  const { sections, activeSection } = useDynamicSections();
 
-  const activeSectionName = sections.find((s) => s.id === activeSection)?.name || 'HOME';
+  const activeSectionName = sections.find((s) => s.id === activeSection)?.name || '';
 
   return (
     <>
-      <aside id="scroll-rail" aria-hidden="true">
-        <div id="scroll-progress-track">
-          <div id="scroll-progress-fill" style={{ height: `${progress}%` }} />
+      <aside className={styles.scrollRail} aria-hidden="true">
+        <div className={styles.scrollProgressTrack}>
+          <div ref={progressRef} className={styles.scrollProgressFill} />
         </div>
-        <nav className="section-dots" style={{ marginTop: '80px' }}>
+        <nav className={styles.sectionDots} style={{ marginTop: '80px' }}>
           {sections.map((section) => (
             <div
               key={section.id}
-              className={`section-dot ${activeSection === section.id ? 'active' : ''}`}
+              className={`${styles.sectionDot} ${activeSection === section.id ? styles.sectionDotActive : ''}`}
               data-section={section.id}
-              title={section.title}
+              title={section.name}
               onClick={() => scrollToSection(section.id)}
             />
           ))}
         </nav>
         <div
-          id="section-label-vert"
-          className={`section-label-vert ${activeSectionName ? 'visible' : ''}`}
+          className={`${styles.sectionLabelVert} ${activeSectionName ? styles.sectionLabelVertVisible : ''}`}
         >
           {activeSectionName}
         </div>
       </aside>
 
       <button
-        id="scroll-top"
-        className={showScrollTop ? 'visible' : ''}
+        className={`${styles.scrollTop} ${showScrollTop ? styles.scrollTopVisible : ''}`}
         aria-label="Scroll to top"
         onClick={scrollToTop}
       >

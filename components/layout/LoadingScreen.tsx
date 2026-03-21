@@ -9,6 +9,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useCookieConsent } from '@/hooks';
 import { LoaderMark, Button } from '@/components/ui';
 import { ANIMATION } from '@/lib/constants';
+import styles from './LoadingScreen.module.css';
 
 interface LoadingScreenProps {
   onLoadingComplete: () => void;
@@ -52,32 +53,30 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
   return (
     <>
       <div
-        id="loading-screen"
-        className={isExiting ? 'exit' : ''}
+        className={`${styles.loadingScreen} ${isExiting ? styles.loadingScreenExit : ''}`}
         role="status"
         aria-label="Loading NEXACORE"
       >
-        <div className="loader-logo">
+        <div className={styles.loaderLogo}>
           <LoaderMark />
-          <div className="loader-name">NEXACORE</div>
-          <div className="loader-tagline">Enterprise Technology Solutions</div>
+          <div className={styles.loaderName}>NEXACORE</div>
+          <div className={styles.loaderTagline}>Enterprise Technology Solutions</div>
         </div>
-        <div className="loader-progress" aria-hidden="true">
-          <div className="loader-progress-bar" />
+        <div className={styles.loaderProgress} aria-hidden="true">
+          <div className={styles.loaderProgressBar} />
         </div>
       </div>
 
       <div
-        id="cookie-bar"
-        className={showCookieBar && !hasConsent ? 'visible' : ''}
+        className={`${styles.cookieBar} ${showCookieBar && !hasConsent ? styles.cookieBarVisible : ''}`}
         role="dialog"
         aria-label="Cookie consent"
       >
-        <p className="cookie-text">
+        <p className={styles.cookieText}>
           <strong>We use cookies</strong> to enhance your experience and analyze site traffic.
           By continuing, you agree to our use of cookies as described in our Cookie Policy.
         </p>
-        <div className="cookie-actions">
+        <div className={styles.cookieActions}>
           <Button variant="ghost" onClick={handleManage}>
             Manage Preferences
           </Button>

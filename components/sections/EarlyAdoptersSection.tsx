@@ -7,6 +7,7 @@
 
 import { useAnimateOnScroll } from '@/hooks';
 import { earlyAdopters, timeline } from '@/data/site';
+import styles from './EarlyAdoptersSection.module.css';
 
 export function EarlyAdoptersSection() {
   const { ref: headerRef, className: headerClass } = useAnimateOnScroll();
@@ -14,7 +15,7 @@ export function EarlyAdoptersSection() {
   const { ref: timelineRef, className: timelineClass } = useAnimateOnScroll();
 
   return (
-    <section id="early-adopters" className="section-pad" data-section-name="ADOPTERS">
+    <section id="early-adopters" className={`${styles.earlyAdopters} section-pad`} data-section-name="ADOPTERS">
       <div className="container">
         <div ref={headerRef} className={`section-header ${headerClass}`}>
           <div className="section-eyebrow">
@@ -30,12 +31,12 @@ export function EarlyAdoptersSection() {
             the foundation every product is built on.
           </p>
         </div>
-        <div ref={gridRef} className={`adopters-grid ${gridClass}`}>
+        <div ref={gridRef} className={`${styles.adoptersGrid} ${gridClass}`}>
           {earlyAdopters.map((adopter) => (
-            <div key={adopter.id} className="adopter-card">
-              <div className="adopter-badge">{adopter.badge}</div>
-              <div className="adopter-name">{adopter.name}</div>
-              <div className="adopter-industry">{adopter.industry}</div>
+            <div key={adopter.id} className={styles.adopterCard}>
+              <div className={styles.adopterBadge}>{adopter.badge}</div>
+              <div className={styles.adopterName}>{adopter.name}</div>
+              <div className={styles.adopterIndustry}>{adopter.industry}</div>
             </div>
           ))}
         </div>
@@ -44,13 +45,13 @@ export function EarlyAdoptersSection() {
           <div className="t-label" style={{ marginBottom: '1.5rem' }}>
             Company Milestones
           </div>
-          <div className="timeline-wrap">
-            <div className="timeline">
+          <div className={styles.timelineWrap}>
+            <div className={styles.timeline}>
               {timeline.map((item) => (
-                <div key={item.year} className="timeline-item">
-                  <div className="timeline-year">{item.year}</div>
-                  <div className="timeline-dot" />
-                  <div className="timeline-event">{item.event}</div>
+                <div key={item.year} className={styles.timelineItem}>
+                  <div className={styles.timelineYear}>{item.year}</div>
+                  <div className={styles.timelineDot} />
+                  <div className={styles.timelineEvent}>{item.event}</div>
                 </div>
               ))}
             </div>

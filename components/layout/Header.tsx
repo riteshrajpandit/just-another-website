@@ -15,6 +15,7 @@ import { ServicesMegaMenu } from './ServicesMegaMenu';
 import { ResourcesMegaMenu } from './ResourcesMegaMenu';
 import { AboutMegaMenu } from './AboutMegaMenu';
 import { MobileNav } from './MobileNav';
+import styles from './Header.module.css';
 
 export function Header() {
   const { theme, toggleTheme, mounted } = useTheme();
@@ -50,18 +51,18 @@ export function Header() {
 
   return (
     <header>
-      <nav id="navbar" role="navigation" aria-label="Main navigation">
-        <div className="nav-inner">
-          <Link href="/" className="nav-logo" aria-label="NEXACORE Home">
+      <nav className={styles.navbar} role="navigation" aria-label="Main navigation">
+        <div className={styles.navInner}>
+          <Link href="/" className={styles.navLogo} aria-label="NEXACORE Home">
             <Logo />
           </Link>
 
-          <ul className="nav-links" role="list">
+          <ul className={styles.navLinks} role="list">
             {navLinks.map((link) => (
-              <li key={link.id} className="nav-item">
+              <li key={link.id} className={styles.navItem}>
                 <Link
                   href={link.href}
-                  className="nav-link"
+                  className={styles.navLink}
                   aria-haspopup={link.hasSubmenu ? 'true' : undefined}
                   aria-expanded={link.hasSubmenu ? 'false' : undefined}
                 >
@@ -73,9 +74,9 @@ export function Header() {
             ))}
           </ul>
 
-          <div className="nav-actions">
+          <div className={styles.navActions}>
             <button
-              className="theme-toggle"
+              className={styles.themeToggle}
               onClick={toggleTheme}
               aria-label="Toggle theme"
             >
@@ -90,7 +91,7 @@ export function Header() {
           </div>
 
           <button
-            className={`hamburger ${mobileNavOpen ? 'open' : ''}`}
+            className={`${styles.hamburger} ${mobileNavOpen ? styles.hamburgerOpen : ''}`}
             onClick={toggleMobileNav}
             aria-label="Toggle mobile menu"
             aria-expanded={mobileNavOpen}

@@ -3,6 +3,8 @@
  * @description Brand mark and wordmark components
  */
 
+import styles from './Logo.module.css';
+
 interface LogoProps {
   variant?: 'default' | 'footer';
   showName?: boolean;
@@ -10,20 +12,13 @@ interface LogoProps {
 }
 
 export function Logo({ variant = 'default', showName = true, className = '' }: LogoProps) {
-  const markSize = variant === 'footer' ? 36 : 32;
-  const markClass = variant === 'footer' ? 'footer-logo-mark' : 'nav-logo-mark';
-  const nameClass = variant === 'footer' ? 'footer-logo-name' : 'nav-logo-name';
-  const containerClass = variant === 'footer' ? 'footer-logo' : 'nav-logo';
+  const variantClass = variant === 'footer' ? styles.logoFooter : styles.logoDefault;
 
   return (
-    <div className={`${containerClass} ${className}`}>
-      <div
-        className={markClass}
-        style={{ width: markSize, height: markSize }}
-        aria-hidden="true"
-      />
+    <div className={`${styles.logo} ${variantClass} ${className}`}>
+      <div className={styles.logoMark} aria-hidden="true" />
       {showName && (
-        <span className={nameClass}>
+        <span className={styles.logoName}>
           {variant === 'default' ? (
             <>
               NEXA<span>CORE</span>

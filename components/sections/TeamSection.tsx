@@ -6,10 +6,11 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { useAnimateOnScroll } from '@/hooks';
+import { Button } from '@/components/ui';
 import { teamMembers, teamFilters } from '@/data/about';
 import type { TeamMember } from '@/types';
+import styles from './TeamSection.module.css';
 
 // Social icons
 const LinkedInIcon = () => (
@@ -46,42 +47,42 @@ interface TeamCardProps {
 
 function TeamCard({ member, isLeader = false }: TeamCardProps) {
   return (
-    <div className={isLeader ? 'leader-card' : 'team-card'} data-dept={member.department}>
-      <div className="team-photo">
-        <div className="team-photo-placeholder">
+    <div className={isLeader ? styles.leaderCard : styles.teamCard} data-dept={member.department}>
+      <div className={styles.teamPhoto}>
+        <div className={styles.teamPhotoPlaceholder}>
           <div
-            className="team-photo-placeholder-bg"
+            className={styles.teamPhotoPlaceholderBg}
             style={{ background: member.gradient }}
           />
-          <div className="team-photo-placeholder-shape team-photo-placeholder-shape--1" />
-          {isLeader && <div className="team-photo-placeholder-shape team-photo-placeholder-shape--2" />}
-          <span className="team-photo-placeholder-initials">{member.initials}</span>
+          <div className={`${styles.teamPhotoPlaceholderShape} ${styles.teamPhotoPlaceholderShape1}`} />
+          {isLeader && <div className={`${styles.teamPhotoPlaceholderShape} ${styles.teamPhotoPlaceholderShape2}`} />}
+          <span className={styles.teamPhotoPlaceholderInitials}>{member.initials}</span>
         </div>
       </div>
-      <div className="team-info-strip">
-        <span className={isLeader ? 'leader-name' : 'team-name'}>{member.name}</span>
-        <span className={isLeader ? 'leader-role' : 'team-role'}>{member.role}</span>
-        {member.bio && <p className="leader-bio">{member.bio}</p>}
-        {!isLeader && <span className="team-dept-tag">{member.department}</span>}
+      <div className={styles.teamInfoStrip}>
+        <span className={isLeader ? styles.leaderName : styles.teamName}>{member.name}</span>
+        <span className={isLeader ? styles.leaderRole : styles.teamRole}>{member.role}</span>
+        {member.bio && <p className={styles.leaderBio}>{member.bio}</p>}
+        {!isLeader && <span className={styles.teamDeptTag}>{member.department}</span>}
       </div>
-      <div className="team-social-bar">
+      <div className={styles.teamSocialBar}>
         {member.social.linkedin && (
-          <a href={member.social.linkedin} className="team-social-link" aria-label="LinkedIn">
+          <a href={member.social.linkedin} className={styles.teamSocialLink} aria-label="LinkedIn">
             <LinkedInIcon />
           </a>
         )}
         {member.social.twitter && (
-          <a href={member.social.twitter} className="team-social-link" aria-label="Twitter">
+          <a href={member.social.twitter} className={styles.teamSocialLink} aria-label="Twitter">
             <TwitterIcon />
           </a>
         )}
         {member.social.github && (
-          <a href={member.social.github} className="team-social-link" aria-label="GitHub">
+          <a href={member.social.github} className={styles.teamSocialLink} aria-label="GitHub">
             <GitHubIcon />
           </a>
         )}
         {member.social.email && (
-          <a href={member.social.email} className="team-social-link" aria-label="Email">
+          <a href={member.social.email} className={styles.teamSocialLink} aria-label="Email">
             <EmailIcon />
           </a>
         )}
@@ -107,7 +108,7 @@ export function TeamSection() {
     activeFilter === 'all' || activeFilter === 'leadership' ? leaders : [];
 
   return (
-    <section id="team" className="section-pad" data-section-name="TEAM">
+    <section id="team" className={`${styles.team} section-pad`} data-section-name="TEAM">
       <div className="container">
         <div ref={headerRef} className={`section-header ${headerClass}`}>
           <div className="section-eyebrow">
@@ -126,11 +127,11 @@ export function TeamSection() {
         </div>
 
         {/* Department filter */}
-        <div ref={filtersRef} className={`team-filters ${filtersClass}`}>
+        <div ref={filtersRef} className={`${styles.teamFilters} ${filtersClass}`}>
           {teamFilters.map((filter) => (
             <button
               key={filter.id}
-              className={`team-filter-btn ${activeFilter === filter.id ? 'active' : ''}`}
+              className={`${styles.teamFilterBtn} ${activeFilter === filter.id ? styles.teamFilterBtnActive : ''}`}
               onClick={() => setActiveFilter(filter.id)}
             >
               {filter.label}
@@ -140,7 +141,7 @@ export function TeamSection() {
 
         {/* C-Suite leaders — large cards */}
         {filteredLeaders.length > 0 && (
-          <div className="leaders-grid anim-up in" id="leaders-grid">
+          <div className={`${styles.leadersGrid} anim-up in`} id="leaders-grid">
             {filteredLeaders.map((leader) => (
               <TeamCard key={leader.id} member={leader} isLeader />
             ))}
@@ -148,7 +149,7 @@ export function TeamSection() {
         )}
 
         {/* Full team grid */}
-        <div className="team-grid anim-up in" id="team-grid" style={{ transitionDelay: '0.1s' }}>
+        <div className={`${styles.teamGrid} anim-up in`} id="team-grid" style={{ transitionDelay: '0.1s' }}>
           {filteredMembers.map((member) => (
             <TeamCard key={member.id} member={member} />
           ))}
@@ -190,12 +191,12 @@ export function TeamSection() {
               flexWrap: 'wrap',
             }}
           >
-            <Link href="#" className="btn btn-brand">
+            <Button href="#" variant="brand">
               View All Openings
-            </Link>
-            <Link href="#" className="btn btn-outline">
+            </Button>
+            <Button href="#" variant="outline">
               Our Culture Deck
-            </Link>
+            </Button>
           </div>
         </div>
       </div>
