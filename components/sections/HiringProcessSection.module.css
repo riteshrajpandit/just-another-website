@@ -1,0 +1,218 @@
+/* HiringProcessSection */
+
+/* Numbers Band */
+.numbersBand {
+  background: var(--bg-dark-band);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 3.5rem 0;
+}
+
+.numbersGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.numberItem {
+  padding: 1rem 1.5rem;
+  border-right: 1px solid var(--border);
+  text-align: center;
+  position: relative;
+}
+
+.numberItem:last-child { border-right: none; }
+
+.numberItem::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--brand-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  margin-bottom: 0.75rem;
+}
+
+.numberItem:hover::before { transform: scaleX(1); }
+
+.numberVal {
+  font-family: var(--font-mono);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  display: block;
+}
+
+.accent { color: var(--brand-primary); }
+
+.numberLbl {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-top: 0.45rem;
+  display: block;
+}
+
+/* Hiring Process */
+.section { background: var(--bg-base); }
+
+.processTrack {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  margin-bottom: 3rem;
+}
+
+.processTrack::before {
+  content: '';
+  position: absolute;
+  top: 36px;
+  left: calc(10% + 36px);
+  right: calc(10% + 36px);
+  height: 1px;
+  background: var(--border);
+  z-index: 0;
+}
+
+.processStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.processNode {
+  width: 72px;
+  height: 72px;
+  background: var(--bg-surface);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color var(--transition), background var(--transition),
+    transform var(--transition), box-shadow var(--transition);
+}
+
+.processStep:hover .processNode {
+  border-color: var(--brand-primary);
+  background: var(--bg-elevated);
+  transform: translate(-3px, -3px);
+  box-shadow: 4px 4px 0 var(--brand-primary);
+}
+
+.processNode svg {
+  width: 26px;
+  height: 26px;
+  stroke: var(--text-muted);
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke var(--transition);
+}
+
+.processStep:hover .processNode svg { stroke: var(--brand-primary); }
+
+.processNum {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 22px;
+  height: 22px;
+  background: var(--brand-primary);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.processTitle {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.processDesc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 160px;
+  margin: 0 auto;
+}
+
+.processTime {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+/* Process footer */
+.processFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.processFooterLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.processFooterStats {
+  display: flex;
+  gap: 2rem;
+}
+
+.footerStat { text-align: center; }
+
+.footerStatVal {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--brand-primary);
+  display: block;
+}
+
+.footerStatLbl {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+@media (max-width: 900px) {
+  .numbersGrid { grid-template-columns: repeat(3, 1fr); }
+  .processTrack { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .processTrack::before { display: none; }
+}
+
+@media (max-width: 600px) {
+  .numbersGrid { grid-template-columns: 1fr 1fr; }
+  .processTrack { grid-template-columns: 1fr; }
+}

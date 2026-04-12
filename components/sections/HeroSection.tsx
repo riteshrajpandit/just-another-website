@@ -5,7 +5,6 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui';
 import { heroData, heroMetaItems } from '@/data/site';
 import styles from './HeroSection.module.css';
@@ -15,14 +14,6 @@ interface HeroProps {
 }
 
 export function HeroSection({ isLoaded }: HeroProps) {
-  const [animated, setAnimated] = useState(false);
-
-  useEffect(() => {
-    if (isLoaded) {
-      setAnimated(true);
-    }
-  }, [isLoaded]);
-
   return (
     <section id="hero" className={styles.hero} data-section-name="HOME">
       <div className={styles.heroBg} aria-hidden="true" />
@@ -31,27 +22,27 @@ export function HeroSection({ isLoaded }: HeroProps) {
         <div className={styles.heroGrid}>
           <div className={styles.heroContent}>
             <div
-              className={`${styles.heroEyebrow} ${styles.heroAnimate} ${animated ? styles.heroAnimateIn : ''}`}
+              className={`${styles.heroEyebrow} ${styles.heroAnimate} ${isLoaded ? styles.heroAnimateIn : ''}`}
               style={{ transitionDelay: '0.1s' }}
             >
               <div className={styles.heroEyebrowLine} />
               <span className="t-label">{heroData.eyebrow}</span>
             </div>
             <h1
-              className={`t-display ${styles.heroHeadline} ${styles.heroAnimate} ${animated ? styles.heroAnimateIn : ''}`}
+              className={`t-display ${styles.heroHeadline} ${styles.heroAnimate} ${isLoaded ? styles.heroAnimateIn : ''}`}
               style={{ transitionDelay: '0.2s' }}
             >
               <span className={styles.line1}>{heroData.headline.line1}</span>
               <span className={styles.line2}>{heroData.headline.line2}</span>
             </h1>
             <p
-              className={`${styles.heroSub} ${styles.heroAnimate} ${animated ? styles.heroAnimateIn : ''}`}
+              className={`${styles.heroSub} ${styles.heroAnimate} ${isLoaded ? styles.heroAnimateIn : ''}`}
               style={{ transitionDelay: '0.35s' }}
             >
               {heroData.description}
             </p>
             <div
-              className={`${styles.heroCtas} ${styles.heroAnimate} ${animated ? styles.heroAnimateIn : ''}`}
+              className={`${styles.heroCtas} ${styles.heroAnimate} ${isLoaded ? styles.heroAnimateIn : ''}`}
               style={{ transitionDelay: '0.45s' }}
             >
               <Button href={heroData.primaryCta.href} variant="primary">
@@ -62,7 +53,7 @@ export function HeroSection({ isLoaded }: HeroProps) {
               </Button>
             </div>
             <div
-              className={`${styles.heroMeta} ${styles.heroAnimate} ${animated ? styles.heroAnimateIn : ''}`}
+              className={`${styles.heroMeta} ${styles.heroAnimate} ${isLoaded ? styles.heroAnimateIn : ''}`}
               style={{ transitionDelay: '0.55s' }}
             >
               {heroMetaItems.map((item, idx) => (
@@ -77,7 +68,7 @@ export function HeroSection({ isLoaded }: HeroProps) {
             </div>
           </div>
           <div
-            className={`${styles.heroVisual} ${styles.heroAnimate} ${animated ? styles.heroAnimateIn : ''}`}
+            className={`${styles.heroVisual} ${styles.heroAnimate} ${isLoaded ? styles.heroAnimateIn : ''}`}
             style={{ transitionDelay: '0.3s' }}
             aria-hidden="true"
           >

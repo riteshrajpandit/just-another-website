@@ -1,0 +1,183 @@
+/* OpenApplicationSection */
+
+.section {
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+/* Drop Zone */
+.dropZone {
+  border: 2px dashed var(--border);
+  background: var(--bg-surface);
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+  min-height: 220px;
+  justify-content: center;
+}
+
+.dropZone:hover,
+.dragging {
+  border-color: var(--brand-primary);
+  background: var(--bg-elevated);
+}
+
+.fileInput {
+  display: none;
+}
+
+.uploadIcon,
+.fileIcon {
+  width: 40px;
+  height: 40px;
+  stroke: var(--text-muted);
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dropLabel {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.dropHint {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.filePreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fileName {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--brand-primary);
+}
+
+.fileHint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.submitBtn {
+  width: 100%;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+/* Next Steps */
+.stepsHeading {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  list-style: none;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
+}
+
+.step:last-child { border-bottom: none; }
+.step:hover { background: var(--bg-surface); }
+
+.stepNum {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--brand-primary);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.stepTitle {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+
+.stepDesc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* CTA Band */
+.ctaBand {
+  background: var(--brand-primary);
+  padding: clamp(4rem, 8vw, 6rem) 0;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%);
+}
+
+.ctaInner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.ctaHeadline {
+  color: #fff;
+}
+
+.ctaSub {
+  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 500px;
+  line-height: 1.7;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; }
+}

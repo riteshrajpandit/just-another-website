@@ -12,22 +12,23 @@ import { GetStartedPanel } from '@/components/sections/GetStartedPanel';
 import { BookDemoPanel } from '@/components/sections/BookDemoPanel';
 import { ContactPanel } from '@/components/sections/ContactPanel';
 
+const tabFromHash: Record<string, ContactTab> = {
+  'get-started': 'get-started',
+  'book-demo': 'book-demo',
+  'contact': 'contact',
+};
+
+function getInitialTab(): ContactTab {
+  if (typeof window === 'undefined') return 'get-started';
+  const hash = window.location.hash.slice(1);
+  return tabFromHash[hash] || 'get-started';
+}
+
 export default function ContactPage() {
-  const [activeTab, setActiveTab] = useState<ContactTab>('get-started');
+  const [activeTab, setActiveTab] = useState<ContactTab>(getInitialTab);
 
-  // Handle hash-based tab switching
+  // Listen for hash changes
   useEffect(() => {
-    const hash = window.location.hash.slice(1);
-    const tabFromHash: Record<string, ContactTab> = {
-      'get-started': 'get-started',
-      'book-demo': 'book-demo',
-      'contact': 'contact',
-    };
-    if (tabFromHash[hash]) {
-      setActiveTab(tabFromHash[hash]);
-    }
-
-    // Listen for hash changes
     const handleHashChange = () => {
       const newHash = window.location.hash.slice(1);
       if (tabFromHash[newHash]) {

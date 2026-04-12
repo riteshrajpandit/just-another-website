@@ -15,7 +15,7 @@ export const navLinks: readonly NavLink[] = [
   { id: 'services', label: 'Services', href: '/#services', hasSubmenu: true },
   { id: 'resources', label: 'Resources', href: '#', hasSubmenu: true },
   { id: 'about', label: 'About Us', href: '/about', hasSubmenu: true },
- 
+  { id: 'careers', label: 'Careers', href: '/careers', hasSubmenu: false },
 ] as const;
 
 // ============================================================

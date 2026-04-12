@@ -27,7 +27,7 @@ export function ContactTabsBar({ activeTab, onTabChange }: ContactTabsBarProps) 
             key={tab.id}
             className={`page-tab ${activeTab === tab.id ? 'active' : ''}`}
             onClick={() => onTabChange(tab.id)}
-            aria-selected={activeTab === tab.id}
+            aria-pressed={activeTab === tab.id}
           >
             <span className="page-tab-dot" />
             <span>{tab.label}</span>

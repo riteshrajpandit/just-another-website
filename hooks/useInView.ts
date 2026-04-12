@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface UseInViewOptions {
   threshold?: number;
@@ -105,6 +105,11 @@ export function useDynamicSections() {
       }
     });
 
+    // Use a ref to track if this effect is still mounted
+    let isMounted = true;
+
+    // Set sections from DOM - runs once on mount
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- DOM detection pattern: finding sections from rendered elements
     setSections(foundSections);
 
     // Set initial active section
@@ -121,7 +126,7 @@ export function useDynamicSections() {
 
       const observer = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && isMounted) {
             setActiveSection(id);
           }
         },
@@ -133,6 +138,7 @@ export function useDynamicSections() {
     });
 
     return () => {
+      isMounted = false;
       observers.forEach((observer) => observer.disconnect());
     };
   }, []);

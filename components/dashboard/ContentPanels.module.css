@@ -1,0 +1,49 @@
+/* ContentPanels */
+
+.rowActions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.actionBtn {
+  padding: 0.3rem 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+}
+
+.actionBtn:hover {
+  color: var(--text-primary);
+  border-color: var(--brand-primary);
+  background: var(--bg-elevated);
+}
+
+.danger:hover {
+  color: #ef4444;
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.addBtn {
+  padding: 0.4rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--brand-primary);
+  background: var(--brand-primary);
+  color: #fff;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.addBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 2px 2px 0 var(--brand-secondary);
+}

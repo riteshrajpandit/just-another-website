@@ -226,3 +226,143 @@ export interface TeamMember {
     readonly email?: string;
   };
 }
+
+// ============================================================
+// Careers Page Types
+// ============================================================
+
+export interface CareerStat {
+  readonly id: string;
+  readonly value: number;
+  readonly suffix: string;
+  readonly label: string;
+}
+
+export interface CareerGoal {
+  readonly id: string;
+  readonly number: string;
+  readonly title: string;
+  readonly text: string;
+}
+
+export interface HiringStep {
+  readonly id: string;
+  readonly number: string;
+  readonly title: string;
+  readonly description: string;
+  readonly time: string;
+  readonly icon: string;
+}
+
+export interface Benefit {
+  readonly id: string;
+  readonly number: string;
+  readonly title: string;
+  readonly description: string;
+  readonly icon: string;
+  readonly category: string;
+}
+
+export interface CultureTile {
+  readonly id: string;
+  readonly label: string;
+  readonly title: string;
+  readonly sub: string;
+  readonly variant: 'a' | 'b' | 'c' | 'd' | 'e';
+  readonly wide?: boolean;
+  readonly tall?: boolean;
+}
+
+export interface CultureQuote {
+  readonly id: string;
+  readonly text: string;
+  readonly authorName: string;
+  readonly authorRole: string;
+  readonly initials: string;
+}
+
+export type JobDepartment = 'Engineering' | 'Product' | 'Operations' | 'Go-to-Market';
+
+export interface JobListing {
+  readonly id: string;
+  readonly title: string;
+  readonly department: JobDepartment;
+  readonly location: string;
+  readonly type: 'Full-time' | 'Part-time' | 'Internship' | 'Contract';
+  readonly description: string;
+  readonly applicants: number;
+  readonly isNew?: boolean;
+}
+
+export interface HeroBadge {
+  readonly id: string;
+  readonly label: string;
+}
+
+// ============================================================
+// Dashboard Types
+// ============================================================
+
+export interface KPICard {
+  readonly id: string;
+  readonly label: string;
+  readonly value: string;
+  readonly trend: number;
+  readonly icon: string;
+}
+
+export interface DashboardProduct {
+  readonly id: string;
+  readonly name: string;
+  readonly category: string;
+  readonly status: 'Active' | 'Beta' | 'Deprecated';
+  readonly inquiries: number;
+  readonly featured: boolean;
+}
+
+export interface DashboardService {
+  readonly id: string;
+  readonly name: string;
+  readonly category: string;
+  readonly leads: number;
+  readonly status: 'Active' | 'Inactive';
+  readonly highlight: boolean;
+}
+
+export interface Inquiry {
+  readonly id: string;
+  readonly name: string;
+  readonly company: string;
+  readonly type: 'Product Inquiry' | 'Get Started' | 'Contact' | 'Demo';
+  readonly subject: string;
+  readonly date: string;
+  readonly status: 'Open' | 'In Progress' | 'Resolved';
+}
+
+export interface Booking {
+  readonly id: string;
+  readonly name: string;
+  readonly company: string;
+  readonly date: string;
+  readonly time: string;
+  readonly architect: string;
+  readonly products: readonly string[];
+  readonly status: 'Confirmed' | 'Pending' | 'Cancelled';
+}
+
+export interface JobApplication {
+  readonly id: string;
+  readonly applicant: string;
+  readonly role: string;
+  readonly department: string;
+  readonly appliedDate: string;
+  readonly stage: 'Applied' | 'Screening' | 'Interview' | 'Offer' | 'Rejected';
+  readonly score: number;
+}
+
+export interface ActivityItem {
+  readonly id: string;
+  readonly type: 'inquiry' | 'booking' | 'subscriber' | 'job' | 'system';
+  readonly description: string;
+  readonly timestamp: string;
+}

@@ -357,7 +357,7 @@ export const footerColumns: readonly FooterColumn[] = [
       { label: 'Overview', href: '/about#overview' },
       { label: 'Leadership', href: '/about#team' },
       { label: 'Team', href: '/about#team' },
-      { label: 'Careers', href: '/about#team', badge: '18 Open' },
+      { label: 'Careers', href: '/careers', badge: '18 Open' },
       { label: 'Partners', href: '/#brands' },
       { label: 'Press', href: '#' },
       { label: 'Contact Us', href: '/contact' },

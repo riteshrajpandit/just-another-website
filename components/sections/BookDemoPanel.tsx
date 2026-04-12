@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { Button, ChevronLeft, ChevronRight, Clock } from '@/components/ui';
 import { architect, expectItems, bookDemoHero, companySizeOptions, demoProductOptions } from '@/data/contact';

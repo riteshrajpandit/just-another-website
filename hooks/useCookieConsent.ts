@@ -9,23 +9,31 @@ import { useState, useEffect, useCallback } from 'react';
 import { STORAGE_KEYS } from '@/lib/constants';
 import type { CookieConsentStatus } from '@/types';
 
+function getInitialConsent(): { status: CookieConsentStatus; isVisible: boolean } {
+  if (typeof window === 'undefined') {
+    return { status: 'pending', isVisible: false };
+  }
+  const stored = localStorage.getItem(STORAGE_KEYS.COOKIES) as CookieConsentStatus | null;
+  if (stored) {
+    return { status: stored, isVisible: false };
+  }
+  return { status: 'pending', isVisible: false };
+}
+
 export function useCookieConsent() {
-  const [status, setStatus] = useState<CookieConsentStatus>('pending');
-  const [isVisible, setIsVisible] = useState(false);
+  const initial = getInitialConsent();
+  const [status, setStatus] = useState<CookieConsentStatus>(initial.status);
+  const [isVisible, setIsVisible] = useState(initial.isVisible);
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEYS.COOKIES);
-    if (stored) {
-      setStatus(stored as CookieConsentStatus);
-      setIsVisible(false);
-    } else {
-      // Delay showing cookie bar for better UX
+    // Delay showing cookie bar for better UX if not yet consented
+    if (status === 'pending') {
       const timer = setTimeout(() => {
         setIsVisible(true);
       }, 1500);
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [status]);
 
   const acceptAll = useCallback(() => {
     localStorage.setItem(STORAGE_KEYS.COOKIES, 'accepted');
