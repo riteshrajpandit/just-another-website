@@ -3,6 +3,7 @@
  * @description Left visual panel for the login page with stats
  */
 
+import Link from 'next/link';
 import styles from './LoginBrandPanel.module.css';
 
 const stats = [
@@ -20,16 +21,16 @@ export function LoginBrandPanel() {
 
       {/* Top bar */}
       <div className={styles.top}>
-        <a href="/" className={styles.logo} aria-label="NEXACORE Home">
+        <Link href="/" className={styles.logo} aria-label="NEXACORE Home">
           <div className={styles.logoMark} aria-hidden="true" />
           <span className={styles.logoName}>NEXA<span>CORE</span></span>
-        </a>
-        <a href="/" className={styles.backLink}>
+        </Link>
+        <Link href="/" className={styles.backLink}>
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M19 12H5 M12 19l-7-7 7-7" />
           </svg>
           Back to site
-        </a>
+        </Link>
       </div>
 
       {/* Visual & headline */}

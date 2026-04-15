@@ -12,32 +12,27 @@ import { GetStartedPanel } from '@/components/sections/GetStartedPanel';
 import { BookDemoPanel } from '@/components/sections/BookDemoPanel';
 import { ContactPanel } from '@/components/sections/ContactPanel';
 
-const tabFromHash: Record<string, ContactTab> = {
-  'get-started': 'get-started',
-  'book-demo': 'book-demo',
-  'contact': 'contact',
-};
+const VALID_TABS = new Set<ContactTab>(['get-started', 'book-demo', 'contact']);
 
-function getInitialTab(): ContactTab {
-  if (typeof window === 'undefined') return 'get-started';
-  const hash = window.location.hash.slice(1);
-  return tabFromHash[hash] || 'get-started';
+function hashToTab(hash: string): ContactTab | null {
+  const key = hash.replace(/^#/, '') as ContactTab;
+  return VALID_TABS.has(key) ? key : null;
 }
 
 export default function ContactPage() {
-  const [activeTab, setActiveTab] = useState<ContactTab>(getInitialTab);
+  // Always start with the default tab — keeps server and client HTML identical
+  const [activeTab, setActiveTab] = useState<ContactTab>('get-started');
 
-  // Listen for hash changes
+  // Sync to hash only after mount (client-only), avoiding hydration mismatch
   useEffect(() => {
-    const handleHashChange = () => {
-      const newHash = window.location.hash.slice(1);
-      if (tabFromHash[newHash]) {
-        setActiveTab(tabFromHash[newHash]);
-      }
+    const syncFromHash = () => {
+      const tab = hashToTab(window.location.hash);
+      if (tab) setActiveTab(tab);
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    syncFromHash(); // apply hash on first mount
+    window.addEventListener('hashchange', syncFromHash);
+    return () => window.removeEventListener('hashchange', syncFromHash);
   }, []);
 
   const handleTabChange = (tab: ContactTab) => {

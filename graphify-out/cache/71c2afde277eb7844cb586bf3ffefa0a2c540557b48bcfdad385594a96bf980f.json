@@ -1,0 +1,1 @@
+{"nodes": [{"id": "data_dashboard_ts", "label": "dashboard.ts", "file_type": "code", "source_file": "data/dashboard.ts", "source_location": "L1"}], "edges": [{"source": "data_dashboard_ts", "target": "types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "data/dashboard.ts", "source_location": "L6", "weight": 1.0}]}

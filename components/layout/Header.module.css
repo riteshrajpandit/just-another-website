@@ -120,6 +120,11 @@
   border-left-color: var(--brand-accent);
 }
 
+.navLinkActive {
+  color: var(--brand-primary);
+  border-left-color: var(--brand-primary);
+}
+
 .navLink svg {
   width: 12px;
   height: 12px;

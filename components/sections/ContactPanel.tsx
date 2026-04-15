@@ -60,6 +60,8 @@ const getContactIcon = (iconType: string) => {
   }
 };
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
 export function ContactPanel() {
   const [formData, setFormData] = useState({
     name: '',
@@ -67,20 +69,66 @@ export function ContactPanel() {
     subject: '',
     message: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear error on change
+    if (errors[field]) {
+      setErrors((prev) => { const next = { ...prev }; delete next[field]; return next; });
+    }
+  };
+
+  const validate = () => {
+    const next: Record<string, string> = {};
+    if (!formData.name.trim()) next.name = 'Full name is required';
+    if (!formData.email.trim()) {
+      next.email = 'Email address is required';
+    } else if (!EMAIL_RE.test(formData.email)) {
+      next.email = 'Please enter a valid email address';
+    }
+    if (!formData.subject) next.subject = 'Please select a subject';
+    if (!formData.message.trim()) {
+      next.message = 'Message is required';
+    } else if (formData.message.trim().length < 10) {
+      next.message = 'Message must be at least 10 characters';
+    }
+    return next;
   };
 
   const handleSubmit = () => {
-    setSubmitted(true);
+    const errs = validate();
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
+      // Focus first error field for accessibility
+      const firstKey = Object.keys(errs)[0];
+      document.getElementById(`contact-${firstKey}`)?.focus();
+      return;
+    }
+    setIsSubmitting(true);
+    // Simulate async submission (replace with real API call)
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }, 600);
   };
 
   return (
     <div className="page-panel" id="panel-contact">
       {/* Hero Section */}
-      <section className="demo-hero" data-section-name="CONTACT">
+      <section
+        className="demo-hero"
+        data-section-name="CONTACT"
+        style={{
+          background: 'var(--bg-base)',
+          borderBottom: '1px solid var(--border)',
+          padding: 'clamp(3rem, 6vw, 5rem) 0 0',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
         <div className="demo-hero-bg" aria-hidden="true" />
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <nav className="gs-hero-crumb anim-up in" aria-label="Breadcrumb">
@@ -112,34 +160,53 @@ export function ContactPanel() {
                 <>
                   <div className="form-card-title">Send a Message</div>
                   <div className="form-card-sub">We respond to every enquiry within 4 business hours.</div>
+                  <div role="alert" aria-live="polite" style={{ position: 'absolute', left: '-9999px' }}>
+                    {Object.keys(errors).length > 0 ? `${Object.keys(errors).length} form errors found` : ''}
+                  </div>
                   <div className="form-row">
-                    <div className="form-group">
-                      <label className="form-label">Full Name</label>
+                    <div className={`form-group${errors.name ? ' has-error' : ''}`}>
+                      <label htmlFor="contact-name" className="form-label">Full Name</label>
                       <input
-                        className="form-input"
+                        id="contact-name"
+                        className={`form-input${errors.name ? ' error' : ''}`}
                         type="text"
                         placeholder="Your name"
                         value={formData.name}
                         onChange={(e) => handleInputChange('name', e.target.value)}
+                        aria-required="true"
+                        aria-invalid={!!errors.name}
+                        aria-describedby={errors.name ? 'error-name' : undefined}
+                        autoComplete="name"
                       />
+                      {errors.name && <span id="error-name" className="form-error-msg" role="alert">{errors.name}</span>}
                     </div>
-                    <div className="form-group">
-                      <label className="form-label">Email</label>
+                    <div className={`form-group${errors.email ? ' has-error' : ''}`}>
+                      <label htmlFor="contact-email" className="form-label">Email</label>
                       <input
-                        className="form-input"
+                        id="contact-email"
+                        className={`form-input${errors.email ? ' error' : ''}`}
                         type="email"
                         placeholder="you@company.com"
                         value={formData.email}
                         onChange={(e) => handleInputChange('email', e.target.value)}
+                        aria-required="true"
+                        aria-invalid={!!errors.email}
+                        aria-describedby={errors.email ? 'error-email' : undefined}
+                        autoComplete="email"
                       />
+                      {errors.email && <span id="error-email" className="form-error-msg" role="alert">{errors.email}</span>}
                     </div>
                   </div>
-                  <div className="form-group">
-                    <label className="form-label">Subject</label>
+                  <div className={`form-group${errors.subject ? ' has-error' : ''}`}>
+                    <label htmlFor="contact-subject" className="form-label">Subject</label>
                     <select
-                      className="form-select"
+                      id="contact-subject"
+                      className={`form-select${errors.subject ? ' error' : ''}`}
                       value={formData.subject}
                       onChange={(e) => handleInputChange('subject', e.target.value)}
+                      aria-required="true"
+                      aria-invalid={!!errors.subject}
+                      aria-describedby={errors.subject ? 'error-subject' : undefined}
                     >
                       <option value="">Select topic</option>
                       {subjectOptions.map((subject) => (
@@ -148,21 +215,39 @@ export function ContactPanel() {
                         </option>
                       ))}
                     </select>
+                    {errors.subject && <span id="error-subject" className="form-error-msg" role="alert">{errors.subject}</span>}
                   </div>
-                  <div className="form-group">
-                    <label className="form-label">Message</label>
+                  <div className={`form-group${errors.message ? ' has-error' : ''}`}>
+                    <label htmlFor="contact-message" className="form-label">Message</label>
                     <textarea
-                      className="form-textarea"
+                      id="contact-message"
+                      className={`form-textarea${errors.message ? ' error' : ''}`}
                       style={{ minHeight: '120px' }}
                       placeholder="Describe your enquiry in as much detail as helps..."
                       value={formData.message}
                       onChange={(e) => handleInputChange('message', e.target.value)}
+                      aria-required="true"
+                      aria-invalid={!!errors.message}
+                      aria-describedby={errors.message ? 'error-message' : undefined}
+                      maxLength={2000}
                     />
+                    {errors.message && <span id="error-message" className="form-error-msg" role="alert">{errors.message}</span>}
                   </div>
                   <div className="form-submit-row">
-                    <Button variant="brand" className="btn-full" onClick={handleSubmit}>
-                      Send Message
+                    <Button
+                      variant="brand"
+                      className="btn-full"
+                      onClick={handleSubmit}
+                      disabled={isSubmitting}
+                      aria-busy={isSubmitting}
+                    >
+                      {isSubmitting ? 'Sending…' : 'Send Message'}
                     </Button>
+                    <p className="form-privacy">
+                      By submitting you agree to our{' '}
+                      <a href="/privacy">Privacy Policy</a>.
+                      We never share your data with third parties.
+                    </p>
                   </div>
                 </>
               ) : (
@@ -183,7 +268,7 @@ export function ContactPanel() {
       </section>
 
       {/* Contact Details + Map Section */}
-      <section id="contact-details" className="section-pad" data-section-name="OFFICES">
+      <section id="contact-details" className="section-pad" data-section-name="OFFICES" style={{ background: 'var(--bg-elevated)', borderTop: '1px solid var(--border)' }}>
         <div className="container">
           <div className="contact-grid">
             {/* Left: Contact Cards + Offices */}
@@ -244,16 +329,27 @@ export function ContactPanel() {
               </div>
 
               {/* SLA Response Times */}
-              <div className="sla-card" style={{ marginTop: '1.5rem' }}>
-                <div className="sla-header">Response Time Commitments</div>
-                <div className="sla-items">
-                  {slaResponseTimes.map((item) => (
-                    <div key={item.id} className="sla-item">
+              <div style={{ border: '1px solid var(--border)', background: 'var(--bg-surface)', marginTop: '1.5rem' }}>
+                <div style={{ padding: '0.85rem 1.25rem', borderBottom: '1px solid var(--border)', background: 'var(--bg-elevated)', fontFamily: 'var(--font-mono)', fontSize: '0.62rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+                  Response Time Commitments
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+                  {slaResponseTimes.map((item, idx) => (
+                    <div
+                      key={item.id}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '1rem 1.25rem',
+                        borderBottom: idx < slaResponseTimes.length - 1 ? '1px solid var(--border)' : 'none',
+                      }}
+                    >
                       <div>
-                        <div className="sla-item-title">{item.title}</div>
-                        <div className="sla-item-desc">{item.description}</div>
+                        <div style={{ fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-primary)' }}>{item.title}</div>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>{item.description}</div>
                       </div>
-                      <div className="sla-item-time t-mono" style={{ color: item.color }}>
+                      <div className="t-mono" style={{ fontSize: '0.9rem', fontWeight: 700, color: item.color }}>
                         {item.time}
                       </div>
                     </div>

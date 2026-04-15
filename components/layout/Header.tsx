@@ -7,6 +7,7 @@
 
 import { useState, useCallback } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Logo, Button, ChevronDown, Sun, Moon } from '@/components/ui';
 import { useTheme } from '@/hooks';
 import { navLinks, mobileNavItems } from '@/data/navigation';
@@ -17,8 +18,16 @@ import { AboutMegaMenu } from './AboutMegaMenu';
 import { MobileNav } from './MobileNav';
 import styles from './Header.module.css';
 
+function isNavLinkActive(href: string, pathname: string): boolean {
+  // Strip hash/query for comparison
+  const path = href.split('#')[0].split('?')[0];
+  if (path === '/') return pathname === '/';
+  return pathname === path || pathname.startsWith(path + '/');
+}
+
 export function Header() {
   const { theme, toggleTheme, mounted } = useTheme();
+  const pathname = usePathname();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const toggleMobileNav = useCallback(() => {
@@ -62,7 +71,8 @@ export function Header() {
               <li key={link.id} className={styles.navItem}>
                 <Link
                   href={link.href}
-                  className={styles.navLink}
+                  className={`${styles.navLink} ${isNavLinkActive(link.href, pathname) ? styles.navLinkActive : ''}`}
+                  aria-current={isNavLinkActive(link.href, pathname) ? 'page' : undefined}
                   aria-haspopup={link.hasSubmenu ? 'true' : undefined}
                   aria-expanded={link.hasSubmenu ? 'false' : undefined}
                 >
@@ -82,9 +92,6 @@ export function Header() {
             >
               {mounted && (theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />)}
             </button>
-            <Button href="/contact#book-demo" variant="outline" size="sm">
-              Book a Demo
-            </Button>
             <Button href="/contact" variant="primary" size="sm">
               Get Started
             </Button>

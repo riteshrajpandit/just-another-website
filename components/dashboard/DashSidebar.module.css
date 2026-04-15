@@ -203,3 +203,25 @@
   color: var(--text-muted);
   margin-top: 0.1rem;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    height: auto;
+    position: static;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  .logoRow { flex-shrink: 0; }
+  .nav { display: flex; flex-direction: row; padding: 0; overflow-x: auto; flex: 1; }
+  .navGroup { display: flex; margin-bottom: 0; }
+  .navGroupLabel { display: none; }
+  .navItem { border-left: none; border-bottom: 3px solid transparent; padding: 0 0.75rem; height: 52px; flex-direction: row; white-space: nowrap; }
+  .navActive { border-bottom-color: var(--brand-primary); border-left-color: transparent; }
+  .userCard { display: none; }
+  .collapseBtn { display: none; }
+}

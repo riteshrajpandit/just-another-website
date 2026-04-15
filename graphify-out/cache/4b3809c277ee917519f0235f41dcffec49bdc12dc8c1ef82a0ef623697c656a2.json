@@ -1,0 +1,1 @@
+{"nodes": [{"id": "data_careers_ts", "label": "careers.ts", "file_type": "code", "source_file": "data/careers.ts", "source_location": "L1"}], "edges": [{"source": "data_careers_ts", "target": "types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "data/careers.ts", "source_location": "L6", "weight": 1.0}]}

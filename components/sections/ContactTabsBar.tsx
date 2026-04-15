@@ -1,9 +1,13 @@
 /**
  * @file Contact Tabs Bar component
- * @description Tab navigation bar for the contact page
+ * @description Sticky tab navigation bar matching the reference design.
+ *              Three tabs: Get Started, Book a Demo, Contact Us.
+ *              Sits directly below the fixed navbar (top: var(--nav-height)).
  */
 
 'use client';
+
+import styles from '@/styles/contact.module.css';
 
 export type ContactTab = 'get-started' | 'book-demo' | 'contact';
 
@@ -12,24 +16,25 @@ interface ContactTabsBarProps {
   onTabChange: (tab: ContactTab) => void;
 }
 
-const tabs = [
-  { id: 'get-started' as const, label: 'Get Started' },
-  { id: 'book-demo' as const, label: 'Book a Demo' },
-  { id: 'contact' as const, label: 'Contact Us' },
+const tabs: { id: ContactTab; label: string }[] = [
+  { id: 'get-started', label: 'Get Started' },
+  { id: 'book-demo',   label: 'Book a Demo' },
+  { id: 'contact',     label: 'Contact Us'  },
 ];
 
 export function ContactTabsBar({ activeTab, onTabChange }: ContactTabsBarProps) {
   return (
-    <div className="page-tabs-bar" id="page-top">
-      <div className="page-tabs-inner">
+    <div className={styles.pageTabsBar} id="page-top" role="navigation" aria-label="Contact sections">
+      <div className={styles.pageTabsInner}>
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            className={`page-tab ${activeTab === tab.id ? 'active' : ''}`}
+            role="tab"
+            aria-selected={activeTab === tab.id}
+            className={`${styles.pageTab} ${activeTab === tab.id ? styles.pageTabActive : ''}`}
             onClick={() => onTabChange(tab.id)}
-            aria-pressed={activeTab === tab.id}
           >
-            <span className="page-tab-dot" />
+            <span className={styles.pageTabDot} aria-hidden="true" />
             <span>{tab.label}</span>
           </button>
         ))}

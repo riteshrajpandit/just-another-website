@@ -1,6 +1,16 @@
-/* Services Section styles */
+/* Services Section — home page preview (3 featured) */
 
-.services { background: var(--bg-elevated); }
+.services { background: var(--bg-elevated); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+.headerRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.headerCta { flex-shrink: 0; padding-bottom: 0.25rem; }
 
 .servicesGrid {
   display: grid;
@@ -19,6 +29,8 @@
   border: 2px solid transparent;
   transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background var(--transition);
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 
 .serviceCard:hover {
@@ -52,6 +64,16 @@
   flex: 1;
 }
 
+.serviceOutcome {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--brand-primary);
+  line-height: 1.5;
+  padding: 0.6rem 0.85rem;
+  border-left: 3px solid var(--brand-primary);
+  background: rgba(27, 118, 187, 0.06);
+}
+
 .serviceArrow {
   display: flex;
   align-items: center;
@@ -69,6 +91,26 @@
   gap: 0.75rem;
 }
 
+/* View all footer band */
+.viewAllBand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 1.5rem 2rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-top: none;
+}
+
+.viewAllLeft { display: flex; flex-direction: column; gap: 0.25rem; }
+
+.viewAllText {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
 /* Responsive */
 @media (max-width: 1023px) {
   .servicesGrid { grid-template-columns: repeat(2, 1fr); }
@@ -76,4 +118,6 @@
 
 @media (max-width: 767px) {
   .servicesGrid { grid-template-columns: 1fr; }
+  .headerRow { flex-direction: column; align-items: flex-start; }
+  .viewAllBand { flex-direction: column; align-items: flex-start; }
 }

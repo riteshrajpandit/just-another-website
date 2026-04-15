@@ -96,7 +96,17 @@ export const products: readonly Product[] = [
     description:
       'Visual workflow automation engine with drag-and-drop process builder, AI decision nodes, and enterprise-grade audit trails.',
     icon: 'workflow',
-    href: '#',
+    href: '/products#nexaflow',
+    featured: true,
+    headline: 'Automate any process. No code required.',
+    features: [
+      'Drag-and-drop visual builder with 200+ pre-built connectors',
+      'AI decision nodes with explainable logic and audit trails',
+      'Multi-tenant deployment with per-tenant isolated execution',
+      'Real-time monitoring dashboard with SLA tracking',
+    ],
+    stat: { value: '14h → 4h', label: 'Average process cycle time reduction' },
+    gradient: 'linear-gradient(135deg, #0d2a45, #1b76bb33)',
   },
   {
     id: 'coresync',
@@ -105,7 +115,17 @@ export const products: readonly Product[] = [
     description:
       'Real-time bidirectional data synchronization between cloud, on-premise, and edge systems. Sub-100ms latency across distributed environments.',
     icon: 'box',
-    href: '#',
+    href: '/products#coresync',
+    featured: true,
+    headline: 'One data layer. Every system in sync.',
+    features: [
+      'Sub-100ms bidirectional sync across cloud, on-premise, and edge',
+      'Schema-agnostic mapping engine with conflict resolution',
+      'Zero-downtime migration tooling with rollback support',
+      'Full observability with lineage tracking and data quality scoring',
+    ],
+    stat: { value: '99.99%', label: 'Data consistency across environments' },
+    gradient: 'linear-gradient(135deg, #0a2a0a, #1b6b3a33)',
   },
   {
     id: 'securevault',
@@ -114,7 +134,17 @@ export const products: readonly Product[] = [
     description:
       'Zero-trust identity and access management with adaptive MFA, privileged access controls, and continuous compliance monitoring.',
     icon: 'shield',
-    href: '#',
+    href: '/products#securevault',
+    featured: true,
+    headline: 'Zero-trust security. Zero compromises.',
+    features: [
+      'Adaptive MFA with contextual risk scoring',
+      'Privileged access management with just-in-time provisioning',
+      'Continuous compliance monitoring for ISO 27001, SOC 2, HIPAA',
+      'Automated threat detection and incident response playbooks',
+    ],
+    stat: { value: '100%', label: 'ISO 27001 audit pass rate on first attempt' },
+    gradient: 'linear-gradient(135deg, #2a0a0a, #7a1b1b33)',
   },
   {
     id: 'pulsemetrics',
@@ -123,7 +153,17 @@ export const products: readonly Product[] = [
     description:
       'Full-stack observability platform unifying metrics, traces, and logs with AI-powered anomaly detection and automated root cause analysis.',
     icon: 'activity',
-    href: '#',
+    href: '/products#pulsemetrics',
+    featured: false,
+    headline: 'See everything. Miss nothing.',
+    features: [
+      'Unified metrics, traces, and logs in a single pane of glass',
+      'AI anomaly detection with automated root cause analysis',
+      'Custom SLA dashboards with executive-level reporting',
+      'Integrates with Prometheus, Datadog, Grafana, and more',
+    ],
+    stat: { value: '74%', label: 'Reduction in mean time to resolution' },
+    gradient: 'linear-gradient(135deg, #1a1a0a, #7a7a1b33)',
   },
   {
     id: 'cloudorchestra',
@@ -132,7 +172,17 @@ export const products: readonly Product[] = [
     description:
       'Unified multi-cloud infrastructure management with policy-as-code, cost optimization, and automated provisioning across AWS, Azure, and GCP.',
     icon: 'cloud',
-    href: '#',
+    href: '/products#cloudorchestra',
+    featured: false,
+    headline: 'Multi-cloud without the complexity.',
+    features: [
+      'Policy-as-code governance across AWS, Azure, and GCP',
+      'Automated cost optimization with rightsizing recommendations',
+      'One-click provisioning with Terraform and Pulumi integration',
+      'Drift detection and auto-remediation for infrastructure compliance',
+    ],
+    stat: { value: '31%', label: 'Average cloud cost reduction in 90 days' },
+    gradient: 'linear-gradient(135deg, #0a1a2a, #0d4a7833)',
   },
   {
     id: 'deskcanvas',
@@ -141,7 +191,17 @@ export const products: readonly Product[] = [
     description:
       'Intelligent service desk and ITSM suite with AI-powered ticket routing, SLA management, and self-service knowledge base built-in.',
     icon: 'monitor',
-    href: '#',
+    href: '/products#deskcanvas',
+    featured: false,
+    headline: 'ITSM that actually learns your business.',
+    features: [
+      'AI-powered ticket classification and auto-routing',
+      'Built-in knowledge base with semantic search',
+      'Full ITIL alignment with customizable workflow templates',
+      'SLA management with escalation rules and real-time alerts',
+    ],
+    stat: { value: '68%', label: 'Tickets resolved without human escalation' },
+    gradient: 'linear-gradient(135deg, #1a0a2a, #5a1b8a33)',
   },
 ] as const;
 
@@ -156,7 +216,15 @@ export const services: readonly Service[] = [
     name: 'Cloud Migration & Modernization',
     description:
       'End-to-end migration strategy and execution — from legacy lift-and-shift to full cloud-native re-architecture. We assess, plan, and migrate with zero business disruption.',
-    href: '#',
+    href: '/services#cloud-migration',
+    featured: true,
+    deliverables: [
+      'Migration readiness assessment and TCO analysis',
+      'Reference architecture design for target cloud environment',
+      'Phased migration execution with rollback checkpoints',
+      'Post-migration 90-day hypercare and optimization',
+    ],
+    outcome: 'Average 40% infrastructure cost reduction within 12 months of migration.',
   },
   {
     id: 'devsecops',
@@ -164,7 +232,15 @@ export const services: readonly Service[] = [
     name: 'DevSecOps & CI/CD',
     description:
       'Integrate security into every stage of your delivery pipeline. We build automated gates, compliance checks, and deployment workflows that ship fast without sacrificing safety.',
-    href: '#',
+    href: '/services#devsecops',
+    featured: true,
+    deliverables: [
+      'Pipeline design and implementation (GitHub Actions, GitLab, Jenkins)',
+      'SAST/DAST integration with policy-as-code gates',
+      'Container and IaC security scanning with Snyk, Trivy, Checkov',
+      'Developer security training and secure coding standards',
+    ],
+    outcome: 'Teams ship 3× more frequently with 60% fewer security findings in production.',
   },
   {
     id: 'cybersecurity',
@@ -172,7 +248,15 @@ export const services: readonly Service[] = [
     name: 'Cybersecurity Operations',
     description:
       '24/7 SOC monitoring, threat intelligence feeds, and incident response retainers. Our security engineers are battle-tested across financial services, healthcare, and government sectors.',
-    href: '#',
+    href: '/services#cybersecurity',
+    featured: true,
+    deliverables: [
+      '24/7 SOC with dedicated tier-2 and tier-3 analysts',
+      'Threat intelligence integration with MITRE ATT&CK mapping',
+      'Incident response retainer with 1-hour SLA',
+      'Monthly executive security briefings and risk scoring',
+    ],
+    outcome: 'Average 8-minute mean time to detect; 94% of incidents contained before breach.',
   },
   {
     id: 'data-engineering',
@@ -180,7 +264,15 @@ export const services: readonly Service[] = [
     name: 'Data Engineering & Analytics',
     description:
       'Design and build enterprise data warehouses, real-time streaming pipelines, and governed data lakes that turn raw operational data into executive-level intelligence.',
-    href: '#',
+    href: '/services#data-engineering',
+    featured: false,
+    deliverables: [
+      'Modern data stack design (dbt, Snowflake, Databricks, Spark)',
+      'Real-time streaming pipelines with Kafka and Flink',
+      'Data governance framework with lineage and quality monitoring',
+      'Executive BI dashboards and self-service analytics enablement',
+    ],
+    outcome: 'From raw data to boardroom insight in under 48 hours for 94% of report requests.',
   },
   {
     id: 'managed-infra',
@@ -188,7 +280,15 @@ export const services: readonly Service[] = [
     name: 'Managed Infrastructure',
     description:
       'Proactive network operations, patch management, capacity planning, and incident resolution — so your internal teams can focus on business innovation, not firefighting.',
-    href: '#',
+    href: '/services#managed-infra',
+    featured: false,
+    deliverables: [
+      '24/7 NOC monitoring with proactive incident management',
+      'Patch management and vulnerability remediation SLA',
+      'Capacity planning and cost optimization reviews (quarterly)',
+      'Dedicated infrastructure engineer with monthly strategy calls',
+    ],
+    outcome: '99.97% uptime SLA maintained across all managed client environments.',
   },
   {
     id: 'digital-advisory',
@@ -196,7 +296,15 @@ export const services: readonly Service[] = [
     name: 'Digital Transformation Advisory',
     description:
       'Strategic roadmaps, technology selection, and organizational change management for enterprises beginning or accelerating their digital transformation journey.',
-    href: '#',
+    href: '/services#digital-advisory',
+    featured: false,
+    deliverables: [
+      'Current-state technology audit and maturity assessment',
+      '3-year digital transformation roadmap with prioritized initiatives',
+      'Vendor selection and technology evaluation frameworks',
+      'Organizational change management and adoption planning',
+    ],
+    outcome: 'Clients achieve target digital maturity 2× faster than industry average.',
   },
 ] as const;
 
@@ -318,37 +426,37 @@ export const footerColumns: readonly FooterColumn[] = [
   {
     title: 'Products',
     links: [
-      { label: 'NexaFlow', href: '#' },
-      { label: 'CoreSync', href: '#' },
-      { label: 'SecureVault', href: '#' },
-      { label: 'PulseMetrics', href: '#' },
-      { label: 'CloudOrchestra', href: '#' },
-      { label: 'DeskCanvas', href: '#' },
-      { label: 'View All Products', href: '#', highlight: true },
+      { label: 'NexaFlow', href: '/products#nexaflow' },
+      { label: 'CoreSync', href: '/products#coresync' },
+      { label: 'SecureVault', href: '/products#securevault' },
+      { label: 'PulseMetrics', href: '/products#pulsemetrics' },
+      { label: 'CloudOrchestra', href: '/products#cloudorchestra' },
+      { label: 'DeskCanvas', href: '/products#deskcanvas' },
+      { label: 'View All Products', href: '/products', highlight: true },
     ],
   },
   {
     title: 'Services',
     links: [
-      { label: 'Cloud Migration', href: '#' },
-      { label: 'DevSecOps', href: '#' },
-      { label: 'Data Engineering', href: '#' },
-      { label: 'Managed Infrastructure', href: '#' },
-      { label: 'Cybersecurity', href: '#' },
-      { label: 'Digital Advisory', href: '#' },
+      { label: 'Cloud Migration', href: '/services#cloud-migration' },
+      { label: 'DevSecOps', href: '/services#devsecops' },
+      { label: 'Data Engineering', href: '/services#data-engineering' },
+      { label: 'Managed Infrastructure', href: '/services#managed-infra' },
+      { label: 'Cybersecurity', href: '/services#cybersecurity' },
+      { label: 'Digital Advisory', href: '/services#digital-advisory' },
       { label: 'Free Consultation', href: '/contact#book-demo', highlight: true },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { label: 'Documentation', href: '#' },
-      { label: 'FAQs', href: '#' },
-      { label: 'Case Studies', href: '#' },
-      { label: 'End User Training', href: '#' },
-      { label: 'Gallery', href: '#' },
-      { label: 'Trust Center', href: '#' },
-      { label: 'API Status', href: '#' },
+      { label: 'Documentation', href: '/resources#docs' },
+      { label: 'FAQs', href: '/resources#faq' },
+      { label: 'Case Studies', href: '/resources#case-studies' },
+      { label: 'End User Training', href: '/resources#training' },
+      { label: 'Gallery', href: '/resources#gallery' },
+      { label: 'Trust Center', href: '/resources#trust-center' },
+      { label: 'Blog', href: '/blog' },
     ],
   },
   {
@@ -359,7 +467,7 @@ export const footerColumns: readonly FooterColumn[] = [
       { label: 'Team', href: '/about#team' },
       { label: 'Careers', href: '/careers', badge: '18 Open' },
       { label: 'Partners', href: '/#brands' },
-      { label: 'Press', href: '#' },
+      { label: 'Press', href: '/contact' },
       { label: 'Contact Us', href: '/contact' },
     ],
   },
@@ -373,9 +481,9 @@ export const socialLinks: readonly SocialLink[] = [
 ] as const;
 
 export const legalLinks = [
-  { label: 'Privacy Policy', href: '#' },
-  { label: 'Terms of Service', href: '#' },
-  { label: 'Cookie Policy', href: '#' },
-  { label: 'Sitemap', href: '#' },
-  { label: 'Accessibility', href: '#' },
+  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'Terms of Service', href: '/terms' },
+  { label: 'Cookie Policy', href: '/cookies' },
+  { label: 'Sitemap', href: '/sitemap' },
+  { label: 'Accessibility', href: '/accessibility' },
 ] as const;

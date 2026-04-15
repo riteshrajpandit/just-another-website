@@ -1,0 +1,554 @@
+/* BookDemoPanel */
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.demoHero {
+  background: var(--bg-base);
+  border-bottom: 1px solid var(--border);
+  padding: clamp(3rem, 6vw, 5rem) 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.demoHeroBg {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.demoHeroBlob {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 166, 35, 0.08), transparent 70%);
+  top: -80px;
+  right: 5%;
+  pointer-events: none;
+}
+
+.demoHeroGrid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.demoBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+/* ── Architect Card ───────────────────────────────────────── */
+.architectCard {
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--brand-warm);
+  background: var(--bg-surface);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.archHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.archAvatar {
+  width: 52px;
+  height: 52px;
+  background: var(--brand-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.archName {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.archRole {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.archBio {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.archSpecialties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.archSpecialty {
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ── What to Expect ───────────────────────────────────────── */
+.expectList {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.expectItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
+}
+
+.expectItem:last-child { border-bottom: none; }
+.expectItem:hover { background: var(--bg-elevated); }
+
+.expectNum {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--brand-primary);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.expectItemTitle {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.expectItemText {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ── Slot Section ─────────────────────────────────────────── */
+.slotSection { background: var(--bg-base); }
+
+.slotLayout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+}
+
+/* ── Calendar ─────────────────────────────────────────────── */
+.calendarWidget {
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+
+.calHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+
+.calNavBtn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.calNavBtn:hover {
+  border-color: var(--brand-primary);
+  box-shadow: 2px 2px 0 var(--brand-primary);
+}
+
+.calMonthLabel {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.calWeekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid var(--border);
+}
+
+.calWeekday {
+  padding: 0.65rem 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-right: 1px solid var(--border);
+}
+
+.calWeekday:last-child { border-right: none; }
+
+.calGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.calDay {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+  position: relative;
+}
+
+.calDay:nth-child(7n) { border-right: none; }
+
+.calDayEmpty { cursor: default; color: var(--text-muted); opacity: 0.3; }
+.calDayPast { cursor: default; color: var(--text-muted); opacity: 0.25; pointer-events: none; }
+
+.calDay:not(.calDayEmpty):not(.calDayPast):hover {
+  background: rgba(27, 118, 187, 0.1);
+  color: var(--brand-primary);
+}
+
+.calDaySelected {
+  background: var(--brand-primary);
+  color: #fff;
+  border-color: var(--brand-primary);
+}
+
+.calDayToday::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--brand-warm);
+  border-radius: 50%;
+}
+
+.calDayHasSlots::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 4px;
+  height: 4px;
+  background: var(--brand-accent);
+}
+
+.calDaySelected.calDayHasSlots::before { background: #fff; }
+
+/* ── Time Slots ───────────────────────────────────────────── */
+.timeSlotsSection {
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+
+.timeSlotsHeader {
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.timeSlotsDate {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.timeSlotsTz {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.timeSlotsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.timeSlot {
+  padding: 0.75rem 1rem;
+  background: var(--bg-surface);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  text-align: center;
+  border: 1px solid transparent;
+}
+
+.timeSlot:hover { background: rgba(27, 118, 187, 0.08); color: var(--brand-primary); }
+.timeSlotSelected { background: var(--brand-primary) !important; color: #fff !important; }
+.timeSlotUnavailable { cursor: default; opacity: 0.3; pointer-events: none; text-decoration: line-through; }
+
+/* ── Form Card ────────────────────────────────────────────── */
+.formCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--brand-primary);
+  padding: 2rem;
+}
+
+.formCardTitle {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.formCardSub {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.formGroup:last-child { margin-bottom: 0; }
+
+.formLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.formInput,
+.formSelect,
+.formTextarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  border-radius: 0;
+  outline: none;
+  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+  appearance: none;
+}
+
+.formInput:focus,
+.formSelect:focus,
+.formTextarea:focus {
+  border-color: var(--brand-primary);
+  border-bottom-color: var(--brand-primary);
+  background: var(--bg-surface);
+  box-shadow: 0 0 0 3px rgba(27, 118, 187, 0.1);
+}
+
+.formInput::placeholder,
+.formTextarea::placeholder { color: var(--text-muted); }
+
+.formTextarea { resize: vertical; min-height: 90px; }
+
+.formSelect {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23555550' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.25rem;
+  cursor: pointer;
+}
+
+.formRadioGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.formRadioPill { position: relative; }
+
+.formRadioPill input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.formRadioPillLabel {
+  display: block;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
+}
+
+.formRadioPill input:checked + .formRadioPillLabel {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: #fff;
+}
+
+.formRadioPillLabel:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+
+.formSubmitRow {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ── Success State ────────────────────────────────────────── */
+.formSuccess {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.formSuccessIcon {
+  width: 56px;
+  height: 56px;
+  border: 2px solid #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formSuccessTitle {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.formSuccessText {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 340px;
+}
+
+/* ── Booking Summary ──────────────────────────────────────── */
+.bookingSummary {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--brand-primary);
+  padding: 1.5rem;
+  position: sticky;
+  top: calc(var(--nav-height) + 64px);
+}
+
+.bookingSummaryItems {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  margin-top: 1rem;
+}
+
+.bookingSummaryItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.bookingSummaryItem:last-child { border-bottom: none; }
+
+.bookingSummaryValue {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.bookingSummaryFree { color: #22c55e; }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .slotLayout { grid-template-columns: 1fr; }
+  .bookingSummary { position: static; }
+}
+
+@media (max-width: 767px) {
+  .demoHeroGrid { grid-template-columns: 1fr; }
+  .formRow { grid-template-columns: 1fr; }
+}

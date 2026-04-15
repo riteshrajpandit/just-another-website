@@ -5,6 +5,7 @@
 
 'use client';
 
+import Link from 'next/link';
 import { Button } from '@/components/ui';
 import { careersHero, careerHeroBadges, liveOpenings } from '@/data/careers';
 import { useAnimateOnScroll } from '@/hooks/useInView';
@@ -24,7 +25,7 @@ export function CareerHeroSection() {
           {/* Left: content */}
           <div ref={ref} className={className}>
             <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-              <a href="/">Home</a>
+              <Link href="/">Home</Link>
               <span aria-hidden="true">/</span>
               <span aria-current="page">Careers</span>
             </nav>

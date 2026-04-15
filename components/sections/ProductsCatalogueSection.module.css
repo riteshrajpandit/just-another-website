@@ -1,0 +1,286 @@
+/* ProductsCatalogueSection */
+
+/* ── Overview Grid ── */
+.overview { background: var(--bg-elevated); border-top: 1px solid var(--border); }
+
+.filterBar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.filterBtn {
+  padding: 0.45rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  transition: color var(--transition), background var(--transition), border-color var(--transition);
+}
+
+.filterBtn:hover { color: var(--text-primary); background: var(--bg-surface); }
+.filterActive { background: var(--brand-primary); color: #fff; border-color: var(--brand-primary); }
+
+.catalogueGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.catalogueCard {
+  background: var(--bg-surface);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--transition), box-shadow var(--transition),
+    border-color var(--transition), background var(--transition);
+  position: relative;
+}
+
+.catalogueCard:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 4px 4px 0 var(--brand-primary);
+  border-color: var(--brand-primary);
+  background: var(--bg-elevated);
+  z-index: 1;
+}
+
+.catalogueCardFeatured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--brand-warm);
+}
+
+.catalogueIcon {
+  width: 44px;
+  height: 44px;
+  background: var(--brand-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--transition);
+}
+
+.catalogueIcon svg { stroke: #fff; fill: none; stroke-width: 2; }
+
+.catalogueMeta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+
+.catalogueTag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.5rem;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.catalogueCard:hover .catalogueTag { border-color: var(--brand-primary); color: var(--brand-primary); }
+
+.featuredBadge {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.5rem;
+  background: var(--brand-warm);
+  color: #0e0e0e;
+  font-weight: 600;
+}
+
+.catalogueName { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--text-primary); }
+.catalogueDesc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; flex: 1; }
+
+.catalogueStat {
+  padding: 0.6rem 0.85rem;
+  background: var(--bg-elevated);
+  border-left: 3px solid var(--brand-primary);
+}
+
+.catalogueStatVal { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; color: var(--brand-primary); display: block; }
+.catalogueStatLbl { font-size: 0.65rem; color: var(--text-muted); line-height: 1.3; }
+
+.catalogueArrow {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: color var(--transition);
+}
+
+.catalogueCard:hover .catalogueArrow { color: var(--brand-primary); }
+
+/* ── Detail rows ── */
+.details { background: var(--bg-base); }
+
+.detailRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--border);
+}
+
+.detailRowFlipped { direction: rtl; }
+.detailRowFlipped > * { direction: ltr; }
+
+.detailContent {
+  padding: clamp(3rem, 6vw, 5rem) clamp(2rem, 4vw, 4rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  border-right: 1px solid var(--border);
+}
+
+.detailRowFlipped .detailContent {
+  border-right: none;
+  border-left: 1px solid var(--border);
+}
+
+.detailEyebrow { display: flex; align-items: center; gap: 1rem; }
+
+.detailName { color: var(--text-primary); }
+
+.detailHeadline {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700;
+  color: var(--brand-primary);
+  line-height: 1.3;
+}
+
+.detailDesc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; }
+
+.featureList { display: flex; flex-direction: column; gap: 0.6rem; list-style: none; }
+
+.featureItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.featureCheck {
+  width: 16px;
+  height: 16px;
+  background: var(--brand-primary);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  position: relative;
+}
+
+.featureCheck::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 5px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: translate(-50%, -60%) rotate(-45deg);
+}
+
+.statCallout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--brand-primary);
+}
+
+.statCalloutVal { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700; color: var(--brand-primary); line-height: 1; }
+.statCalloutLbl { font-size: 0.78rem; color: var(--text-secondary); }
+
+.detailCtas { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+/* Visual panel */
+.detailVisual {
+  position: relative;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+
+.detailVisualIcon {
+  position: relative;
+  z-index: 1;
+  width: 96px;
+  height: 96px;
+  border: 2px solid rgba(27, 118, 187, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detailVisualIcon svg { stroke: rgba(255, 255, 255, 0.6); fill: none; stroke-width: 1.5; }
+
+.detailVisualTag {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  z-index: 1;
+}
+
+.detailVisualGeo1 {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(15deg);
+}
+
+.detailVisualGeo2 {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-10deg);
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .catalogueGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .catalogueGrid { grid-template-columns: 1fr; }
+  .detailRow { grid-template-columns: 1fr; direction: ltr; }
+  .detailRowFlipped { direction: ltr; }
+  .detailContent { border-right: none; border-left: none; border-bottom: 1px solid var(--border); }
+  .detailRowFlipped .detailContent { border-left: none; }
+  .detailVisual { min-height: 200px; }
+}

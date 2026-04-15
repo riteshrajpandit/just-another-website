@@ -6,6 +6,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Link from 'next/link';
 import styles from './LoginPanel.module.css';
 
 type AuthTab = 'signin' | 'register';
@@ -209,7 +210,7 @@ function RegisterForm() {
         </div>
         <h3 className={styles.successTitle}>Request Submitted</h3>
         <p className={styles.successDesc}>An admin will review and activate your workspace within one business day.</p>
-        <a href="/" className={styles.backLink}>← Back to NEXACORE</a>
+        <Link href="/" className={styles.backLink}>← Back to NEXACORE</Link>
       </div>
     );
   }
@@ -259,7 +260,7 @@ function RegisterForm() {
       <button type="submit" className={styles.submitBtn}>Create Account</button>
       <p className={styles.termsNote}>
         By creating an account you agree to our{' '}
-        <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.
       </p>
     </form>
   );

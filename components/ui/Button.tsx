@@ -4,6 +4,7 @@
  */
 
 import { type ReactNode, type ButtonHTMLAttributes, type AnchorHTMLAttributes } from 'react';
+import Link from 'next/link';
 import styles from './Button.module.css';
 
 type ButtonVariant = 'primary' | 'outline' | 'ghost' | 'brand' | 'white' | 'white-outline';
@@ -60,10 +61,20 @@ export function Button(props: ButtonProps) {
 
   if ('href' in rest && rest.href) {
     const { href, ...linkProps } = rest as ButtonAsLink;
+    // External links: plain <a> with security attributes to prevent reverse tabnapping
+    const isExternal = href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//');
+    if (isExternal) {
+      return (
+        <a href={href} className={classes} rel="noopener noreferrer" target="_blank" {...linkProps}>
+          {children}
+        </a>
+      );
+    }
+    // Internal links: Next.js <Link> for client-side navigation
     return (
-      <a href={href} className={classes} {...linkProps}>
+      <Link href={href} className={classes} {...(linkProps as Omit<React.ComponentProps<typeof Link>, 'href' | 'className'>)}>
         {children}
-      </a>
+      </Link>
     );
   }
 

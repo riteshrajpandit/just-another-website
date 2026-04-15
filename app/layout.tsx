@@ -5,6 +5,7 @@
 
 import type { Metadata, Viewport } from 'next';
 import { Syne, DM_Sans, JetBrains_Mono } from 'next/font/google';
+import { CookieConsentBanner } from '@/components/layout';
 import './globals.css';
 
 const syne = Syne({
@@ -98,7 +99,13 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <a href="#main-content" className="skip-to-content">
+          Skip to main content
+        </a>
+        {children}
+        <CookieConsentBanner />
+      </body>
     </html>
   );
 }

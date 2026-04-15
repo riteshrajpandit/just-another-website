@@ -1,0 +1,208 @@
+/* Contact page-specific styles */
+
+/* Page Tabs Bar */
+.pageTabsBar {
+  position: sticky;
+  top: var(--nav-height);
+  z-index: 300;
+  background: var(--bg-dark-band);
+  border-bottom: 1px solid var(--border);
+}
+
+.pageTabsInner {
+  display: flex;
+  align-items: stretch;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem) 0 calc(var(--left-rail) + clamp(1rem, 3vw, 2rem));
+}
+
+.pageTab {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0 2rem;
+  height: 52px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+  white-space: nowrap;
+}
+
+.pageTab:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+.pageTabActive {
+  color: var(--brand-primary);
+  border-bottom-color: var(--brand-primary);
+}
+
+.pageTabDot {
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+  flex-shrink: 0;
+  transition: background var(--transition);
+}
+
+/* Page Panels */
+.pagePanel {
+  display: block;
+}
+
+/* Form Elements */
+.formCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--brand-primary);
+  padding: 2rem;
+  position: sticky;
+  top: calc(var(--nav-height) + 64px);
+}
+
+.formCardTitle {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.formCardSub {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.formRowFull {
+  grid-template-columns: 1fr;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.formGroup:last-child {
+  margin-bottom: 0;
+}
+
+.formLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.formInput,
+.formSelect,
+.formTextarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  border-radius: 0;
+  outline: none;
+  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+  appearance: none;
+}
+
+.formInput:focus,
+.formSelect:focus,
+.formTextarea:focus {
+  border-color: var(--brand-primary);
+  border-bottom-color: var(--brand-primary);
+  background: var(--bg-surface);
+  box-shadow: 0 0 0 3px rgba(27, 118, 187, 0.1);
+}
+
+.formInput::placeholder,
+.formTextarea::placeholder {
+  color: var(--text-muted);
+}
+
+.formInputError,
+.formSelectError,
+.formTextareaError {
+  border-color: #ef4444;
+  border-bottom-color: #ef4444;
+}
+
+.formErrorMsg {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: #ef4444;
+  display: none;
+}
+
+.formGroupHasError .formErrorMsg {
+  display: block;
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.formSelect {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23555550' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.25rem;
+  cursor: pointer;
+}
+
+.formSubmitRow {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Responsive */
+@media (max-width: 1279px) {
+  .pageTabsInner {
+    padding-left: clamp(1rem, 3vw, 2rem);
+  }
+}
+
+@media (max-width: 1023px) {
+  .formCard {
+    position: static;
+  }
+  .pageTab {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+}

@@ -11,9 +11,9 @@ import type { NavLink, MegaMenuConfig } from '@/types';
 
 export const navLinks: readonly NavLink[] = [
   { id: 'home', label: 'Home', href: '/', hasSubmenu: false },
-  { id: 'products', label: 'Products', href: '/#products', hasSubmenu: true },
-  { id: 'services', label: 'Services', href: '/#services', hasSubmenu: true },
-  { id: 'resources', label: 'Resources', href: '#', hasSubmenu: true },
+  { id: 'products', label: 'Products', href: '/products', hasSubmenu: true },
+  { id: 'services', label: 'Services', href: '/services', hasSubmenu: true },
+  { id: 'resources', label: 'Resources', href: '/resources', hasSubmenu: true },
   { id: 'about', label: 'About Us', href: '/about', hasSubmenu: true },
   { id: 'careers', label: 'Careers', href: '/careers', hasSubmenu: false },
 ] as const;
@@ -73,7 +73,7 @@ export const productsMegaMenu: MegaMenuConfig = {
     description:
       'The most powerful workflow engine we have ever built. Automate complex enterprise processes with no-code visual builder and built-in AI decision nodes.',
     ctaLabel: 'Explore NexaFlow',
-    ctaHref: '#products',
+    ctaHref: '/products#nexaflow',
   },
 };
 
@@ -146,7 +146,7 @@ export const servicesMegaMenu: MegaMenuConfig = {
     description:
       '30-minute strategy call with a senior solutions architect. No obligations, no sales pitch.',
     ctaLabel: 'Book Your Slot',
-    ctaHref: '#cta',
+    ctaHref: '/contact#book-demo',
     variant: 'brand',
   },
 };
@@ -205,7 +205,7 @@ export const resourcesMegaMenu: MegaMenuConfig = {
     description:
       'SOC 2 Type II certified. View our security posture, compliance reports, and data handling policies.',
     ctaLabel: 'View Trust Center',
-    ctaHref: '#',
+    ctaHref: '/resources#trust-center',
   },
 };
 
@@ -279,15 +279,15 @@ export const mobileNavItems = [
   {
     id: 'resources',
     label: 'Resources',
-    href: '#',
+    href: '/resources',
     submenu: [
       'FAQs',
       'Documentation',
       'Case Studies',
       'End User Training',
       'Gallery',
+      'Blog',
       'Trust Center',
-      'Tools',
     ],
   },
   {

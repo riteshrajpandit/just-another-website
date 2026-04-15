@@ -4,6 +4,7 @@
  */
 
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { LoginBrandPanel } from '@/components/sections/LoginBrandPanel';
 import { LoginPanel } from '@/components/sections/LoginPanel';
 import styles from './login.module.css';
@@ -19,7 +20,7 @@ export default function LoginPage() {
       <LoginBrandPanel />
       <div className={styles.right}>
         <div className={styles.rightControls}>
-          <a href="/" className={styles.helpLink}>Help</a>
+          <Link href="/" className={styles.helpLink}>Help</Link>
         </div>
         <div className={styles.formWrap}>
           <LoginPanel />

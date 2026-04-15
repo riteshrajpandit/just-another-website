@@ -1,0 +1,534 @@
+/* Privacy.module.css */
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.hero {
+  padding: clamp(4rem, 8vw, 6rem) 0 clamp(2rem, 4vw, 3rem);
+  background: var(--bg-base);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.heroBlob {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(27, 118, 187, 0.08), transparent 70%);
+  top: -120px;
+  right: -60px;
+  pointer-events: none;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.breadcrumb a:hover { color: var(--brand-primary); }
+.breadcrumb span:last-child { color: var(--brand-primary); }
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-primary);
+  background: rgba(27, 118, 187, 0.08);
+  border: 1px solid rgba(27, 118, 187, 0.2);
+  padding: 0.35rem 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.heroBadgeDot {
+  width: 6px;
+  height: 6px;
+  background: var(--brand-primary);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 1.25rem;
+  max-width: 680px;
+}
+
+.heroTitleAccent {
+  color: var(--brand-primary);
+  display: block;
+}
+
+.heroMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.heroMetaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.heroMetaLabel {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.heroMetaValue {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   TWO-COLUMN LAYOUT
+   ============================================================ */
+
+.layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+
+.content {
+  min-width: 0;
+}
+
+/* ============================================================
+   TABLE OF CONTENTS SIDEBAR
+   ============================================================ */
+
+.toc {
+  position: sticky;
+  top: calc(var(--nav-height) + 2rem);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--brand-primary);
+  padding: 1.5rem;
+  max-height: calc(100vh - var(--nav-height) - 4rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.tocTitle {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tocList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tocItem {
+  border-bottom: 1px solid var(--border);
+}
+
+.tocItem:last-child {
+  border-bottom: none;
+}
+
+.tocLink {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition), padding-left var(--transition);
+  line-height: 1.4;
+}
+
+.tocLink:hover {
+  color: var(--brand-primary);
+  padding-left: 0.4rem;
+}
+
+.tocLinkNum {
+  color: var(--brand-primary);
+  font-weight: 700;
+  flex-shrink: 0;
+  min-width: 1.4em;
+}
+
+/* ============================================================
+   POLICY SECTIONS
+   ============================================================ */
+
+.section {
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.sectionAnchor {
+  display: block;
+  /* Offset for sticky header */
+  margin-top: calc(-1 * var(--nav-height) - 1rem);
+  padding-top: calc(var(--nav-height) + 1rem);
+  pointer-events: none;
+  visibility: hidden;
+  height: 0;
+}
+
+.sectionEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.sectionEyebrowLine {
+  width: 20px;
+  height: 2px;
+  background: var(--brand-primary);
+  flex-shrink: 0;
+}
+
+.sectionNum {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-primary);
+  font-weight: 600;
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  margin-bottom: 1.25rem;
+}
+
+.sectionSubtitle {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.sectionText {
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  line-height: 1.75;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.sectionText:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================================
+   LISTS
+   ============================================================ */
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.listItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: clamp(0.88rem, 1.2vw, 0.97rem);
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.listBullet {
+  width: 6px;
+  height: 6px;
+  background: var(--brand-primary);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.55em;
+}
+
+.listItemStrong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ============================================================
+   HIGHLIGHT BOX
+   ============================================================ */
+
+.highlight {
+  border-left: 3px solid var(--brand-primary);
+  background: rgba(27, 118, 187, 0.05);
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+}
+
+.highlightLabel {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-primary);
+  margin-bottom: 0.4rem;
+}
+
+.highlightText {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.highlightText a {
+  color: var(--brand-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.highlightText a:hover {
+  color: var(--brand-accent);
+}
+
+/* ============================================================
+   INFO GRID
+   ============================================================ */
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin: 1.25rem 0;
+}
+
+.infoCard {
+  background: var(--bg-surface);
+  padding: 1.25rem 1.5rem;
+  transition: background var(--transition);
+}
+
+.infoCard:hover {
+  background: var(--bg-elevated);
+}
+
+.infoCardLabel {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.infoCardValue {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+  line-height: 1.3;
+}
+
+.infoCardSub {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   RIGHTS GRID (GDPR)
+   ============================================================ */
+
+.rightsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin: 1.25rem 0;
+}
+
+.rightCard {
+  background: var(--bg-surface);
+  padding: 1.25rem;
+  border-top: 2px solid transparent;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.rightCard:hover {
+  border-top-color: var(--brand-primary);
+  background: var(--bg-elevated);
+}
+
+.rightCardTitle {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rightCardIcon {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--brand-primary);
+  font-weight: 700;
+}
+
+.rightCardText {
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   CONTACT BLOCK
+   ============================================================ */
+
+.contactBlock {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--brand-primary);
+  padding: 2rem;
+  margin-top: 1.25rem;
+}
+
+.contactBlockRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.contactBlockRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.contactBlockLabel {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.contactBlockValue {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.contactBlockValue a {
+  color: var(--brand-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition);
+}
+
+.contactBlockValue a:hover {
+  color: var(--brand-accent);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .toc {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .rightsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroMeta {
+    gap: 1rem;
+  }
+}

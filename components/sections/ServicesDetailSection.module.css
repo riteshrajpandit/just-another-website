@@ -1,0 +1,170 @@
+/* ServicesDetailSection */
+
+.section { background: var(--bg-base); }
+
+.servicesList {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+}
+
+.serviceRow {
+  display: grid;
+  grid-template-columns: 80px 1fr 180px;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
+}
+
+.serviceRow:last-child { border-bottom: none; }
+.serviceRow:hover { background: var(--bg-elevated); }
+
+/* Meta column */
+.serviceMeta {
+  padding: 2rem 1.5rem;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--bg-elevated);
+}
+
+.serviceNum {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--brand-primary);
+  line-height: 1;
+}
+
+.featuredPill {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.featuredPillVisible {
+  opacity: 1;
+  border-color: var(--brand-warm);
+  color: var(--brand-warm);
+  background: rgba(245, 166, 35, 0.06);
+}
+
+/* Content column */
+.serviceContent {
+  padding: 2rem 2rem 2rem;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.serviceName {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.serviceDesc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 640px;
+}
+
+.deliverables {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.deliverable {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.deliverableCheck {
+  width: 14px;
+  height: 14px;
+  background: var(--brand-primary);
+  flex-shrink: 0;
+  margin-top: 0.12rem;
+  position: relative;
+}
+
+.deliverableCheck::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 4px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: translate(-50%, -60%) rotate(-45deg);
+}
+
+.outcomeBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.85rem 1.1rem;
+  background: rgba(27, 118, 187, 0.06);
+  border-left: 4px solid var(--brand-primary);
+}
+
+.outcomeLabel {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-primary);
+}
+
+.outcomeText {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* CTA column */
+.serviceCta {
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.75rem;
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .serviceRow { grid-template-columns: 60px 1fr; }
+  .serviceCta { display: none; }
+}
+
+@media (max-width: 767px) {
+  .serviceRow { grid-template-columns: 1fr; }
+  .serviceMeta {
+    flex-direction: row;
+    padding: 1rem 1.5rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .serviceContent { border-right: none; }
+}

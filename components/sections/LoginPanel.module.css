@@ -460,3 +460,11 @@
   text-transform: uppercase;
   color: var(--text-muted);
 }
+
+/* Responsive */
+@media (max-width: 479px) {
+  .nameRow { grid-template-columns: 1fr; }
+  .ssoGrid { grid-template-columns: 1fr; }
+  .formCard { max-width: 100%; }
+  .sessionStrip { flex-direction: column; gap: 0.35rem; align-items: center; text-align: center; }
+}

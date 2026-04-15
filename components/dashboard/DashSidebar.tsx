@@ -6,6 +6,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { sidebarNav } from '@/data/dashboard';
 import type { DashPage } from '@/data/dashboard';
 import styles from './DashSidebar.module.css';
@@ -38,10 +39,10 @@ export function DashSidebar({ activePage, onNavigate }: Props) {
       {/* Logo */}
       <div className={styles.logoRow}>
         {!collapsed && (
-          <a href="/" className={styles.logo} aria-label="NEXACORE Home">
+          <Link href="/" className={styles.logo} aria-label="NEXACORE Home">
             <div className={styles.logoMark} aria-hidden="true" />
             <span className={styles.logoName}>NEXA<span>CORE</span></span>
-          </a>
+          </Link>
         )}
         <button
           className={styles.collapseBtn}

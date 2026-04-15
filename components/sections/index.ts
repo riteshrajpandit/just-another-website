@@ -36,3 +36,21 @@ export * from './OpenApplicationSection';
 // Login page sections
 export * from './LoginBrandPanel';
 export * from './LoginPanel';
+
+// Products page sections
+export * from './ProductsHeroSection';
+export * from './ProductsCatalogueSection';
+
+// Services page sections
+export * from './ServicesHeroSection';
+export * from './ServicesDetailSection';
+
+// Resources page sections
+export * from './ResourcesHeroSection';
+export * from './ResourcesFaqSection';
+export * from './ResourcesDocSection';
+export * from './ResourcesCaseStudiesSection';
+export * from './ResourcesTrainingSection';
+export * from './ResourcesGallerySection';
+export * from './ResourcesBlogSection';
+export * from './ResourcesTrustCenterSection';

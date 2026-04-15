@@ -11,3 +11,4 @@ export * from './ProductsMegaMenu';
 export * from './ServicesMegaMenu';
 export * from './ResourcesMegaMenu';
 export * from './AboutMegaMenu';
+export * from './CookieConsentBanner';

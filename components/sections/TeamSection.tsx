@@ -191,10 +191,10 @@ export function TeamSection() {
               flexWrap: 'wrap',
             }}
           >
-            <Button href="#" variant="brand">
+            <Button href="/careers" variant="brand">
               View All Openings
             </Button>
-            <Button href="#" variant="outline">
+            <Button href="/careers#culture" variant="outline">
               Our Culture Deck
             </Button>
           </div>

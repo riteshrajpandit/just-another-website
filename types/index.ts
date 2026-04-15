@@ -66,6 +66,11 @@ export interface Product {
   readonly description: string;
   readonly icon: string;
   readonly href?: string;
+  readonly featured?: boolean;
+  readonly headline?: string;
+  readonly features?: readonly string[];
+  readonly stat?: { value: string; label: string };
+  readonly gradient?: string;
 }
 
 export interface Service {
@@ -74,6 +79,9 @@ export interface Service {
   readonly name: string;
   readonly description: string;
   readonly href?: string;
+  readonly featured?: boolean;
+  readonly deliverables?: readonly string[];
+  readonly outcome?: string;
 }
 
 export interface Brand {
@@ -365,4 +373,95 @@ export interface ActivityItem {
   readonly type: 'inquiry' | 'booking' | 'subscriber' | 'job' | 'system';
   readonly description: string;
   readonly timestamp: string;
+}
+
+// ============================================================
+// Resources Page Types
+// ============================================================
+
+export interface FaqItem {
+  readonly id: string;
+  readonly question: string;
+  readonly answer: string;
+  readonly category: string;
+}
+
+export interface DocSection {
+  readonly id: string;
+  readonly title: string;
+  readonly description: string;
+  readonly articles: number;
+  readonly icon: string;
+  readonly updated: string;
+}
+
+export interface CaseStudy {
+  readonly id: string;
+  readonly client: string;
+  readonly industry: string;
+  readonly challenge: string;
+  readonly outcome: string;
+  readonly metrics: readonly { value: string; label: string }[];
+  readonly products: readonly string[];
+}
+
+export interface TrainingCourse {
+  readonly id: string;
+  readonly title: string;
+  readonly level: 'Beginner' | 'Intermediate' | 'Advanced';
+  readonly duration: string;
+  readonly modules: number;
+  readonly product: string;
+  readonly certified: boolean;
+}
+
+export interface GalleryItem {
+  readonly id: string;
+  readonly title: string;
+  readonly caption: string;
+  readonly product: string;
+  readonly category: 'UI' | 'Architecture' | 'Dashboard' | 'Integration';
+}
+
+export interface BlogPost {
+  readonly id: string;
+  readonly slug: string;
+  readonly title: string;
+  readonly excerpt: string;
+  readonly category: string;
+  readonly tags: readonly string[];
+  readonly readTime: string;
+  readonly date: string;
+  readonly author: string;
+  readonly authorInitials: string;
+  readonly authorRole: string;
+  readonly authorBio: string;
+  readonly featured?: boolean;
+  readonly content: readonly BlogSection[];
+  readonly likes: number;
+  readonly views: string;
+  readonly relatedIds: readonly string[];
+}
+
+export interface BlogSection {
+  readonly type: 'heading' | 'paragraph' | 'quote' | 'callout' | 'list' | 'code';
+  readonly text?: string;
+  readonly items?: readonly string[];
+  readonly language?: string;
+  readonly level?: 2 | 3;
+}
+
+export interface ComplianceCert {
+  readonly id: string;
+  readonly name: string;
+  readonly issuer: string;
+  readonly status: 'Current' | 'In Progress';
+  readonly description: string;
+}
+
+export interface SecurityPolicy {
+  readonly id: string;
+  readonly title: string;
+  readonly description: string;
+  readonly icon: string;
 }

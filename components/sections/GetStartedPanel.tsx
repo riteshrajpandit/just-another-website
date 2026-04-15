@@ -432,11 +432,11 @@ export function GetStartedPanel() {
                           <span className="form-check-box" />
                           <span className="form-check-label">
                             I agree to NEXACORE&apos;s{' '}
-                            <a href="#" style={{ color: 'var(--brand-accent)', textDecoration: 'underline' }}>
+                            <a href="/privacy" style={{ color: 'var(--brand-accent)', textDecoration: 'underline' }}>
                               Privacy Policy
                             </a>{' '}
                             and{' '}
-                            <a href="#" style={{ color: 'var(--brand-accent)', textDecoration: 'underline' }}>
+                            <a href="/terms" style={{ color: 'var(--brand-accent)', textDecoration: 'underline' }}>
                               Terms of Service
                             </a>
                             .
